@@ -18,5 +18,6 @@ homerouter.get("/userdata/:email",async(req,res)=>{
           
       }
   })
+  homerouter.put("/edit-profile/")
 
 module.exports=homerouter

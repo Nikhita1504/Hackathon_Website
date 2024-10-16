@@ -47,6 +47,7 @@ height: 75%;
     border-radius: 4px;
     margin-bottom: 20px;
     font-size: 16px;
+    color: black;
 
     &:focus {
       outline: none;
@@ -91,11 +92,18 @@ height: 75%;
     }
 
     .select__menu {
+      color: black;
       z-index: 999;
     }
 
     .select__multi-value__label {
+      color: black;
       font-size: 14px;
+    }
+
+    .select__multi-value__remove{
+      background-color: lightgray;
+      color: black;
     }
   }
 
