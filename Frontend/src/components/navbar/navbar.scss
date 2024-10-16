@@ -1,0 +1,124 @@
+.nav-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 10px 40px;
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    // background-color: #7491B7;
+    background-color: #2C3E50;
+    padding: 0px 39px;
+    border-radius: 24px;
+    justify-content: space-evenly;
+
+    ul {
+      display: flex;
+      gap: 45px;
+      list-style: none;
+
+      a {
+        text-decoration: none;
+        color: white;
+        transition: background-color 1s ease, color 0.3s ease,
+          box-shadow 1s ease;
+        /* Add transition for smooth hover effect */
+        padding: 3px 7px;
+        /* Keep the padding consistent */
+
+        /* Optional: add a border for the default state */
+        border-radius: 18px;
+        /* Maintain the border radius */
+        box-shadow: 0 0 0 transparent;
+        /* Start with no shadow */
+
+        &:hover {
+          background-color: white;
+          color: black;
+          // box-shadow: 0 0 0 3px rgb(255, 255, 255); /* Add a shadow effect on hover */
+        }
+      }
+    }
+  }
+
+  .search-bar {
+    position: relative;
+    /* Needed to position the icon */
+    display: flex;
+    align-items: center;
+  }
+
+  .search-icon {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    /* Adjust the position of the icon */
+    color: #aaa;
+    /* Optional: Set icon color */
+    font-size: 15px;
+    /* Optional: Set icon size */
+  }
+
+  .search-bar input {
+    padding-left: 35px;
+    /* Add padding so text doesn't overlap the icon */
+    height: 30px;
+    // width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    font-size: 16px;
+  }
+
+  .profile-dropdown {
+    // border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+
+    .circle {
+      height: 30px;
+      width: 30px;
+      background-color: red;
+      border-radius: 50%;
+
+
+    }
+
+    .Me {
+      .triangle-down {
+        cursor: pointer;
+      }
+    }
+    .modaloverlay {
+      height: 80px;
+      width: 80px;
+      background-color: #2c3e50;
+      // opacity: 0.9;
+      position: fixed;
+      top: -50%;
+      right: 6%;
+      border-radius: 10px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      // transition: top 0.5s ease-in-out;
+
+     button{
+        color: white;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+      }
+  }
+
+  .modalshow {
+      top: 9%;
+  }
+  }
+
+}

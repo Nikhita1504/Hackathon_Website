@@ -1,0 +1,118 @@
+
+
+.label {
+  font-size: 20px;
+}
+
+
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f4f4;
+  height: 100vh;
+  width: 100vw;
+}
+
+
+.container {
+  background-color:white;
+  padding: 32px 38px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.heading {
+  margin-bottom: 40px;
+}
+
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+
+.input {
+  width: 100%;
+  font-size: 20px;
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #ccc;
+}
+
+
+.input::placeholder {
+  font-size: 12px;
+  font-style: italic;
+  color: #999;
+}
+
+
+.signup {
+  background-color:  #6f42c1;
+  border: 1px solid black;
+  font-size: 20px;
+  color: white;
+  border-radius: 5px;
+  padding: 10px 0px;
+  margin: 10px;
+}
+.googlediv{
+border: 1px solid black;
+
+}
+.googleButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+.googleIcon{
+  height: 50px !important;
+  width: 50px !important;
+  object-fit: cover; 
+  min-height: 50px;
+  min-width: 50px;
+  object-fit: cover;
+}
+
+.link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+
+.span {
+  font-size: 14px;
+}
+
+
+.divider {
+  color: black;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #000;
+}
+.divider:not(:empty)::before {
+  margin-right: 10px;
+}
+.divider:not(:empty)::after {
+  margin-left: 10px;
+}
