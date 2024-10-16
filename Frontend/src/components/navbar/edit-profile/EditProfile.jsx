@@ -62,7 +62,7 @@ const EditProfile = () => {
       const token = sessionStorage.getItem('token');
       const user = jwtDecode(token);
   
-      await axios.put(`http://localhost:3000/home/update-user/${user.email}`, Userinfo);
+      await axios.put(`http://localhost:3000/edit-profile/updateprofile/${user.email}`, Userinfo);
       alert('Profile updated successfully!');
     } catch (error) {
       console.error('Error updating profile:', error);
