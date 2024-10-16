@@ -20,7 +20,7 @@ app.use("/auth" , authrouter)
 app.use("/google/auth",google_auth_router)
 app.use("/profile" , Profilerouter)
 app.use("/home",homerouter)
-app.use("/home/edit-profile",editprofilerouter)
+// app.use("/home/edit-profile",editprofilerouter)
 
 
 app.listen(Port, () =>{
