@@ -11,16 +11,19 @@ const ProfileSection = () => {
     const [modal, setopenmodal] = useState(false);
     const[load,setload]=useState(false)
     const [userdata, setuserdata] = useState({});
-
     useEffect( () => {
+   
         const queryParams = new URLSearchParams(window.location.search);
    console.log(window.location.search); 
-   const token = queryParams.get('token');
-   console.log(token)
-   if(token) {
+   let token = queryParams.get('token');
+   if(token){
+    console.log(token);
     sessionStorage.setItem('token' , token);
+   }else{
+    token = sessionStorage.getItem('token' , token)
    }
-       const user= jwtDecode(token)
+  
+      const user= jwtDecode(token)
         const fetchuserdata = async () => {
             try {
                 const response = await axios.get(`http://localhost:3000/home/userdata/${user.email}`)
