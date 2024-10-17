@@ -1,4 +1,4 @@
-import { isAdmin, isTokenValid } from "../Utils/utils";
+import { isAdmin, isTokenValid } from "../../Utils/utils";
 import { Navigate } from "react-router-dom";
 
 const Protected = ({ children }) => {

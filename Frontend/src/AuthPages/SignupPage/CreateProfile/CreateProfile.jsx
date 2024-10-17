@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import './profile.scss'; // Import normal CSS
-import Usercontext from "../Context/Usercontext";
+import './CreateProfile.scss'; // Import normal CSS
+import Usercontext from "../../../Context/Usercontext";
 import Select from "react-select";
-import { handleError, handleSucess } from "../Utils/utils";
+import { handleError, handleSucess } from "../../../Utils/utils";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import skillOptions from '../Utils/Skillsoption'
+import skillOptions from '../../../Utils/Skillsoption'
 
 const currentYear = new Date().getFullYear();
 const graduationYears = [
@@ -17,7 +17,7 @@ const graduationYears = [
   currentYear + 4,
 ];
 
-function Profile() {
+function CreateProfile() {
 
   const navigate = useNavigate();
   const { Userinfo, SetUserinfo } = useContext(Usercontext);
@@ -181,4 +181,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default CreateProfile;

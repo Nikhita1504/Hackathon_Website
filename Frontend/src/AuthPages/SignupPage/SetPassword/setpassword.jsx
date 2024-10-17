@@ -1,8 +1,8 @@
 import React, { useContext  ,useEffect, useState} from 'react'
 import { useLocation , useNavigate } from 'react-router-dom';
 import style from"./setpassword.module.css"
-import Usercontext from '../Context/Usercontext';
-import { handleError, handleSucess } from '../Utils/utils';
+import Usercontext from '../../../Context/Usercontext';
+import { handleError, handleSucess } from '../../../Utils/utils';
 import {jwtDecode} from "jwt-decode"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

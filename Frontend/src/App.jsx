@@ -1,6 +1,4 @@
 import"./App.css"
-
-
 import { Outlet } from "react-router-dom";
 import UserProvider from "./Context/UsercontextProvider";
 function App() {
