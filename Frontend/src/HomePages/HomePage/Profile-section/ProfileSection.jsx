@@ -7,26 +7,25 @@ const ProfileSection = () => {
     const [modal, setopenmodal] = useState(false);
     const [load, setload] = useState(true);  // start with loading set to true
     const [userdata, setuserdata] = useState({});
-
-    useEffect(() => {
+    useEffect( () => {
+   
         const queryParams = new URLSearchParams(window.location.search);
-        const token = queryParams.get('token') || sessionStorage.getItem('token');
-        
-        if (token) {
+   console.log(window.location.search); 
+   let token = queryParams.get('token');
+   if(token){
+    console.log(token);
+    sessionStorage.setItem('token' , token);
+   }else{
+    token = sessionStorage.getItem('token' , token)
+   }
+  
+      const user= jwtDecode(token)
+        const fetchuserdata = async () => {
             try {
-                sessionStorage.setItem('token', token);
-                const user = jwtDecode(token);
+                const response = await axios.get(`http://localhost:3000/home/userdata/${user.email}`)
 
-                const fetchuserdata = async () => {
-                    try {
-                        const response = await axios.get(`http://localhost:3000/home/userdata/${user.email}`);
-                        setuserdata(response.data);
-                    } catch (error) {
-                        console.error("Error fetching user data:", error);
-                    } finally {
-                        setload(false);  // stop loading after fetching
-                    }
-                };
+                setuserdata(response.data);
+                setload(false);
 
                 fetchuserdata();
             } catch (error) {
