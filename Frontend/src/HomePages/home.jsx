@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Navbar from "./HomePage/HomePage";
+import Navbar from "./HomePage/Navbar/Navbar";
 // import "../components/navbar/navbar.scss"
 import { Outlet } from "react-router-dom";
 
