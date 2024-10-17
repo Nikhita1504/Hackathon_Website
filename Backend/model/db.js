@@ -66,9 +66,34 @@ const userSchema = new mongoose.Schema({
   { timestamps: true }
 );
 
-const UserModel = mongoose.model("UserModel" , userSchema)
+const hackathonschema = new mongoose.Schema({
+  name:String,
+  description: String,
+  startDate: Date,
+  endDate: Date,
+  maxTeamSize: Number,
+  minTeamSize: Number,
+  status: String, // upcoming/ongoing/closed
+  participants:[{type:mongoose.Schema.ObjectId , ref:"Team"}]
+}
+);
 
-module.exports= {UserModel};
+const teamschema = new mongoose.Schema({
+  teamName: String,
+  members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'WebsiteUser' }],
+  leaderId: { type: mongoose.Schema.Types.ObjectId, ref: 'WebsiteUser' },
+  hackathonId: { type: mongoose.Schema.Types.ObjectId, ref: 'Hackathon' },
+  createdAt: Date,
+})
+
+
+
+
+const UserModel = mongoose.model("UserModel" , userSchema)
+const HackathonModel = mongoose.model("Hackathon",hackathonschema)
+const TeamModel = mongoose.model("Team" ,teamschema )
+
+module.exports= {UserModel , HackathonModel , TeamModel};
 
 
 

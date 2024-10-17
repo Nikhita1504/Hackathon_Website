@@ -1,18 +1,19 @@
 import { createBrowserRouter, Form } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-import Login from "../Pages/login";
-import Signup from "../Pages/signup";
-import Home from "../Pages/home";
-import Profile from "../Pages/profile";
-import { ToastContainer } from "react-toastify";
-import { Protected, Admin } from "../AuthComponent/Protected";
+
 import App from "../App";
-import Setpassword from "../Pages/setpassword";
-import HomePage from "../components/homepage/HomePage";
-import Teams from "../components/teams/Teams";
-import Hackathon from "../components/hackathons/Hackathon";
-import Messages from "../components/messages/Messages";
-import EditProfile from "../components/navbar/edit-profile/EditProfile";
+import  Login from "./../AuthPages/LoginPage/login"
+import Signup  from "./../AuthPages/SignupPage/signup"
+import Home from "./../HomePages/home"
+import HomePage from "./../HomePages/HomePage/HomePage"
+import Teams from "./../HomePages/HomePage/Navbar/Teams/Teams"
+import Hackathon from "./../HomePages/HomePage/Navbar/Hackathons/Hackathon"
+import Messages  from "./../HomePages/HomePage/Navbar/Message/Messages"
+import EditProfile from "./../HomePages/HomePage/Profile-section/EditProfile/EditProfile"
+import {Protected} from "./../AuthPages/AuthComponent/Protected"
+import CreateProfile from "./../AuthPages/SignupPage/CreateProfile/CreateProfile";
+import Setpassword from "./../AuthPages/SignupPage/SetPassword/setpassword"
+
 
 const router = createBrowserRouter([
   {
@@ -61,7 +62,7 @@ const router = createBrowserRouter([
         path: "profile",
         element: (
           <Protected>
-            <Profile></Profile>
+            <CreateProfile></CreateProfile>
             </Protected>
         
         ),

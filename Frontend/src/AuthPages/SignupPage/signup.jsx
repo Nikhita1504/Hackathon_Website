@@ -1,10 +1,10 @@
 import styles from "./signup.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState , useContext } from "react";
-import { handleError, handleSucess } from "../Utils/utils";
+import { handleError, handleSucess } from "../../Utils/utils";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Usercontext from "../Context/Usercontext";
+import Usercontext from "../../Context/Usercontext";
 
 function Signup() {
   const {Userinfo , SetUserinfo} = useContext(Usercontext);

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import "./ProfileSection.scss"
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 import axios from 'axios'
 import Usercontext from '../../../Context/Usercontext';
 // import skillOptions from '../../../data/skills';
@@ -12,11 +12,15 @@ const ProfileSection = () => {
     const[load,setload]=useState(false)
     const [userdata, setuserdata] = useState({});
 
-    useEffect(() => {
-        const token=sessionStorage.getItem("token")
-        const user=jwtDecode(token)
-        // console.log(user.email)
-        // console.log(token)
+    useEffect( () => {
+        const queryParams = new URLSearchParams(window.location.search);
+   console.log(window.location.search); 
+   const token = queryParams.get('token');
+   console.log(token)
+   if(token) {
+    sessionStorage.setItem('token' , token);
+   }
+       const user= jwtDecode(token)
         const fetchuserdata = async () => {
             try {
                 const response = await axios.get(`http://localhost:3000/home/userdata/${user.email}`)
@@ -24,8 +28,7 @@ const ProfileSection = () => {
                 setuserdata(response.data);
                 setload(false);
 
-                // console.log(response)
-
+               
             } catch (error) {
                 console.log(error)
                 setload(false);
@@ -34,6 +37,7 @@ const ProfileSection = () => {
         fetchuserdata();
 
     }, [])
+  
 
     if (load) {
         return <p>Loading</p>
