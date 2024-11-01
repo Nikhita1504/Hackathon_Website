@@ -13,6 +13,8 @@ import EditProfile from "./../HomePages/HomePage/Profile-section/EditProfile/Edi
 import {Protected} from "./../AuthPages/AuthComponent/Protected"
 import CreateProfile from "./../AuthPages/SignupPage/CreateProfile/CreateProfile";
 import Setpassword from "./../AuthPages/SignupPage/SetPassword/setpassword"
+import UpcomingHackathon from "../HomePages/HomePage/Navbar/Hackathons/listed_hackathons/UpcomingHackathon";
+import TeamDetails from "../HomePages/HomePage/Navbar/Hackathons/team-details/TeamDetails";
 
 
 const router = createBrowserRouter([
@@ -46,7 +48,8 @@ const router = createBrowserRouter([
           },
           {
             path:"hackathons",
-            element:<Hackathon/>
+            element:<Hackathon/>,
+            
           },
           {
             path:"messages",
@@ -55,6 +58,14 @@ const router = createBrowserRouter([
           {
             path:"edit-profile",
             element:<EditProfile/>
+        },
+        {
+          path:":hackathonName",
+          element:<UpcomingHackathon/>
+        },
+        {
+          path:"team-details",
+          element:<TeamDetails/>
         },
         ]
       },
@@ -75,7 +86,9 @@ const router = createBrowserRouter([
           <Setpassword/>
       
       ),
+
     },
+
   
 
     ],

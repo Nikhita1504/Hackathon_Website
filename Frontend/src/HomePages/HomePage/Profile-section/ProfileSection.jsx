@@ -10,38 +10,37 @@ const ProfileSection = () => {
     useEffect( () => {
    
         const queryParams = new URLSearchParams(window.location.search);
-   console.log(window.location.search); 
-   let token = queryParams.get('token');
-   if(token){
-    console.log(token);
-    sessionStorage.setItem('token' , token);
-   }else{
-    token = sessionStorage.getItem('token' , token)
-   }
-  
-      const user= jwtDecode(token)
-        const fetchuserdata = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3000/home/userdata/${user.email}`)
-
-                setuserdata(response.data);
-                setload(false);
-
-                fetchuserdata();
-            } catch (error) {
-                console.error("Invalid token:", error);
-                setload(false);  // stop loading if the token is invalid
-            }
-        } else {
-            console.error("No token found.");
-            setload(false);  // stop loading if no token is found
+        console.log(window.location.search); 
+        let token = queryParams.get('token');
+        if(token){
+         console.log(token);
+         sessionStorage.setItem('token' , token);
+        }else{
+         token = sessionStorage.getItem('token' , token)
         }
-    }, []);
-
-    if (load) {
-        return <p>Loading...</p>;
-    }
-
+       
+           const user= jwtDecode(token)
+             const fetchuserdata = async () => {
+                 try {
+                     const response = await axios.get(`http://localhost:3000/home/userdata/${user.email}`)
+     
+                     setuserdata(response.data);
+                     setload(false);
+     
+                    
+                 } catch (error) {
+                     console.log(error)
+                     setload(false);
+                 }
+             }
+             fetchuserdata();
+     
+         }, [])
+       
+     
+         if (load) {
+             return <p>Loading</p>
+         }
     return (
         <div className="container">
             <div className='profile-container'>

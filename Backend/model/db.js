@@ -67,16 +67,33 @@ const userSchema = new mongoose.Schema({
 );
 
 const hackathonschema = new mongoose.Schema({
-  name:String,
-  description: String,
-  startDate: Date,
-  endDate: Date,
-  maxTeamSize: Number,
-  minTeamSize: Number,
-  status: String, // upcoming/ongoing/closed
-  participants:[{type:mongoose.Schema.ObjectId , ref:"Team"}]
-}
-);
+  name: { type: String, required: true },
+  logo: { type: String, required: true },
+  startDate: { type: Date, required: true }, // Flattened date structure
+  endDate: { type: Date, required: true },
+  status: { type: String, default: 'upcoming' },
+  location: { type: String, required: true },
+  description: { type: String, required: true },
+  eligibility: { type: String, required: true },
+  teamSize: {
+    min: { type: Number, required: true },
+    max: { type: Number, required: true },
+  },
+  registration: {
+    open: { type: Boolean, default: true },
+    deadline: { type: Date, required: true },
+  },
+  prizes: [{
+    name: { type: String, required: true },  
+    money: { type: Number, required: true }, 
+  }],
+  organizers: [{
+    name: { type: String, required: true },  
+  }],
+  participants: [{ type: mongoose.Schema.ObjectId, ref: "Team" }]
+}, { timestamps: true });
+
+
 
 const teamschema = new mongoose.Schema({
   teamName: String,
