@@ -19,7 +19,7 @@ const Navbar = () => {
     <>
       <div className='nav-container'>
         <div>
-          logo
+       <h3>Logo</h3>
         </div>
         <div className="navbar">
           <ul>
