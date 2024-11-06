@@ -15,6 +15,7 @@ import CreateProfile from "./../AuthPages/SignupPage/CreateProfile/CreateProfile
 import Setpassword from "./../AuthPages/SignupPage/SetPassword/setpassword"
 import UpcomingHackathon from "../HomePages/HomePage/Navbar/Hackathons/listed_hackathons/UpcomingHackathon";
 import TeamDetails from "../HomePages/HomePage/Navbar/Hackathons/team-details/TeamDetails";
+import AddMember from "../HomePages/HomePage/Navbar/Hackathons/team-details/addmember/AddMember";
 
 
 const router = createBrowserRouter([
@@ -60,12 +61,17 @@ const router = createBrowserRouter([
             element:<EditProfile/>
         },
         {
-          path:":hackathonName",
+          path:"hackathons/:hackathonName",
           element:<UpcomingHackathon/>
         },
         {
-          path:"team-details",
-          element:<TeamDetails/>
+          path:"hackathons/:hackathonName/team-details",
+          element:<TeamDetails/>,
+          
+        },
+        {
+          path: "hackathons/:hackathonName/team-details/add-member",  // Define AddMember as a sibling route
+          element: <AddMember />
         },
         ]
       },

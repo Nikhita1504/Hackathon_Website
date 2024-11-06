@@ -1,44 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styles from './TeamDetails.module.css';
 import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
+import HackathonContext from '../../../../../Context/HackathonContext';
 
 const TeamDetails = () => {
-    const [modal, setModal] = useState(false);
-    const [searchname, setSearchname] = useState("");
-    const [recommendations, setRecommendations] = useState([]);
 
-    const handleAddMembers = (e) => {
-        e.preventDefault(); 
-        setModal(true); 
-    };
+    const location = useLocation();
+    const hackathonName = location.state?.hackathonName;
+    console.log(hackathonName)
 
-    const closeModal = () => {
-        setModal(false); 
-        setRecommendations([]); 
-    };
+    const navigate = useNavigate();
 
-    const handleChange = async (e) => {
-        const name = e.target.value;
-        setSearchname(name);
-
-        if (name.length > 2) {
-            try {
-                const response = await axios.get(`http://localhost:3000/add-member/search/?name=${name}`);
-                setRecommendations(response.data);
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
-            setRecommendations([]); 
-        }
-    };
-
-    const handleInvite=()=>{
-alert("invite sent ")
+    const handleNavigate = () => {
+        navigate(`/home/hackathons/${hackathonName}/team-details/add-member`,{ state: { hackathonName } })
     }
-    
 
-    return (
+     return (
         <div className={styles.bigcontainer}>
             <div className={styles.container}>
                 <h2 className={styles.heading}>Enroll Your Team for the Hackathon</h2>
@@ -54,36 +32,10 @@ alert("invite sent ")
                         <label htmlFor="yourName">Your Name</label>
                         <input type="text" id="yourName" placeholder="Enter your name" />
                     </div>
-                    <button type="submit" onClick={handleAddMembers} className={styles.button}>Add Members</button>
+                    <button type="submit" onClick={handleNavigate} className={styles.button}>Next</button>
                 </form>
 
-                {modal && (
-                    <>
-                        <div className={styles.modalBackground} onClick={closeModal}></div>
-                        <div className={styles.modalOverlay}>
-                            <button className={styles.crossBtn} onClick={closeModal}>&times;</button>
-                            <p>Invite members to your team</p>
-                            <input
-                                type="text"
-                                placeholder="Member name"
-                                value={searchname}
-                                onChange={handleChange}
-                            />
-                            <div className={styles.recommendationlist}>
-                                {recommendations.length > 0 ? (
-                                    recommendations.map((item) => (
-                                        <div className={styles.item} key={item._id}>
-                                            <span>{item.name}</span>
-                                            <button onClick={handleInvite}>Invite</button>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <p>No users found</p>
-                                )}
-                            </div>
-                        </div>
-                    </>
-                )}
+
             </div>
         </div>
     );
