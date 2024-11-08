@@ -1,13 +1,13 @@
-/* Main container styling */
+
 .bigcontainer {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
-    /* background: linear-gradient(135deg, #e0f7fa, #80deea); */
+margin-top: 120px;
+    /* background-color: #004d40; */
+
 }
 
-/* Form container styling */
+
 .container {
     width: 100%;
     max-width: 600px;
@@ -23,7 +23,7 @@
     font-size: 26px;
     margin-bottom: 15px;
     font-weight: bold;
-    color: #00796b;
+    color: #2C3E50;
 }
 
 .description {
@@ -68,7 +68,7 @@
 
 /* Button styling */
 .button {
-    background-color: #00796b;
+    background-color: #2C3E50;
     color: #fff;
     padding: 12px;
     font-size: 16px;
@@ -79,12 +79,12 @@
 }
 
 .button:hover {
-    background-color: #004d40;
+    background-color: #1b2732;
     transform: translateY(-1px);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Modal Background */
+
 .modalBackground {
     position: fixed;
     top: 0;
@@ -95,7 +95,7 @@
     z-index: 999;
 }
 
-/* Modal Overlay */
+
 .modalOverlay {
     position: fixed;
     top: 50%;
@@ -110,8 +110,20 @@
     z-index: 1000;
     animation: fadeIn 0.3s ease-in-out;
 }
+.modalOverlay input{
+    padding: 12px;
+    font-size: 15px;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.modalOverlay input:focus {
+    border-color: #00796b;
+    box-shadow: 0 0 8px rgba(0, 121, 107, 0.3);
+}
 
-/* Close Button */
+
 .crossBtn {
     position: absolute;
     right: 15px;
@@ -128,7 +140,7 @@
     color: #004d40;
 }
 
-/* Recommendation List */
+
 .recommendationlist {
     display: flex;
     flex-direction: column;
@@ -149,6 +161,20 @@
     border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
+}
+
+.item div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.item .itemborder {
+    font-size: 15px;
+    font-weight: bold;
+    padding-left: 10px;
+    border-left: 1px solid black; 
+    color: #004d40;
 }
 
 .item:hover {
@@ -175,7 +201,7 @@
     background-color: #00796b;
 }
 
-/* Modal animations */
+
 @keyframes fadeIn {
     from {
         opacity: 0;

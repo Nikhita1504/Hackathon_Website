@@ -6,7 +6,7 @@ import Select from "react-select";
 import { handleError, handleSucess } from "../../../Utils/utils";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import skillOptions from '../../../Utils/Skillsoption'
+import skillOptions from '../../../utils/Skillsoption'
 
 const currentYear = new Date().getFullYear();
 const graduationYears = [
