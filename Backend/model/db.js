@@ -94,21 +94,46 @@ const hackathonschema = new mongoose.Schema({
 }, { timestamps: true });
 
 
+const teamSchema = new mongoose.Schema({
+  teamName: { 
+    type: String, 
+    required: true 
+  },
+  members: [
+    { 
+      user: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Usermodel', 
+        required: true 
+      },
+      role: { 
+        type: String, 
+        enum: ['leader', 'member'], 
+        default: 'member' 
+      }
+    }
+  ],
+  // teamId: { 
+  //   type: String, 
+  //   unique: true,
+  //   required: true 
+  // },
+  hackathonId: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Hackathon',  // assuming 'Hackathon' is your model name for the Hackathon collection
+    required: true 
+  }
+}, { 
+  timestamps: true // Automatically adds `createdAt` and `updatedAt`
+});
 
-const teamschema = new mongoose.Schema({
-  teamName: String,
-  members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'WebsiteUser' }],
-  leaderId: { type: mongoose.Schema.Types.ObjectId, ref: 'WebsiteUser' },
-  hackathonId: { type: mongoose.Schema.Types.ObjectId, ref: 'Hackathon' },
-  createdAt: Date,
-})
 
 
 
 
 const UserModel = mongoose.model("UserModel" , userSchema)
 const HackathonModel = mongoose.model("Hackathon",hackathonschema)
-const TeamModel = mongoose.model("Team" ,teamschema )
+const TeamModel = mongoose.model("Team" ,teamSchema )
 
 module.exports= {UserModel , HackathonModel , TeamModel};
 

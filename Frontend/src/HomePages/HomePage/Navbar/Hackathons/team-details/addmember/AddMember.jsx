@@ -14,14 +14,12 @@ const AddMember = () => {
     const currentYear = new Date().getFullYear();
     const graduationYears = [currentYear, currentYear + 1, currentYear + 2, currentYear + 3];
 
-    const [filters, setFilters] = useState({
-        college: [],
-        degree: [],
-        GraduationYear: [],
-        skills: [],
-    });
 
-    // Fetch hackathon details
+    const [college, setcollege] = useState([])
+    const [degree, setdegree] = useState([])
+    const [GraduationYear, setGraduationYear] = useState([])
+
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -34,74 +32,20 @@ const AddMember = () => {
         fetchData();
     }, [hackathonName, setHackathonDetails]);
 
+    const handleCollegeChange = (e) => {
 
-    const handleCheckboxChange = (category, value) => {
-        setFilters((prevFilters) => {
-            const categoryValues = prevFilters[category];
-            const isChecked = categoryValues.includes(value);
-            const newValues = isChecked
-                ? categoryValues.filter((item) => item !== value)
-                : [...categoryValues, value];
+        
+    }
 
-            return { ...prevFilters, [category]: newValues };
-        });
-    };
-
-    const createFilterQuery = () => {
-        const filterQuery = Object.entries(filters)
-            .map(([key, values]) => values.map((value) => `${key}=${encodeURIComponent(value)}`).join("&"))
-            .filter(Boolean)
-            .join("&");
-        return filterQuery;
-    };
 
     const handleReset = () => {
-        setFilters({ college: [], degree: [], GraduationYear: [], skills: [] });
+        setcollege([]);
+        setdegree([]);
+        setGraduationYear([]);
     };
 
-    const handleSearch = async (e) => {
-        const name = e.target.value;
-        setSearchname(name);
 
-        if (name.length > 2) {
-            try {
-                const filterQuery = createFilterQuery();
-                const response = await axios.get(
-                    `http://localhost:3000/add-member/search?name=${name}&${filterQuery}`
-                );
-                setRecommendations(response.data);
-            } catch (error) {
-                console.log(error);
-            }
-        } else {
-            setRecommendations([]);
-        }
-    };
 
-    const handleInvite = () => {
-        alert("Invite sent");
-    };
-
-    const filterOptions = {
-        college: [
-            { value: 'LNCT', label: 'LNCT' },
-            { value: 'LNCTS', label: 'LNCTS' },
-            { value: 'LNCTE', label: 'LNCTE' },
-        ],
-        degree: [
-            { value: 'CSE', label: 'CSE' },
-            { value: 'AIML', label: 'AIML' },
-            { value: 'AIDS', label: 'AIDS' },
-            { value: 'IOT', label: 'IOT' },
-            { value: 'EE', label: 'EE' },
-            { value: 'EC', label: 'EC' },
-        ],
-        GraduationYear: graduationYears.map((year) => ({ value: year, label: year })),
-        skills: [
-            { value: 'JavaScript', label: 'JavaScript' },
-            { value: 'Python', label: 'Python' },
-        ],
-    };
 
     return (
         <>
@@ -135,22 +79,47 @@ const AddMember = () => {
                             <button onClick={handleReset}>Reset</button>
                         </div>
 
-                        {Object.keys(filterOptions).map((category) => (
-                            <div key={category} className={styles.filterCategory}>
-                                <p>{category.charAt(0).toUpperCase() + category.slice(1)}</p>
-                                {filterOptions[category].map((option) => (
-                                    <label key={option.value}>
-                                        <input
-                                            type="checkbox"
-                                            value={option.value}
-                                            checked={filters[category].includes(option.value)}
-                                            onChange={() => handleCheckboxChange(category, option.value)}
-                                        />
-                                        {option.label}
-                                    </label>
-                                ))}
-                            </div>
-                        ))}
+                        <p>Colleges</p>
+                        {
+                            ["LNCT", "LNCTS", "LNCTE"].map((value) => (
+                                <div className={styles.filterCategory}>
+
+                                    <label>
+                                        <input type="checkbox" name="" value={college}
+                                            onChange={handleCollegeChange}
+                                            id="" />
+                                        {value}</label>
+                                </div>
+                            ))
+                        }
+                        <p>Branches</p>
+                        {
+                            ["CSE", "AIML", "AIDS", "IOT", "ME", "EC", "EE"].map((value) => (
+                                <div className={styles.filterCategory}>
+
+                                    <label>
+                                        <input type="checkbox" name="" value={degree}
+                                            onChange={(e) => setdegree(e.target.value)}
+
+                                            id="" />
+                                        {value}</label>
+                                </div>
+                            ))
+                        }
+                        <p>Year</p>
+                        {
+                            graduationYears.map((value) => (
+                                <div className={styles.filterCategory}>
+
+                                    <label>
+                                        <input type="checkbox" name="" value={GraduationYear}
+                                            onChange={(e) => setGraduationYear(e.target.value)}
+
+                                            id="" />
+                                        {value}</label>
+                                </div>
+                            ))
+                        }
                     </div>
 
                     <div className={styles.searchContainer}>
@@ -159,7 +128,7 @@ const AddMember = () => {
                                 type="text"
                                 placeholder="Search team members..."
                                 value={searchname}
-                                onChange={handleSearch}
+                                // onChange={handleSearch}
                                 className={styles.searchInput}
                             />
                         </div>
