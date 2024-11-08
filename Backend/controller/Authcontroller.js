@@ -62,11 +62,12 @@ const login = async (req, res) => {
         .json({ message: "Invalid email or password", success: false });
     }
     const token = jwt.sign(
-      { email, UserId: user._id, isAdmin: user.isAdmin },
+      {user},
+      // { email, name:user.name, UserId: user._id, isAdmin: user.isAdmin },
       process.env.SecretKey,
     
     );
-
+    console.log(user)
     res
       .status(200)
       .json({ message: "Login successful", success: true, jwt_token: token });
