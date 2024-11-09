@@ -113,11 +113,6 @@ const teamSchema = new mongoose.Schema({
       }
     }
   ],
-  // teamId: { 
-  //   type: String, 
-  //   unique: true,
-  //   required: true 
-  // },
   hackathonId: { 
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Hackathon',  // assuming 'Hackathon' is your model name for the Hackathon collection

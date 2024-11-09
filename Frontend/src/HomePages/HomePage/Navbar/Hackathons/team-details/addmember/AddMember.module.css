@@ -96,12 +96,15 @@
 
     margin-top: 10px;
     width: 67%;
+overflow: scroll;
+
 }
 
 .searchBar {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    position: sticky;
 }
 
 .searchInput {
@@ -198,6 +201,7 @@
     margin-top: 10px;
     align-items: center;
     padding: 10px;
+
 }
 
 .item {

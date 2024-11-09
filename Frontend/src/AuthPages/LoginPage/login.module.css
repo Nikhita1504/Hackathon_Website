@@ -1,65 +1,106 @@
+
 .body {
   height: 100vh;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #f0f2f5;
 }
 
-.container {
+
+.loginbanner {
+  display: flex;
+  width: 80%;
+  max-width: 1000px;
+  height: 80%;
   background-color: #fff;
-  padding: 32px 48px;
   border-radius: 10px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 0 20px;
+}
+
+
+.loginbannerVideo {
+  flex: 1.5;
+  position: relative;
+  overflow: hidden;
+}
+
+
+.video {
   width: 100%;
-  max-width: 400px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  /* Remove position and top properties */
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.container {
+  flex: 1;
+  padding: 40px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
 }
 
 .header {
-  margin-bottom: 40px;
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.subheader {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 30px;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
+  width: 80%;
 }
 
 .input {
   width: 100%;
-  font-size: 21px;
-  padding: 10px;
-  border: none;
+  font-size: 16px;
+  padding: 12px;
+  border: 1px solid #ccc;
   outline: none;
-  border-bottom: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .input::placeholder {
-  font-size: 12px;
+  font-size: 14px;
   font-style: italic;
   color: #999;
 }
 
 .button {
-  background-color: #6f42c1;
+  background-color: #0d6efd;
   border: none;
-  font-size: 20px;
+  font-size: 18px;
   color: white;
   border-radius: 5px;
-  padding: 10px;
+  padding: 12px;
   cursor: pointer;
-  margin: 10px 0;
+  margin-top: 10px;
   transition: background-color 0.3s;
 }
 
 .button:hover {
-  background-color: #5a32a8;
+  background-color: #0056b3;
 }
 
 .link {
-  color: #007bff;
+  color: #0d6efd;
   text-decoration: none;
+  font-weight: bold;
+  margin-left: 5px;
 }
 
 .link:hover {
@@ -69,4 +110,29 @@
 .span {
   text-align: center;
   font-size: 14px;
+  color: #666;
+  margin-top: 15px;
+}
+
+.socialLoginContainer {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.socialIcon {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f2f5;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.socialIcon:hover {
+  background-color: #e2e6ea;
 }

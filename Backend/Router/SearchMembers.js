@@ -4,44 +4,29 @@ const SearchMembers = express.Router();
 
 SearchMembers.get("/search", async (req, res) => {
   try {
-    const { name, college, degree, GraduationYear, skills } = req.query;
-
-
+    const { name, college, degree, GraduationYear } = req.query;
     const query = {};
 
-
-    console.log("Received query params:", req.query);
-
-
     if (name) {
-      query.name = { $regex: name, $options: "i" }; // Case-insensitive search for name
+      query.name = { $regex: name, $options: "i" }; 
     }
-
 
     if (college) {
       query.college = { $in: Array.isArray(college) ? college : [college] };
     }
 
-
     if (degree) {
       query.degree = { $in: Array.isArray(degree) ? degree : [degree] };
     }
 
-
     if (GraduationYear) {
-      query.GraduationYear = { $in: Array.isArray(GraduationYear) ? graduationYear.map(Number) : [Number(graduationYear)] };
+      query.GraduationYear = { $in: Array.isArray(GraduationYear) ? GraduationYear : [GraduationYear] };
     }
 
-
-    if (skills) {
-      query.skills = { $in: Array.isArray(skills) ? skills : [skills] };
-    }
-
-
-    console.log("Constructed query:", query);
+    console.log(query.college)
+    console.log(query)
 
     const suggestions = await UserModel.find(query);
-
 
     res.json(suggestions);
   } catch (error) {

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styles from './AddMember.module.css';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import HackathonContext from '../../../../../../Context/HackathonContext';
 
 const AddMember = () => {
@@ -14,11 +14,9 @@ const AddMember = () => {
     const currentYear = new Date().getFullYear();
     const graduationYears = [currentYear, currentYear + 1, currentYear + 2, currentYear + 3];
 
-
-    const [college, setcollege] = useState([])
-    const [degree, setdegree] = useState([])
-    const [GraduationYear, setGraduationYear] = useState([])
-
+    const [college, setCollege] = useState([]);
+    const [degree, setDegree] = useState([]);
+    const [GraduationYear, setGraduationYear] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,19 +31,68 @@ const AddMember = () => {
     }, [hackathonName, setHackathonDetails]);
 
     const handleCollegeChange = (e) => {
-
-        
-    }
-
-
-    const handleReset = () => {
-        setcollege([]);
-        setdegree([]);
-        setGraduationYear([]);
+        const { value, checked } = e.target;
+        console.log(value)
+        console.log(checked)
+        setCollege((prev) =>
+            checked ? [...prev, value] : prev.filter((college) => college !== value)
+        );
+    };
+    const handleDegreeChange = (e) => {
+        const { value, checked } = e.target;
+        setDegree((prev) =>
+            checked ? [...prev, value] : prev.filter((deg) => deg !== value)
+        );
     };
 
+    const handleYearChange = (e) => {
+        const { value, checked } = e.target;
+        setGraduationYear((prev) =>
+            checked ? [...prev, value] : prev.filter((year) => year !== value)
+        );
+    };
 
+    const handleReset = () => {
+        setCollege([]);
+        setDegree([]);
+        setGraduationYear([]);
+        setSearchname("");
+        setRecommendations([]);
+    };
 
+    const fetchRecommendations = async () => {
+        try {
+            const response = await axios.get("http://localhost:3000/add-member/search", {
+                params: {
+                    name: searchname.length > 2 ? searchname : undefined,
+                    college: college.length ? college : undefined,
+                    degree: degree.length ? degree : undefined,
+                    GraduationYear: GraduationYear.length ? GraduationYear : undefined,
+                },
+            });
+            setRecommendations(response.data);
+
+        } catch (error) {
+            console.error("Error fetching recommendations:", error);
+        }
+    };
+
+    useEffect(() => {
+        if (searchname.length > 2 || college.length || degree.length || GraduationYear.length) {
+            fetchRecommendations();
+        } else {
+            setRecommendations([]);
+        }
+    }, [searchname, college, degree, GraduationYear]);
+
+    const handleInvite = () => {
+        alert("invite sent");
+    };
+
+    const navigate = useNavigate();
+    const handleNavigateBack = () => {
+        navigate(`/home/hackathons/${hackathonName}/team-details`);
+    };
 
     return (
         <>
@@ -80,46 +127,47 @@ const AddMember = () => {
                         </div>
 
                         <p>Colleges</p>
-                        {
-                            ["LNCT", "LNCTS", "LNCTE"].map((value) => (
-                                <div className={styles.filterCategory}>
-
-                                    <label>
-                                        <input type="checkbox" name="" value={college}
-                                            onChange={handleCollegeChange}
-                                            id="" />
-                                        {value}</label>
-                                </div>
-                            ))
-                        }
+                        {["LNCT", "LNCTS", "LNCTE"].map((value) => (
+                            <div className={styles.filterCategory} key={value}>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        value={value}
+                                        checked={college.includes(value)}
+                                        onChange={handleCollegeChange}
+                                    />
+                                    {value}
+                                </label>
+                            </div>
+                        ))}
                         <p>Branches</p>
-                        {
-                            ["CSE", "AIML", "AIDS", "IOT", "ME", "EC", "EE"].map((value) => (
-                                <div className={styles.filterCategory}>
-
-                                    <label>
-                                        <input type="checkbox" name="" value={degree}
-                                            onChange={(e) => setdegree(e.target.value)}
-
-                                            id="" />
-                                        {value}</label>
-                                </div>
-                            ))
-                        }
+                        {["CSE", "AIML", "AIDS", "IOT", "ME", "EC", "EE"].map((value) => (
+                            <div className={styles.filterCategory} key={value}>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        value={value}
+                                        checked={degree.includes(value)}
+                                        onChange={handleDegreeChange}
+                                    />
+                                    {value}
+                                </label>
+                            </div>
+                        ))}
                         <p>Year</p>
-                        {
-                            graduationYears.map((value) => (
-                                <div className={styles.filterCategory}>
-
-                                    <label>
-                                        <input type="checkbox" name="" value={GraduationYear}
-                                            onChange={(e) => setGraduationYear(e.target.value)}
-
-                                            id="" />
-                                        {value}</label>
-                                </div>
-                            ))
-                        }
+                        {graduationYears.map((value) => (
+                            <div className={styles.filterCategory} key={value}>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        value={value}
+                                        checked={GraduationYear.includes(value)}
+                                        onChange={handleYearChange}
+                                    />
+                                    {value}
+                                </label>
+                            </div>
+                        ))}
                     </div>
 
                     <div className={styles.searchContainer}>
@@ -128,7 +176,7 @@ const AddMember = () => {
                                 type="text"
                                 placeholder="Search team members..."
                                 value={searchname}
-                                // onChange={handleSearch}
+                                onChange={(e) => setSearchname(e.target.value)}
                                 className={styles.searchInput}
                             />
                         </div>
@@ -154,7 +202,9 @@ const AddMember = () => {
             </div>
 
             <div className={styles.buttonContainer}>
-                <button className={styles.backButton}>Back</button>
+                <button className={styles.backButton} onClick={handleNavigateBack}>
+                    Back
+                </button>
                 <button className={styles.completeRegistrationButton}>Complete Registration</button>
             </div>
         </>
