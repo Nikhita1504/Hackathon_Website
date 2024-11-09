@@ -3,16 +3,40 @@ import styles from './upcominghackathons.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import HackathonContext from '../../../../../Context/HackathonContext';
+import {jwtDecode} from 'jwt-decode'
 
 const UpcomingHackathon = () => {
     const { hackathonDetails, setHackathonDetails } = useContext(HackathonContext);
-    // console.log(hackathonDetails)
+    
 
     const { hackathonName } = useParams(); 
     const navigate = useNavigate();
 
-    const handleNavigate = (hackathonName,e) => {
-        navigate(`/home/hackathons/${hackathonName}/team-details`, { state: { hackathonName } }); 
+    const handleNavigate = async (hackathonName) => {
+        try{
+            const token = sessionStorage.getItem('token');
+            const payload = jwtDecode(token);
+            const URL = `http://localhost:3000/enroll/checkenroll/${payload.user.email}/${hackathonName}`;
+            const response = await fetch(URL , {
+                method:"GET",
+                headers: {
+                    "content-Type": "application/json",
+                  },
+            });
+            const Response = await response.json()
+            console.log(Response)
+            if(Response.found){
+                navigate(`/home/hackathons/${hackathonName}/team-details/add-member`, {
+                    state: { hackathonName },
+                  });
+            }else{
+                navigate(`/home/hackathons/${hackathonName}/team-details`, { state: { hackathonName } }); 
+            }
+        } catch(error){
+            console.log(error)
+        }
+        
+       
     };
 
 

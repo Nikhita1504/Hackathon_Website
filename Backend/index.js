@@ -11,6 +11,7 @@ const editprofilerouter = require("./Router/editprofilerouter");
 const hackathondetails = require("./Router/hackathondetails");
 const SearchMembers = require("./Router/SearchMembers");
 const TeamDetails = require("./Router/TeamDetails");
+const CheckEnrollRouter = require("./Router/CheckEnrollRouter")
 require("dotenv").config();
 require("./model/db")
 
@@ -26,6 +27,7 @@ app.use("/home",homerouter)
 app.use("/hackathon",hackathondetails)
 app.use("/add-member",SearchMembers)
 app.use("/team",TeamDetails)
+app.use("/enroll",CheckEnrollRouter)
 
 
 // app.use("/home/edit-profile",editprofilerouter)
