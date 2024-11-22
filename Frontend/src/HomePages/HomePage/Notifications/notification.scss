@@ -1,8 +1,13 @@
 .not-container {
     height: 100vh;
-    padding: 0px 20px;
+    overflow-y: auto;
   
-   
+
+    .single-Notification-container{
+   border: 1px solid black;
+   margin-bottom: 10px;
+  padding: 5px;
+    }
   
     .light-line {
       border: none;

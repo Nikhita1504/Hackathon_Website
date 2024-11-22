@@ -6,14 +6,24 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Usercontext from "../../Context/Usercontext";
 import SocketContext from "../../Context/SocketContext";
+import axios from "axios";
 
 function Login() {
-  const {loggedIn , SetloggedIn} = useContext(SocketContext)
+  const { SetloggedIn} = useContext(SocketContext)
   const{SetUserinfo} = useContext(Usercontext)
   const [logininfo, Setlogininfo] = useState({
     email:"",
     password: "",
   });
+
+  const FetchUserDetails = async() =>{
+    try{
+    const response = await axios.get(`http://localhost:3000/home/userdata/${logininfo.email}`);
+    SetUserinfo(response.data.userdata)
+    }catch(error){
+     console.log("error in fetching user details")
+    }
+  }
 
   const navigate = useNavigate();
 
@@ -43,7 +53,8 @@ function Login() {
       if (success) {
         
         sessionStorage.setItem("token", jwt_token);
-        SetUserinfo({email:logininfo.email});
+        FetchUserDetails();
+        
    
        try {
         SetloggedIn(true);
