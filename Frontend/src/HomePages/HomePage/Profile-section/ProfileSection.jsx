@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react';
 import "./ProfileSection.scss";
 import {jwtDecode }from 'jwt-decode';  // jwtDecode should not be in curly braces
 import axios from 'axios';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileSection = () => {
     const [modal, setopenmodal] = useState(false);
+    const navigate=useNavigate()
     const [load, setload] = useState(true);  // start with loading set to true
     const [userdata, setuserdata] = useState({});
     useEffect( () => {
@@ -37,6 +41,10 @@ const ProfileSection = () => {
              fetchuserdata();
      
          }, [])
+
+         const handleEdit=()=>{
+            navigate('/home/edit-profile');
+         }
        
      
          if (load) {
@@ -45,6 +53,8 @@ const ProfileSection = () => {
     return (
         <div className="container">
             <div className='profile-container'>
+            <FontAwesomeIcon className='edit-icon' onClick={handleEdit} icon={faPenToSquare} />
+
                 <div className="profile-img">
                     <img src="/user.png" alt="" />
                 </div>

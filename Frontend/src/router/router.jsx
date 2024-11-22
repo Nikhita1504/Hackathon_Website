@@ -13,7 +13,7 @@ import EditProfile from "./../HomePages/HomePage/Profile-section/EditProfile/Edi
 import {Protected} from "./../AuthPages/AuthComponent/Protected"
 import CreateProfile from "./../AuthPages/SignupPage/CreateProfile/CreateProfile";
 import Setpassword from "./../AuthPages/SignupPage/SetPassword/setpassword"
-import UpcomingHackathon from "../HomePages/HomePage/Navbar/Hackathons/listed_hackathons/UpcomingHackathon";
+import HackathonDetails from "../HomePages/HomePage/Navbar/Hackathons/hackathon_details/HackathonDetails";
 import TeamDetails from "../HomePages/HomePage/Navbar/Hackathons/team-details/TeamDetails";
 import AddMember from "../HomePages/HomePage/Navbar/Hackathons/team-details/addmember/AddMember";
 
@@ -62,7 +62,7 @@ const router = createBrowserRouter([
         },
         {
           path:"hackathons/:hackathonName",
-          element:<UpcomingHackathon/>
+          element:<HackathonDetails/>
         },
         {
           path:"hackathons/:hackathonName/team-details",

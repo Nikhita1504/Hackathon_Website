@@ -41,10 +41,11 @@ const EditProfile = () => {
     const token = sessionStorage.getItem("token");
     const user = jwtDecode(token);
 
+
     const fetchuserdata = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/home/userdata/${user.email}`
+          `http://localhost:3000/home/userdata/${user.user.email}`
         );
         SetUserinfo(response.data);
       } catch (error) {

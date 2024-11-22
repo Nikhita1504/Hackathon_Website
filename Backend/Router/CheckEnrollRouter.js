@@ -14,14 +14,15 @@ CheckEnrollRouter.get(
         hackathonId: hackthon._id,
         "members.user": user._id,
     });
-      console.log(team);
+
+
       if (!team) {
         return res.json({
           message: "user not found in any team",
           found: false,
         });
       }
-      return res.json({ message: "user found in a team", found: true });
+      return res.json({ message: "user found in a team", found: true ,team});
     } catch (error) {
       return res.status(500).json({ message: "internal server eroor", error });
     }
@@ -29,3 +30,4 @@ CheckEnrollRouter.get(
 );
 
 module.exports = CheckEnrollRouter;
+

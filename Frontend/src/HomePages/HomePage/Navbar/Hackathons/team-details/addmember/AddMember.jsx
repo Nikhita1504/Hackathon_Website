@@ -3,13 +3,35 @@ import styles from './AddMember.module.css';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import HackathonContext from '../../../../../../Context/HackathonContext';
+import skillOptions from '../../../../../../utils/Skillsoption';
+import { io } from "socket.io-client";
 
 const AddMember = () => {
     const [recommendations, setRecommendations] = useState([]);
+    const [teamMembers, setTeamMembers] = useState([]);
     const location = useLocation();
+    const teamData = location.state?.teamData;
     const hackathonName = location.state?.hackathonName;
     const { hackathonDetails, setHackathonDetails } = useContext(HackathonContext);
     const [searchname, setSearchname] = useState("");
+
+    const socket=io("http://localhost:3000/")
+    useEffect(() => {
+        // Emit event to server when component mounts
+        socket.emit("addMemberRendered");
+    
+        // Clean up the connection when component unmounts
+        return () => {
+          socket.disconnect();
+        };
+      }, []);
+
+
+    const [showColleges, setShowColleges] = useState(false);
+    const [showBranches, setShowBranches] = useState(false);
+    const [showYears, setShowYears] = useState(false);
+    const [showSkills, setShowSkills] = useState(false);
+
 
     const currentYear = new Date().getFullYear();
     const graduationYears = [currentYear, currentYear + 1, currentYear + 2, currentYear + 3];
@@ -17,7 +39,9 @@ const AddMember = () => {
     const [college, setCollege] = useState([]);
     const [degree, setDegree] = useState([]);
     const [GraduationYear, setGraduationYear] = useState([]);
+    const [Skills, setSkills] = useState([]);
 
+    // Fetch hackathon details
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -30,14 +54,38 @@ const AddMember = () => {
         fetchData();
     }, [hackathonName, setHackathonDetails]);
 
+
+    useEffect(() => {
+        const fetchTeamData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3000/team/${teamData._id}`);
+                // console.log(response.data.members)
+                setTeamMembers(response.data.members);
+            } catch (error) {
+                console.error("Error fetching team data:", error);
+            }
+        };
+
+
+        fetchTeamData();
+        const intervalId = setInterval(fetchTeamData, 5000);
+
+
+        return () => clearInterval(intervalId);
+    }, [teamData._id]);
+
+
+
+
+
+    // Filter handlers
     const handleCollegeChange = (e) => {
         const { value, checked } = e.target;
-        console.log(value)
-        console.log(checked)
         setCollege((prev) =>
             checked ? [...prev, value] : prev.filter((college) => college !== value)
         );
     };
+
     const handleDegreeChange = (e) => {
         const { value, checked } = e.target;
         setDegree((prev) =>
@@ -52,10 +100,19 @@ const AddMember = () => {
         );
     };
 
+    const handleSkillChange = (e) => {
+        const { value, checked } = e.target;
+        console.log(value);
+        setSkills((prev) =>
+            checked ? [...prev, value] : prev.filter((skill) => skill !== value)
+        );
+    };
+
     const handleReset = () => {
         setCollege([]);
         setDegree([]);
         setGraduationYear([]);
+        setSkills([]);
         setSearchname("");
         setRecommendations([]);
     };
@@ -68,25 +125,26 @@ const AddMember = () => {
                     college: college.length ? college : undefined,
                     degree: degree.length ? degree : undefined,
                     GraduationYear: GraduationYear.length ? GraduationYear : undefined,
+                    skills: Skills.length ? Skills : undefined
                 },
             });
             setRecommendations(response.data);
-
         } catch (error) {
             console.error("Error fetching recommendations:", error);
         }
     };
 
+
     useEffect(() => {
-        if (searchname.length > 2 || college.length || degree.length || GraduationYear.length) {
+        if (searchname.length > 2 || college.length || degree.length || GraduationYear.length || Skills.length) {
             fetchRecommendations();
         } else {
             setRecommendations([]);
         }
-    }, [searchname, college, degree, GraduationYear]);
+    }, [searchname, college, degree, GraduationYear, Skills]);
 
     const handleInvite = () => {
-        alert("invite sent");
+        alert("Invite sent");
     };
 
     const navigate = useNavigate();
@@ -99,23 +157,47 @@ const AddMember = () => {
             <div className={styles.container}>
                 <div className={styles.leftPanel}>
                     <h2 className={styles.hackathonTitle}>{hackathonDetails.name}</h2>
-                    <p className={styles.institution}>Indian Institute of Technology (IIT), Gandhinagar</p>
+                    <p className={styles.institution}>
+                        {hackathonDetails?.organizers?.[0]?.name || "N/A"}
+                    </p>
+
 
                     <div className={styles.teamSection}>
                         <div className={styles.teamHeader}>
                             <h3 className={styles.teamName}>
-                                Team Name: <span className={styles.teamNameHighlight}>Tech Savvies</span>
+                                Team Name: <span className={styles.teamNameHighlight}>{teamData.teamName}</span>
                             </h3>
-                            <p className={styles.memberCount}>Teammates: 1/4</p>
+                            <p className={styles.memberCount}>Teammates: {teamMembers.length}/{hackathonDetails?.teamSize?.max || 'N/A'}</p>
                         </div>
-                        <p className={styles.memberInfo}>You can add up to 3 additional members</p>
-                        <div className={styles.memberCard}>
-                            <div className={styles.memberAvatar}>N</div>
-                            <div>
-                                <p className={styles.memberName}>Nikhita Das</p>
-                                <p className={styles.memberContact}>LNCT AIML 2026</p>
-                            </div>
-                        </div>
+                        <p className={styles.memberCountP}>You can add up to 3 additional members</p>
+                        {teamMembers.length > 0 ? (
+                            teamMembers.map((value) => (
+                                <div className={styles.memberCard} key={value._id}>
+                                    <div className={styles.memberAvatar}>{value.user.name ? value.user.name[0] : "?"}</div>
+                                    <div>
+                                        <div className={styles.memberInfo}>
+                                            <p className={styles.memberName}>{value.user.name || "Unknown"}</p>
+                                            <p className={styles.memberCollege}>
+                                                {value.user.college || "College not available"}
+                                            </p>
+                                            <p className={styles.memberDegree}>
+                                                {value.user.degree || "Degree not available"}
+                                            </p>
+                                            <p className={styles.memberYear}>
+                                                {value.user.GraduationYear || ""}
+                                            </p>
+                                        </div>
+                                        <button className={styles.memberRole}>
+                                            {value.role ? value.role.charAt(0).toUpperCase() + value.role.slice(1) : ""}
+                                        </button>
+
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No team members found</p>
+                        )}
+
                     </div>
                 </div>
 
@@ -126,49 +208,79 @@ const AddMember = () => {
                             <button onClick={handleReset}>Reset</button>
                         </div>
 
-                        <p>Colleges</p>
-                        {["LNCT", "LNCTS", "LNCTE"].map((value) => (
-                            <div className={styles.filterCategory} key={value}>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        value={value}
-                                        checked={college.includes(value)}
-                                        onChange={handleCollegeChange}
-                                    />
-                                    {value}
-                                </label>
-                            </div>
-                        ))}
-                        <p>Branches</p>
-                        {["CSE", "AIML", "AIDS", "IOT", "ME", "EC", "EE"].map((value) => (
-                            <div className={styles.filterCategory} key={value}>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        value={value}
-                                        checked={degree.includes(value)}
-                                        onChange={handleDegreeChange}
-                                    />
-                                    {value}
-                                </label>
-                            </div>
-                        ))}
-                        <p>Year</p>
-                        {graduationYears.map((value) => (
-                            <div className={styles.filterCategory} key={value}>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        value={value}
-                                        checked={GraduationYear.includes(value)}
-                                        onChange={handleYearChange}
-                                    />
-                                    {value}
-                                </label>
-                            </div>
-                        ))}
+
+                        <p onClick={() => setShowColleges(!showColleges)}>Colleges</p>
+                        <div className={`${styles.filterlist} ${showColleges ? styles.showfilterlist : ''}`}>
+                            {["LNCT", "LNCTS", "LNCTE"].map((value) => (
+                                <div className={styles.filterCategory} key={value}>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            value={value}
+                                            checked={college.includes(value)}
+                                            onChange={handleCollegeChange}
+                                        />
+                                        {value}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+
+
+                        <p onClick={() => setShowBranches(!showBranches)}>Branches</p>
+                        <div className={`${styles.filterlist} ${showBranches ? styles.showfilterlist : ''}`}>
+                            {["CSE", "AIML", "AIDS", "IOT", "ME", "EC", "EE"].map((value) => (
+                                <div className={styles.filterCategory} key={value}>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            value={value}
+                                            checked={degree.includes(value)}
+                                            onChange={handleDegreeChange}
+                                        />
+                                        {value}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+
+
+                        <p onClick={() => setShowYears(!showYears)}>Year</p>
+                        <div className={`${styles.filterlist} ${showYears ? styles.showfilterlist : ''}`}>
+                            {graduationYears.map((value) => (
+                                <div className={styles.filterCategory} key={value}>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            value={value}
+                                            checked={GraduationYear.includes(value)}
+                                            onChange={handleYearChange}
+                                        />
+                                        {value}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+
+                        <p onClick={() => setShowSkills(!showSkills)}>Skills</p>
+                        <div className={`${styles.filterlist} ${showSkills ? styles.showfilterlist : ''}`}>
+                            {skillOptions.map((value) => (
+                                <div className={styles.filterCategory} key={value.value}>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            value={value.value}
+                                            checked={Skills.includes(value.value)}
+                                            onChange={handleSkillChange}
+                                        />
+                                        {value.label}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
                     </div>
+
+
 
                     <div className={styles.searchContainer}>
                         <div className={styles.searchBar}>
@@ -202,7 +314,9 @@ const AddMember = () => {
             </div>
 
             <div className={styles.buttonContainer}>
-                <button className={styles.backButton} onClick={handleNavigateBack}>
+                <button className={styles.backButton}
+                // onClick={handleNavigateBack}
+                >
                     Back
                 </button>
                 <button className={styles.completeRegistrationButton}>Complete Registration</button>
