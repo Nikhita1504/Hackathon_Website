@@ -11,6 +11,7 @@ const Notifications = () => {
 
   const FetchNotificaion = async () => {
     try {
+      console.log("useremail",Userinfo.email)
       const reponse = await axios.get(
         `http://localhost:3000/home/userdata/${Userinfo.email}`
       );
