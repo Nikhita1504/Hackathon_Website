@@ -1,15 +1,15 @@
 /* upcominghackathons.module.css */
-
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Ubuntu&display=swap');
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f0f2f5;
+    background-color: #eff2f8; 
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .img {
@@ -27,6 +27,12 @@
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.detailsbox h2{
+    text-align: center;
+    font-size: 38px;
+    font-family: "Roboto Mono", monospace;
 }
 
 .left {
@@ -86,19 +92,21 @@ ul {
 }
 
 .enrollbtn {
-    background-color: #007bff;
-    color: white;
+    background-color: transparent;
+    color: black;
     padding: 12px 24px;
-    border-radius: 8px;
-    border: none;
+
+    border: 1px solid black;
     cursor: pointer;
     margin-top: 20px;
     font-size: 18px;
-    transition: background-color 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.5s;
 }
 
 .enrollbtn:hover {
-    background-color: #0056b3;
+    background-color: #2C3E50;
+    color: white;
 }
 
 /* Extra styling for responsiveness */

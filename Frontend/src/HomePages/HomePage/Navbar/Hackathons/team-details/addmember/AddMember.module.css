@@ -2,16 +2,16 @@
     display: flex;
     gap: 20px;
     padding: 20px;
-    height: 71vh;
+    height: 74vh;
 }
 
 .leftPanel,
 .rightPanel {
     width: 50%;
     background-color: #f9f9f9;
-    padding: 20px;
+    padding: 25px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .rightPanel {
@@ -22,12 +22,12 @@
 .hackathonTitle {
     font-size: 24px;
     font-weight: bold;
-    color: #333;
+    color: #1a3e7a;
 }
 
 .institution {
     font-size: 16px;
-    color: #666;
+    color: #555;
 }
 
 .teamSection {
@@ -41,62 +41,93 @@
 }
 
 .teamNameHighlight {
-    color: #007bff;
+    color: #0056b3;
     font-weight: bold;
 }
 
 .memberCount {
-    font-size: 14px;
-    color: #555;
+    font-size: 15px;
+    color: #333;
 }
 
-.memberInfo {
+.memberCountP {
     font-size: 14px;
-    color: #888;
+    color: #777;
 }
 
 .memberCard {
     display: flex;
     align-items: center;
-    background-color: #d8e4f0;
-    padding: 10px;
+    background-color: #e0edf7;
+    border: 0.5px solid black;
+    padding: 15px;
     border-radius: 8px;
     margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.memberCard:hover {
+    background-color: #d2e7f3;
 }
 
 .memberAvatar {
-    background-color: #2C3E50;
+    background-color: #2a5783;
     color: white;
     font-weight: bold;
     font-size: 16px;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 10px;
+    margin-right: 15px;
+}
+.memberInfo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.memberName{
+    font-weight: 500;
+}
+.memberCollege,.memberDegree,.memberYear{
+    border-left: 1px solid grey;
+    padding-left: 10px;
+}
+.memberRole{
+    border: 1px solid black;
+    background-color: transparent;
 }
 
 .addMemberButton,
 .inviteFriendsButton,
 .backButton,
 .completeRegistrationButton {
-    background-color: #007bff;
+    background-color: #0056b3;
     color: white;
     border: none;
-    border-radius: 5px;
-    padding: 10px;
+    border-radius: 6px;
+    padding: 12px;
     cursor: pointer;
     width: 100%;
     margin-top: 15px;
+    transition: background-color 0.3s ease;
 }
 
-.searchContainer{
+.backButton:hover,
+.completeRegistrationButton:hover {
+    background-color: #004080;
+    color: white;
+}
+
+
+.searchContainer {
 
     margin-top: 10px;
     width: 67%;
-overflow: scroll;
+    overflow: scroll;
 
 }
 
@@ -108,10 +139,10 @@ overflow: scroll;
 }
 
 .searchInput {
-    width: 70%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
 }
 
 .searchButton {
@@ -127,50 +158,88 @@ overflow: scroll;
     /* background-color: #007bff; */
     display: flex;
     flex-direction: column;
-    overflow: scroll;
-    width: 33%;
-    border-right: 1px solid lightgrey;
+    overflow-y: auto;
+    max-height: 70vh;
+    width: 30%;
+    border-right: 1px solid #ddd;
+    padding-right: 15px;
 }
 
 .filters h3 {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     font-size: 18px;
     color: #333;
 }
 
-.header{
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
 }
-.header button{
+
+.header button {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    padding: 0px 20px;
+    padding: 0px 15px;
+    color: #0056b3;
 }
 
 .filterCategory {
-    margin-bottom: 15px;
+    background-color: #eef2f9; /* Light background for separation */
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+.filterCategory:hover {
+    background-color: #d6e8f8; /* Slightly darker on hover */
+}
+.filters p{
+    cursor: pointer;
+}
+
+.filterlist {
+    transition: transform 0.3s ease, height 0.3s ease, padding 0.3s ease;
+
+    transform: scaleY(0);
+    height: 0;
+
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+
+}
+
+/* Show Filter List */
+.showfilterlist {
+    transform: scaleY(1);
+    height: auto;
+    padding: 10px 0;
 }
 
 .filterCategory p {
     font-weight: bold;
-    margin-bottom: 5px;
     color: #555;
+
 }
 
 .filterCategory label {
     display: flex;
     align-items: center;
     font-size: 14px;
-    margin-bottom: 5px;
+    color: #333;
+    gap: 8px;
     cursor: pointer;
 }
-
 .filterCategory input[type="checkbox"] {
+    accent-color: #007bff;
     margin-right: 8px;
+    cursor: pointer;
 }
 
 .completeRegistrationButton {
@@ -182,7 +251,8 @@ overflow: scroll;
 }
 
 .backButton {
-    background-color: #ccc;
+    background-color: #999;
+    ;
     color: #333;
     width: 100px;
 }
@@ -190,17 +260,19 @@ overflow: scroll;
 .buttonContainer {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    padding: 0 20px;
+    /* background-color: #004d40; */
 
 
 }
+
 .recommendationlist {
     display: flex;
     flex-direction: column;
     gap: 15px;
     margin-top: 10px;
     align-items: center;
-    padding: 10px;
+    padding: 15px;
 
 }
 
@@ -208,27 +280,27 @@ overflow: scroll;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #d8e4f0;
+    background-color: #e8f1f9;
     color: #004d40;
     width: 100%;
     padding: 10px;
     border-radius: 8px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
 }
 
 .item div {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     align-items: center;
 }
 
 .item .itemborder {
     font-size: 15px;
     font-weight: bold;
-    padding-left: 10px;
-    border-left: 1px solid black; 
-    color: #004d40;
+    padding-left: 12px;
+    border-left: 1px solid #aaa;
+    color: #333;
 }
 
 .item:hover {
@@ -241,9 +313,9 @@ overflow: scroll;
 }
 
 .item button {
-    background-color: #54789c;
+    background-color: #5a82a1;
     color: white;
-    padding: 8px 12px;
+    padding: 8px 14px;
     border: none;
     border-radius: 6px;
     cursor: pointer;

@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import styles from './upcominghackathons.module.css';
+import styles from './HackathonDetails.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import HackathonContext from '../../../../../Context/HackathonContext';
 import {jwtDecode} from 'jwt-decode'
 
-const UpcomingHackathon = () => {
+const HackathonDetails = () => {
     const { hackathonDetails, setHackathonDetails } = useContext(HackathonContext);
     
 
@@ -24,10 +24,11 @@ const UpcomingHackathon = () => {
                   },
             });
             const Response = await response.json()
-            console.log(Response)
+            const teamData=Response.team
+
             if(Response.found){
                 navigate(`/home/hackathons/${hackathonName}/team-details/add-member`, {
-                    state: { hackathonName },
+                    state: { hackathonName,teamData},
                   });
             }else{
                 navigate(`/home/hackathons/${hackathonName}/team-details`, { state: { hackathonName } }); 
@@ -59,9 +60,12 @@ const UpcomingHackathon = () => {
             <div className={styles.container}>
                 <img src="/assets/hackathonbanner.png" className={styles.img} alt="Hackathon Banner" />
 
+
                 <div className={styles.detailsbox}>
+                <h2>{hackathonDetails.name}</h2>
+
                     <div className={styles.left}>
-                        <img src={"/assets/logo1.jpg"} className={styles.logo} alt="Hackathon Logo" />
+                        <img src={"/assets/hackathonbanner2.webp"} className={styles.logo} alt="Hackathon Logo" />
                         <div className={styles.deadlinecontainer}>
                         <p className={styles.lastdate}><strong>Last Date to Apply:</strong>
                        
@@ -70,7 +74,6 @@ const UpcomingHackathon = () => {
                     </div>
 
                     <div className={styles.right}>
-                        <p><strong>Hackathon Name:</strong> {hackathonDetails.name}</p>
                         <p><strong>Location:</strong> {hackathonDetails.location}</p>
                         <p><strong>Description:</strong> {hackathonDetails.description}</p>
                         <p><strong>Eligibility:</strong> {hackathonDetails.eligibility}</p>
@@ -101,4 +104,4 @@ const UpcomingHackathon = () => {
     );
 }
 
-export default UpcomingHackathon;
+export default HackathonDetails;

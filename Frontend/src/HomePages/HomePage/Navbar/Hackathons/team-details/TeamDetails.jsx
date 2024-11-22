@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const TeamDetails = () => {
   const location = useLocation();
   const hackathonName = location.state?.hackathonName;
+
   const [teamInfo, setTeamInfo] = useState({
     teamName: "",
     Yourname: "",
@@ -27,21 +28,25 @@ const TeamDetails = () => {
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     const payload = token ? jwtDecode(token) : null;
-    setTeamInfo({Yourname:payload.user.name ,yourEmail:payload.user.email })
-    console.log(payload.user.name);
+    setTeamInfo({ Yourname: payload.user.name, yourEmail: payload.user.email })
+    // console.log(payload.user.name);
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:3000/team/enroll-team", {
+      const response = await axios.post("http://localhost:3000/team/enroll-team", {
         hackathonName,
         ...teamInfo,
       });
+const teamData=response.data.team
+      
+
+
 
       navigate(`/home/hackathons/${hackathonName}/team-details/add-member`, {
-        state: { hackathonName },
+        state: { hackathonName,teamData },
       });
     } catch (error) {
       console.error("Error enrolling team:", error);
@@ -75,7 +80,7 @@ const TeamDetails = () => {
               name="Yourname"
               readOnly
               value={teamInfo.Yourname}
-              
+
             />
           </div>
           <div className={styles.formGroup}>
@@ -85,7 +90,7 @@ const TeamDetails = () => {
               name="yourEmail"
               readOnly
               value={teamInfo.yourEmail}
-              
+
             />
           </div>
           <button type="submit" className={styles.button}>

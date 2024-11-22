@@ -4,9 +4,9 @@ const { UserModel, NotificationModel } = require("./model/db");
 function hello(server) {
   const io = new Server(server, {
     cors: {
-      origin: "http://localhost:5173", // Allow Socket.IO connections from this origin
+      origin: "http://localhost:5173",
       methods: ["GET", "POST"],
-      credentials: true, // Allow credentials (cookies) with Socket.IO
+      credentials: true, 
     },
   });
 
@@ -18,7 +18,7 @@ function hello(server) {
     });
     console.log("between adding new user" ,user)
     if(user){
-      console.log("enter")
+      
       user.socketID = socketID;
     }else{
       onlineUser.push({ useremail: email, socketID });
@@ -37,7 +37,7 @@ function hello(server) {
     });
     
     console.log(user)
-    console.log(user.socketID)
+    console.log(user?.socketID)
     return user?.socketID;
   };
 
