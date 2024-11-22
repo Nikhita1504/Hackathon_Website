@@ -1,16 +1,19 @@
 .not-container {
-  height: 100vh;
-  padding: 20px;
-  background-color: #eff2f8; 
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
+    height: 100vh;
+    overflow-y: auto;
+  
 
-.not-container .light-line {
-  border: none;
-  border-top: 1px solid #dcdcdc;
-  margin: 10px 0;
-}
+    .single-Notification-container{
+   border: 1px solid black;
+   margin-bottom: 10px;
+  padding: 5px;
+    }
+  
+    .light-line {
+      border: none;
+      border-top: 1px solid #b1b1b1; /* Light gray line */
+      margin-top: 10px; /* Spacing above the line */
+    }
 
 .not-container .select-container {
   display: flex;
@@ -30,4 +33,5 @@
 .not-container button:hover {
   color: #3498db;
   transform: translateY(-2px);
+}
 }

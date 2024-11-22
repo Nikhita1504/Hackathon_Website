@@ -139,12 +139,10 @@ const AddMember = () => {
         }
     }, [searchname, college, degree, GraduationYear, Skills]);
 
-    const handleInvite = (item) => { 
-        console.log(item);
-        socket.emit("SendNotification" ,Userinfo.email , item.email,`${Userinfo.email} send invite to ${item.email}`)
-      
-      
-      };
+  const handleInvite = (item) => { 
+    socket.emit("SendNotification" ,Userinfo.email , item.email,`${Userinfo.name} invites you to join their team for the ${hackathonName} hackathon!`
+)
+  };
 
   const navigate = useNavigate();
   const handleNavigateBack = () => {
