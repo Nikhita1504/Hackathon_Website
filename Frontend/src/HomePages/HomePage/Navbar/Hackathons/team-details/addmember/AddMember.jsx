@@ -106,6 +106,7 @@ const AddMember = () => {
   }, [searchname, college, degree, GraduationYear]);
 
   const handleInvite = (item) => { 
+    console.log(item.email);
     socket.emit("SendNotification" ,Userinfo.email , item.email,`${Userinfo.name} invites you to join their team for the ${hackathonName} hackathon!`
 )
   };

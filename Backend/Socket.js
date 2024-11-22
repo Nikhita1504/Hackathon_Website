@@ -35,6 +35,7 @@ function hello(server) {
     
       return User.useremail == email;
     });
+    
     console.log(user)
     console.log(user.socketID)
     return user?.socketID;
@@ -64,6 +65,7 @@ function hello(server) {
       console.log("sender",senderemail);
       const sender = await UserModel.findOne({ email: senderemail });
       const reciever = await UserModel.findOne({ email: recieveremail });
+
 
       const Notification = new NotificationModel({
         SenderUser: sender._id,
