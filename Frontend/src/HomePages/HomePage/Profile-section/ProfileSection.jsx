@@ -14,27 +14,27 @@ const ProfileSection = () => {
     useEffect( () => {
    
         const queryParams = new URLSearchParams(window.location.search);
-        console.log(window.location.search); 
+       
         let token = queryParams.get('token');
         if(token){
-         console.log(token);
+         
          sessionStorage.setItem('token' , token);
         }else{
          token = sessionStorage.getItem('token' , token)
         }
        
            const payload= jwtDecode(token)
-           console.log(payload)
+           
              const fetchuserdata = async () => {
                  try {
                      const response = await axios.get(`http://localhost:3000/home/userdata/${payload.user.email}`)
      
-                     setuserdata(response.data);
+                     setuserdata(response.data.userdata);
                      setload(false);
      
                     
                  } catch (error) {
-                     console.log(error)
+                   
                      setload(false);
                  }
              }

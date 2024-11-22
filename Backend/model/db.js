@@ -1,3 +1,4 @@
+const { string, required } = require("joi");
 const mongoose = require("mongoose");
 require('dotenv').config(); 
 const URL = process.env.URL;
@@ -122,6 +123,33 @@ const teamSchema = new mongoose.Schema({
   timestamps: true // Automatically adds `createdAt` and `updatedAt`
 });
 
+const NotificationSchema = new mongoose.Schema({
+  SenderUser:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref:"UserModel",
+    required:true
+  },
+  RecieverUser:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref:"UserModel",
+    required:true
+  },
+  message:{
+    type:String,
+    required:true,
+ },
+ status:{
+  type:String,
+  enum:["read" ,"unread"],
+  default:"unread",
+  required:true
+},
+},{ 
+  timestamps: true // Automatically adds `createdAt` and `updatedAt`
+}
+
+);
+
 
 
 
@@ -129,8 +157,9 @@ const teamSchema = new mongoose.Schema({
 const UserModel = mongoose.model("UserModel" , userSchema)
 const HackathonModel = mongoose.model("Hackathon",hackathonschema)
 const TeamModel = mongoose.model("Team" ,teamSchema )
+const NotificationModel = mongoose.model("Notification" , NotificationSchema )
 
-module.exports= {UserModel , HackathonModel , TeamModel};
+module.exports= {UserModel , HackathonModel , TeamModel , NotificationModel};
 
 
 

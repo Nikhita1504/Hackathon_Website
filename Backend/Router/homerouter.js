@@ -1,16 +1,20 @@
 const express = require("express");
-const { UserModel } = require("../model/db");
+const { UserModel, NotificationModel } = require("../model/db");
 const homerouter=express.Router()
 homerouter.get("/userdata/:email",async(req,res)=>{
     try {
-    console.log("hello")
+   
+ 
+      const userdata= await UserModel.findOne({email:req.params.email});
 
-      const userdata= await UserModel.findOne({email:req.params.email})
-      console.log(userdata)
+      const userNotification = await NotificationModel.find({RecieverUser:userdata._id}).populate('SenderUser', 'name email') // Populate SenderUser with specific fields (e.g., name and email)
+      .populate('RecieverUser', 'name email') // Populate RecieverUser with specific fields
+      .sort({ createdAt: -1 }); 
+  
       if(!userdata){
         return res.status(404).json({message:"user not found"})
       }
-      res.json(userdata)
+      res.json({userdata:userdata , userNotification:userNotification})
   
           
       } catch (error) {

@@ -3,9 +3,9 @@ const { HackathonModel } = require("../model/db");
 const hackathondetails = express.Router();
 
 hackathondetails.post("/hackathondetails", async (req, res) => {
-    console.log(req.body);
+    
     try {
-        console.log("hello");
+        
 
         const newHackathon = new HackathonModel({
             name: req.body.name,
@@ -34,7 +34,7 @@ hackathondetails.post("/hackathondetails", async (req, res) => {
         });
 
         await newHackathon.save();
-        console.log("saved");
+      
         res.status(201).json({ message: "Hackathon saved successfully" });
 
     } catch (error) {

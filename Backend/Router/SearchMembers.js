@@ -27,9 +27,7 @@ SearchMembers.get("/search", async (req, res) => {
       query.skills = { $elemMatch: { $in: parsedSkills } };
     }
 
-    console.log(query)
-
-
+  
 
     const suggestions = await UserModel.find(query);
 

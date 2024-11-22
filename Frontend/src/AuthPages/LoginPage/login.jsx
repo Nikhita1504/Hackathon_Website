@@ -1,14 +1,17 @@
 import styles from "./login.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { handleError, handleSucess } from "../../Utils/utils";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaFacebookF, FaGoogle, FaLinkedinIn } from "react-icons/fa";
+import Usercontext from "../../Context/Usercontext";
+import SocketContext from "../../Context/SocketContext";
 
 function Login() {
+  const {loggedIn , SetloggedIn} = useContext(SocketContext)
+  const{SetUserinfo} = useContext(Usercontext)
   const [logininfo, Setlogininfo] = useState({
-    email: "",
+    email:"",
     password: "",
   });
 
@@ -38,9 +41,20 @@ function Login() {
       const result = await response.json();
       const { success, error, message, jwt_token } = result;
       if (success) {
+        
         sessionStorage.setItem("token", jwt_token);
+        SetUserinfo({email:logininfo.email});
+   
+       try {
+        SetloggedIn(true);
+        
+      } catch (error) {
+        console.error("Error in SetloggedIn:", error);
+      }
+       
         handleSucess(message);
         setTimeout(() => {
+          console.log("enter")
           navigate("/home");
         }, 1000);
       } else {

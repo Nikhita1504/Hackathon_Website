@@ -14,8 +14,7 @@ CheckEnrollRouter.get(
         hackathonId: hackthon._id,
         "members.user": user._id,
     });
-
-
+     
       if (!team) {
         return res.json({
           message: "user not found in any team",

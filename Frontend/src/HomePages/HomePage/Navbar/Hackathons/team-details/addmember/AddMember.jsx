@@ -3,10 +3,16 @@ import styles from './AddMember.module.css';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import HackathonContext from '../../../../../../Context/HackathonContext';
+import SocketContext from "../../../../../../Context/SocketContext";
+import Usercontext from "../../../../../../Context/Usercontext";
 import skillOptions from '../../../../../../utils/Skillsoption';
-import { io } from "socket.io-client";
+
 
 const AddMember = () => {
+
+    const {socket} = useContext(SocketContext)
+    const{Userinfo} = useContext(Usercontext);
+  
     const [recommendations, setRecommendations] = useState([]);
     const [teamMembers, setTeamMembers] = useState([]);
     const location = useLocation();
@@ -14,34 +20,24 @@ const AddMember = () => {
     const hackathonName = location.state?.hackathonName;
     const { hackathonDetails, setHackathonDetails } = useContext(HackathonContext);
     const [searchname, setSearchname] = useState("");
-
-    const socket=io("http://localhost:3000/")
-    useEffect(() => {
-        // Emit event to server when component mounts
-        socket.emit("addMemberRendered");
-    
-        // Clean up the connection when component unmounts
-        return () => {
-          socket.disconnect();
-        };
-      }, []);
-
-
     const [showColleges, setShowColleges] = useState(false);
     const [showBranches, setShowBranches] = useState(false);
     const [showYears, setShowYears] = useState(false);
     const [showSkills, setShowSkills] = useState(false);
 
-
-    const currentYear = new Date().getFullYear();
-    const graduationYears = [currentYear, currentYear + 1, currentYear + 2, currentYear + 3];
+  const currentYear = new Date().getFullYear();
+  const graduationYears = [
+    currentYear,
+    currentYear + 1,
+    currentYear + 2,
+    currentYear + 3,
+  ];
 
     const [college, setCollege] = useState([]);
     const [degree, setDegree] = useState([]);
     const [GraduationYear, setGraduationYear] = useState([]);
     const [Skills, setSkills] = useState([]);
 
-    // Fetch hackathon details
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -53,7 +49,6 @@ const AddMember = () => {
         };
         fetchData();
     }, [hackathonName, setHackathonDetails]);
-
 
     useEffect(() => {
         const fetchTeamData = async () => {
@@ -75,47 +70,48 @@ const AddMember = () => {
     }, [teamData._id]);
 
 
-
-
-
-    // Filter handlers
     const handleCollegeChange = (e) => {
         const { value, checked } = e.target;
+        console.log(value);
+        console.log(checked);
         setCollege((prev) =>
-            checked ? [...prev, value] : prev.filter((college) => college !== value)
+          checked ? [...prev, value] : prev.filter((college) => college !== value)
         );
-    };
-
-    const handleDegreeChange = (e) => {
+      };
+      const handleDegreeChange = (e) => {
         const { value, checked } = e.target;
         setDegree((prev) =>
-            checked ? [...prev, value] : prev.filter((deg) => deg !== value)
+          checked ? [...prev, value] : prev.filter((deg) => deg !== value)
         );
-    };
-
-    const handleYearChange = (e) => {
-        const { value, checked } = e.target;
-        setGraduationYear((prev) =>
-            checked ? [...prev, value] : prev.filter((year) => year !== value)
-        );
-    };
-
-    const handleSkillChange = (e) => {
-        const { value, checked } = e.target;
-        console.log(value);
-        setSkills((prev) =>
-            checked ? [...prev, value] : prev.filter((skill) => skill !== value)
-        );
-    };
-
-    const handleReset = () => {
-        setCollege([]);
-        setDegree([]);
-        setGraduationYear([]);
-        setSkills([]);
-        setSearchname("");
-        setRecommendations([]);
-    };
+      };
+    
+        const handleSkillChange = (e) => {
+            const { value, checked } = e.target;
+            console.log(value);
+            setSkills((prev) =>
+                checked ? [...prev, value] : prev.filter((skill) => skill !== value)
+            );
+        };
+      
+        const handleYearChange = (e) => {
+            const { value, checked } = e.target;
+            const year = parseInt(value, 10); 
+            setGraduationYear((prev) =>
+                checked ? [...prev, year] : prev.filter((yr) => yr !== year)
+            );
+        };
+        
+    
+        const handleReset = () => {
+            setCollege([]);
+            setDegree([]);
+            setGraduationYear([]);
+            setSkills([]);
+            setSearchname("");
+            setRecommendations([]);
+        };
+    
+    
 
     const fetchRecommendations = async () => {
         try {
@@ -129,11 +125,11 @@ const AddMember = () => {
                 },
             });
             setRecommendations(response.data);
+
         } catch (error) {
             console.error("Error fetching recommendations:", error);
         }
     };
-
 
     useEffect(() => {
         if (searchname.length > 2 || college.length || degree.length || GraduationYear.length || Skills.length) {
@@ -143,14 +139,17 @@ const AddMember = () => {
         }
     }, [searchname, college, degree, GraduationYear, Skills]);
 
-    const handleInvite = () => {
-        alert("Invite sent");
-    };
+    const handleInvite = (item) => { 
+        console.log(item);
+        socket.emit("SendNotification" ,Userinfo.email , item.email,`${Userinfo.email} send invite to ${item.email}`)
+      
+      
+      };
 
-    const navigate = useNavigate();
-    const handleNavigateBack = () => {
-        navigate(`/home/hackathons/${hackathonName}/team-details`);
-    };
+  const navigate = useNavigate();
+  const handleNavigateBack = () => {
+    navigate(`/home/hackathons/${hackathonName}/team-details`);
+  };
 
     return (
         <>
@@ -262,6 +261,7 @@ const AddMember = () => {
                             ))}
                         </div>
 
+
                         <p onClick={() => setShowSkills(!showSkills)}>Skills</p>
                         <div className={`${styles.filterlist} ${showSkills ? styles.showfilterlist : ''}`}>
                             {skillOptions.map((value) => (
@@ -302,7 +302,7 @@ const AddMember = () => {
                                             <span className={styles.itemborder}>{item.degree}</span>
                                             <span className={styles.itemborder}>{item.GraduationYear}</span>
                                         </div>
-                                        <button onClick={handleInvite}>Invite</button>
+                                        <button onClick={()=>handleInvite(item)}>Invite</button>
                                     </div>
                                 ))
                             ) : (
@@ -315,7 +315,7 @@ const AddMember = () => {
 
             <div className={styles.buttonContainer}>
                 <button className={styles.backButton}
-                // onClick={handleNavigateBack}
+                onClick={handleNavigateBack}
                 >
                     Back
                 </button>
