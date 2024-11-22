@@ -1,12 +1,22 @@
 .profile-container {
-    padding: 25px 35px;
+    padding: 30px 40px;
     display: flex;
+    position: relative;
     flex-direction: column;
     align-items: center;
     // background-color: #fafafa;
-    background-color: #D9E8FB;
+    // background-color: #D9E8FB;
+    background-color: #eff2f8; 
+  font-family: 'Arial', sans-serif;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+    .edit-icon {
+        position: absolute;
+        right: 25px;
+        cursor: pointer;
+        color: rgb(80, 80, 80);
+    }
 
     img {
         height: 100px;
@@ -67,9 +77,9 @@
     text-align: left;
     margin: 10px 0;
     padding: 15px 20px;
-    background-color: #f9f9f9;
+   
     border-radius: 10px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 .skills {
@@ -161,7 +171,7 @@
     color: #2c3e50;
 }
 
-.github-url, 
+.github-url,
 .linkedin-url {
     .light {
         font-weight: 300;

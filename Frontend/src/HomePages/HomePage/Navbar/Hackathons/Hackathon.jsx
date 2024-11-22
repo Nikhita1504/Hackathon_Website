@@ -13,7 +13,7 @@ const Hackathon = () => {
     navigate(`/home/hackathons/${hackathonName}`);
   };
 
-  console.log(hackathonDetails)
+  // console.log(hackathonDetails)
 
 
 

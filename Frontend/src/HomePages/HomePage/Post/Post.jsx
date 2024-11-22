@@ -2,8 +2,8 @@ import React from 'react'
 import "./posts.scss"
 const Post = () => {
   return (
-    <div>
-      posts
+    <div className='post-container'>
+
     </div>
   )
 }

@@ -4,7 +4,7 @@ const SearchMembers = express.Router();
 
 SearchMembers.get("/search", async (req, res) => {
   try {
-    const { name, college, degree, GraduationYear } = req.query;
+    const { name, college, degree, GraduationYear,skills } = req.query;
     const query = {};
 
     if (name) {
@@ -22,6 +22,10 @@ SearchMembers.get("/search", async (req, res) => {
     if (GraduationYear) {
       query.GraduationYear = { $in: Array.isArray(GraduationYear) ? GraduationYear : [GraduationYear] };
     }
+    if(skills){
+      const parsedSkills = Array.isArray(skills) ? skills : skills ? [skills] : [];
+      query.skills = { $elemMatch: { $in: parsedSkills } };
+    }
 
   
 
@@ -35,3 +39,4 @@ SearchMembers.get("/search", async (req, res) => {
 });
 
 module.exports = SearchMembers;
+

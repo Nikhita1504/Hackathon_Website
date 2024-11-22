@@ -27,15 +27,18 @@
         color: white;
         transition: background-color 1s ease, color 0.3s ease,
           box-shadow 1s ease;
-        /* Add transition for smooth hover effect */
+
         padding: 3px 7px;
-        /* Keep the padding consistent */
+
 
         /* Optional: add a border for the default state */
         border-radius: 18px;
         /* Maintain the border radius */
         box-shadow: 0 0 0 transparent;
         /* Start with no shadow */
+
+       
+
 
         &:hover {
           background-color: white;
@@ -57,7 +60,7 @@
     position: absolute;
     top: 8px;
     left: 10px;
-    /* Adjust the position of the icon */
+
     color: #aaa;
     /* Optional: Set icon color */
     font-size: 15px;
@@ -75,7 +78,7 @@
   }
 
   .profile-dropdown {
-    // border: 1px solid black;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -84,7 +87,7 @@
     .circle {
       height: 30px;
       width: 30px;
-      background-color: red;
+      background-color: #2C3E50;
       border-radius: 50%;
 
 
@@ -95,6 +98,7 @@
         cursor: pointer;
       }
     }
+
     .modaloverlay {
       height: 80px;
       width: 80px;
@@ -111,17 +115,17 @@
       align-items: center;
       // transition: top 0.5s ease-in-out;
 
-     button{
+      button {
         color: white;
         background-color: transparent;
         border: none;
         cursor: pointer;
       }
-  }
+    }
 
-  .modalshow {
+    .modalshow {
       top: 9%;
-  }
+    }
   }
 
 }

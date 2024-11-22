@@ -15,15 +15,23 @@
       margin-top: 10px; /* Spacing above the line */
     }
 
-    .select-container{
-        display: flex;
-        gap: 20px;
-    }
+.not-container .select-container {
+  display: flex;
+  gap: 20px;
+}
 
-    button{
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-    }
-  }
-  
+.not-container button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 5px;
+  color: #34495e;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.not-container button:hover {
+  color: #3498db;
+  transform: translateY(-2px);
+}
+}

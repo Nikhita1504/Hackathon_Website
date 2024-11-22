@@ -21,7 +21,7 @@ CheckEnrollRouter.get(
           found: false,
         });
       }
-      return res.json({ message: "user found in a team", found: true });
+      return res.json({ message: "user found in a team", found: true ,team});
     } catch (error) {
       return res.status(500).json({ message: "internal server eroor", error });
     }
@@ -29,3 +29,4 @@ CheckEnrollRouter.get(
 );
 
 module.exports = CheckEnrollRouter;
+
