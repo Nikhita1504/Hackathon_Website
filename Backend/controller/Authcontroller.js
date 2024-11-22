@@ -54,8 +54,7 @@ const login = async (req, res) => {
         });
     }
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log("Stored Hashed Password: ", user.password);
-    console.log(isMatch);
+   
     if (!isMatch) {
       return res
         .status(400)
@@ -67,7 +66,7 @@ const login = async (req, res) => {
       process.env.SecretKey,
     
     );
-    console.log(user)
+    
     res
       .status(200)
       .json({ message: "Login successful", success: true, jwt_token: token });

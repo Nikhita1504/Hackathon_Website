@@ -23,8 +23,7 @@ SearchMembers.get("/search", async (req, res) => {
       query.GraduationYear = { $in: Array.isArray(GraduationYear) ? GraduationYear : [GraduationYear] };
     }
 
-    console.log(query.college)
-    console.log(query)
+  
 
     const suggestions = await UserModel.find(query);
 
