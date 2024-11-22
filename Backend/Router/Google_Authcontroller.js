@@ -65,7 +65,7 @@ google_auth_router.get('/signup/callback',
   function(req, res) {
     
     const user = req.user;
-    console.log(user.name)
+   
     const alreadyexist = user.alreadyexist;
     const token = jwt.sign(
       { email: user.email, UserId: user._id, isAdmin: user.isAdmin ,name:user.name},
