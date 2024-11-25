@@ -37,14 +37,14 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate required fields
+
     if (!hackathon.name || !hackathon.status || !hackathon.eligibility || !hackathon.startDate || !hackathon.endDate || !hackathon.registration.deadline) {
       alert("Please fill out all required fields.");
       return;
     }
 
     try {
-      console.log(hackathon); // Check the state before submission
+      console.log(hackathon); 
       await axios.post('http://localhost:3000/hackathon/hackathondetails', hackathon);
       alert("Details saved successfully");
     } catch (error) {

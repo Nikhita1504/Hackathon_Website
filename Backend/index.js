@@ -3,6 +3,7 @@
 const express = require("express");
 const app = express();
 const bodyparser = require("body-parser");
+app.use('/public', express.static('public'));
 const cors = require("cors");
 const { authrouter } = require("./Router/Authrouter");
 const { google_auth_router } = require("./Router/Google_Authcontroller");
@@ -19,6 +20,7 @@ const { createServer } = require("http");
 const server = createServer(app);
 
 const {hello} = require("./Socket"); // Import the function correctly
+const ImageUpload = require("./Router/ImageUpload");
    hello(server); // Call the function to initialize socket
 
 app.use(bodyparser.json());
@@ -40,6 +42,7 @@ app.use("/hackathon", hackathondetails);
 app.use("/add-member", SearchMembers);
 app.use("/team", TeamDetails);
 app.use("/enroll", CheckEnrollRouter);
+app.use("/upload",ImageUpload);
 
 // Listen on port
 const Port = process.env.Port || 3000;
