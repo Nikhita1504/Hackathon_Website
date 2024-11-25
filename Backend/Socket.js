@@ -60,9 +60,10 @@ function hello(server) {
       addNewUser(email, socket.id);
     });
 
-    socket.on("SendNotification", async (senderemail, recieveremail, text) => {
+    socket.on("SendNotification", async (senderemail, recieveremail, text , details) => {
       console.log("reciever",recieveremail);
       console.log("sender",senderemail);
+      console.log("details" , details)
       const sender = await UserModel.findOne({ email: senderemail });
       const reciever = await UserModel.findOne({ email: recieveremail });
 
@@ -71,7 +72,9 @@ function hello(server) {
         SenderUser: sender._id,
         RecieverUser: reciever._id,
         message: text,
+        Details:details
       });
+      console.log(Notification)
 
       await Notification.save();
       console.log(onlineUser);

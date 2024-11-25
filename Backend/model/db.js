@@ -1,4 +1,4 @@
-const { string, required } = require("joi");
+const { string, required, object } = require("joi");
 const mongoose = require("mongoose");
 require('dotenv').config(); 
 const URL = process.env.URL;
@@ -143,6 +143,10 @@ const NotificationSchema = new mongoose.Schema({
   enum:["read" ,"unread"],
   default:"unread",
   required:true
+},
+Details: {
+  type: Object, // Allows any object
+ 
 },
 },{ 
   timestamps: true // Automatically adds `createdAt` and `updatedAt`

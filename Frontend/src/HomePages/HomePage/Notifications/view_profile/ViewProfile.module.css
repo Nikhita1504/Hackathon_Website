@@ -1,0 +1,193 @@
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+.profileContainer {
+    padding: 30px 40px;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    background-color: #eff2f8; 
+    font-family: 'Arial', sans-serif;
+    border-radius: 12px;
+    width: 75%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.edit-icon {
+    position: absolute;
+    right: 25px;
+    cursor: pointer;
+    color: rgb(80, 80, 80);
+}
+
+.profileContainer img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    background-color: white;
+    object-fit: cover;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.studentInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.studentInfo .info {
+    color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    justify-content: center;
+}
+
+.studentInfo .name {
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #2c3e50;
+}
+
+.info p {
+    position: relative;
+    padding: 0 12px;
+    color: #34495e;
+}
+
+.info p:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 20px;
+    background-color: #bdc3c7;
+}
+
+.bio,
+.skills,
+.githubUrl,
+.linkedinUrl {
+    width: 100%;
+    text-align: left;
+    margin: 10px 0;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.skills {
+    position: relative;
+}
+
+.skills .addBtn {
+    position: absolute;
+    right: 3%;
+    top: 30%;
+    width: 60px;
+    padding: 7px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.skills .addBtn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.skills .modaloverlay {
+    height: 80px;
+    width: 300px;
+    background-color: rgba(44, 62, 80, 0.9);
+    position: fixed;
+    top: -50%;
+    left: 35%;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: top 0.5s ease-in-out;
+}
+
+.skills .modalshow {
+    top: 50%;
+}
+
+.skills .crossBtn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.skills .crossBtn:hover {
+    transform: rotate(90deg);
+}
+
+.skills .skillsList {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.skills .skillItem {
+    background-color: #e1e1e1;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #2c3e50;
+    white-space: nowrap;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.skills .skillItem:hover {
+    background-color: #dcdcdc;
+    transform: scale(1.05);
+}
+
+.bio p,
+.skills p,
+.githubUrl p,
+.linkedinUrl p {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #2c3e50;
+}
+
+.githubUrl .light,
+.linkedinUrl .light {
+    font-weight: 300;
+    color: #2c3e50;
+    display: block;
+    margin-top: 7px;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.githubUrl .light:hover,
+.linkedinUrl .light:hover {
+    color: #3498db;
+    transform: translateX(3px);
+}

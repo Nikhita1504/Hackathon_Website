@@ -45,7 +45,7 @@ TeamDetails.get("/:teamid", async (req, res) => {
     const teamData = await TeamModel.findOne({ _id: teamid }).populate({
       path: "members.user",
       model: "UserModel",
-    });
+    }).populate('hackathonId');
 
     if (!teamData) {
       return res.status(404).json({ message: "Team does not exist" });

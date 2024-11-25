@@ -141,7 +141,7 @@ const AddMember = () => {
 
   const handleInvite = (item) => { 
     console.log(item.email);
-    socket.emit("SendNotification" ,Userinfo.email , item.email,`${Userinfo.name} invites you to join their team for the ${hackathonName} hackathon!`
+    socket.emit("SendNotification" ,Userinfo.email , item.email,`${Userinfo.name} invites you to join their team for the ${hackathonName} hackathon!`,{teamId:teamData._id}
 )
   };
 
@@ -149,6 +149,10 @@ const AddMember = () => {
   const handleNavigateBack = () => {
     navigate(`/home/hackathons/${hackathonName}/team-details`);
   };
+  const handleProfileNavigate = (userEmail) => {
+    navigate("/home/view-profile", { state: { userEmail } });
+  };
+  
 
     return (
         <>
@@ -174,7 +178,7 @@ const AddMember = () => {
                                     <div className={styles.memberAvatar}>{value.user.name ? value.user.name[0] : "?"}</div>
                                     <div>
                                         <div className={styles.memberInfo}>
-                                            <p className={styles.memberName}>{value.user.name || "Unknown"}</p>
+                                            <p className={styles.memberName} onClick={()=>{handleProfileNavigate(value.user.email)}}>{value.user.name || "Unknown"}</p>
                                             <p className={styles.memberCollege}>
                                                 {value.user.college || "College not available"}
                                             </p>
@@ -296,7 +300,7 @@ const AddMember = () => {
                                 recommendations.map((item) => (
                                     <div className={styles.item} key={item._id}>
                                         <div>
-                                            <span>{item.name}</span>
+                                            <span  onClick={()=>{handleProfileNavigate(item.email)}}>{item.name}</span>
                                             <span className={styles.itemborder}>{item.college}</span>
                                             <span className={styles.itemborder}>{item.degree}</span>
                                             <span className={styles.itemborder}>{item.GraduationYear}</span>
