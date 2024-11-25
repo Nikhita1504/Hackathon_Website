@@ -4,9 +4,9 @@ const { UserModel, NotificationModel } = require("./model/db");
 function hello(server) {
   const io = new Server(server, {
     cors: {
-      origin: "http://localhost:5173", // Allow Socket.IO connections from this origin
+      origin: "http://localhost:5173",
       methods: ["GET", "POST"],
-      credentials: true, // Allow credentials (cookies) with Socket.IO
+      credentials: true, 
     },
   });
 
@@ -18,7 +18,7 @@ function hello(server) {
     });
     console.log("between adding new user" ,user)
     if(user){
-      console.log("enter")
+      
       user.socketID = socketID;
     }else{
       onlineUser.push({ useremail: email, socketID });
@@ -35,6 +35,7 @@ function hello(server) {
     
       return User.useremail == email;
     });
+    
     console.log(user)
     console.log(user?.socketID)
     return user?.socketID;
@@ -65,7 +66,6 @@ function hello(server) {
       const sender = await UserModel.findOne({ email: senderemail });
       const reciever = await UserModel.findOne({ email: recieveremail });
 
-      console.log(reciever)
 
       const Notification = new NotificationModel({
         SenderUser: sender._id,

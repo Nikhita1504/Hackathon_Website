@@ -5,6 +5,7 @@ import Usercontext from "./Usercontext"
 const UserProvider = ({children}) =>{
   const[Userinfo , SetUserinfo] = useState(() => {
    const storedData = sessionStorage.getItem("Userinfo");
+   console.log("stored data" , storedData)
    return storedData ? JSON.parse(storedData) :{
       name:"",
       email:"",

@@ -47,7 +47,6 @@ const EditProfile = () => {
         const response = await axios.get(
           `http://localhost:3000/home/userdata/${user.user.email}`
         );
-
         SetUserinfo(response.data.userdata);
       } catch (error) {
         console.log(error);
