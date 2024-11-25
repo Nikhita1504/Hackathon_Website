@@ -91,6 +91,7 @@
 }
 .memberName{
     font-weight: 500;
+    cursor: pointer;
 }
 .memberCollege,.memberDegree,.memberYear{
     border-left: 1px solid grey;
@@ -310,6 +311,7 @@
 .item span {
     font-size: 15px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .item button {
