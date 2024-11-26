@@ -6,101 +6,99 @@ function hello(server) {
     cors: {
       origin: "http://localhost:5173",
       methods: ["GET", "POST"],
-      credentials: true, 
+      credentials: true,
     },
   });
 
   let onlineUser = [];
 
   const addNewUser = (email, socketID) => {
-   const user = onlineUser.find((user) =>{
+    const user = onlineUser.find((user) => {
       return user.useremail == email;
     });
-    console.log("between adding new user" ,user)
-    if(user){
-      
+    console.log("between adding new user", user);
+    if (user) {
       user.socketID = socketID;
-    }else{
+    } else {
       onlineUser.push({ useremail: email, socketID });
     }
-    
+
     console.log("after adding user", onlineUser);
   };
 
-  const getUser =  (email) => {
-    console.log("enter getUser")
- 
+  const getUser = (email) => {
+    console.log("enter getUser");
+
     console.log(email);
-    const user =  onlineUser.find((User) => {
-    
+    const user = onlineUser.find((User) => {
       return User.useremail == email;
     });
-    
-    console.log(user)
-    console.log(user?.socketID)
+
+    console.log(user);
+    console.log(user?.socketID);
     return user?.socketID;
   };
 
-  const removeUser = (socketID) =>{
-    onlineUser = onlineUser.filter((user) =>{
+  const removeUser = (socketID) => {
+    onlineUser = onlineUser.filter((user) => {
       return user.socketID != socketID;
     });
-    console.log("after removing " , onlineUser)
-  }
-
-
-
+    console.log("after removing ", onlineUser);
+  };
 
   io.on("connection", (socket) => {
     console.log("on connection", onlineUser);
-    
+
     socket.on("newUser", (email) => {
-      
-      console.log("new User", email );
+      console.log("new User", email);
       addNewUser(email, socket.id);
     });
 
-    socket.on("SendNotification", async (senderemail, recieveremail, text , details) => {
-      console.log("reciever",recieveremail);
-      console.log("sender",senderemail);
-      console.log("details" , details)
-      const sender = await UserModel.findOne({ email: senderemail });
-      const reciever = await UserModel.findOne({ email: recieveremail });
+    socket.on(
+      "SendNotification",
+      async (senderemail, recieveremail, text, details) => {
+        console.log("reciever", recieveremail);
+        console.log("sender", senderemail);
+        console.log("details", details);
+        const sender = await UserModel.findOne({ email: senderemail });
+        const reciever = await UserModel.findOne({ email: recieveremail });
 
+        const Notification = new NotificationModel({
+          SenderUser: sender._id,
+          RecieverUser: reciever._id,
+          message: text,
+          Details: details,
+        });
+        console.log(Notification);
 
-      const Notification = new NotificationModel({
-        SenderUser: sender._id,
-        RecieverUser: reciever._id,
-        message: text,
-        Details:details
-      });
-      console.log(Notification)
+        await Notification.save();
+        console.log(onlineUser);
 
-      await Notification.save();
-      console.log(onlineUser);
-    
-      const recieverID = getUser(recieveremail);
-      console.log("recieverId" ,recieverID);
-      const RecieverNotifications = await NotificationModel.find({
-        RecieverUser: reciever._id,
-      });
-      console.log(RecieverNotifications);
+        const recieverID = getUser(recieveremail);
+        console.log("recieverId", recieverID);
+        const RecieverNotifications = await NotificationModel.find({
+          RecieverUser: reciever._id,
+        });
+        console.log(RecieverNotifications);
 
-     
-      if(recieverID){
-        socket.to(recieverID).emit("getNotification", {
-          RecieverNotifications,
-        } );
-      }else{
-        console.log("user is not online")
+        if (recieverID) {
+          socket.to(recieverID).emit("getNotification", {
+            RecieverNotifications,
+          });
+        } else {
+          console.log("user is not online");
+        }
       }
-      
+    );
+
+    socket.on("DeleteNotification", (recieveremail) => {
+      socket.emit("DeleteNotification");
+      console.log("emitted");
     });
-    
 
     socket.on("disconnect", () => {
       console.log("disconnect user");
-       removeUser(socket.id);
+      removeUser(socket.id);
     });
   });
 }

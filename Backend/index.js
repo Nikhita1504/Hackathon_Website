@@ -13,6 +13,7 @@ const hackathondetails = require("./Router/hackathondetails");
 const SearchMembers = require("./Router/SearchMembers");
 const TeamDetails = require("./Router/TeamDetails");
 const CheckEnrollRouter = require("./Router/CheckEnrollRouter");
+const Notificaitonrouter = require("./Router/Notificationrouter")
 require("dotenv").config();
 require("./model/db");
 
@@ -43,6 +44,7 @@ app.use("/add-member", SearchMembers);
 app.use("/team", TeamDetails);
 app.use("/enroll", CheckEnrollRouter);
 app.use("/upload",ImageUpload);
+app.use("/Notification" , Notificaitonrouter)
 
 // Listen on port
 const Port = process.env.Port || 3000;

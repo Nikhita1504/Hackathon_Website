@@ -105,7 +105,8 @@ const teamSchema = new mongoose.Schema({
       user: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Usermodel', 
-        required: true 
+        required: true, 
+        unique:true,
       },
       role: { 
         type: String, 
