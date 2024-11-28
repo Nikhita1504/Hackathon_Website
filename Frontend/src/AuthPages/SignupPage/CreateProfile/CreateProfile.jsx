@@ -1,12 +1,13 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import './CreateProfile.scss'; // Import normal CSS
+import "./CreateProfile.scss"; // Import normal CSS
 import Usercontext from "../../../Context/Usercontext";
 import Select from "react-select";
 import { handleError, handleSucess } from "../../../Utils/utils";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import skillOptions from '../../../utils/Skillsoption'
+import skillOptions from "../../../utils/Skillsoption";
+import axios from "axios";
 
 const currentYear = new Date().getFullYear();
 const graduationYears = [
@@ -18,7 +19,6 @@ const graduationYears = [
 ];
 
 function CreateProfile() {
-
   const navigate = useNavigate();
   const { Userinfo, SetUserinfo } = useContext(Usercontext);
 
@@ -33,11 +33,21 @@ function CreateProfile() {
     copyinfo[name] = value;
     SetUserinfo(copyinfo);
   };
-
-  const handlesubmit = async(e) => {
+  const FetchUserDetails = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/home/userdata/${Userinfo.email}`
+      );
+      SetUserinfo(response.data.userdata);
+      sessionStorage.setItem("Userinfo" , Userinfo);
+    } catch (error) {
+      console.log("error in fetching user details", error);
+    }
+  };
+  const handlesubmit = async (e) => {
     e.preventDefault();
     try {
-      const URL = `http://localhost:3000/profile/${Userinfo.email}`
+      const URL = `http://localhost:3000/profile/${Userinfo.email}`;
       const body = Userinfo;
       const response = await fetch(URL, {
         method: "PUT",
@@ -48,6 +58,7 @@ function CreateProfile() {
       });
       const { message, err, success } = await response.json();
       if (success) {
+        FetchUserDetails();
         handleSucess(message);
         setTimeout(() => {
           navigate("/home");
@@ -65,13 +76,17 @@ function CreateProfile() {
   };
 
   const handleSkillsChange = (selectedOptions) => {
-    const skills = selectedOptions ? selectedOptions.map((option) => option.value) : [];
+    const skills = selectedOptions
+      ? selectedOptions.map((option) => option.value)
+      : [];
     SetUserinfo({ ...Userinfo, skills });
   };
 
   return (
     <>
-      <div className="profilecreation-container"> {/* Use className without CSS modules */}
+      <div className="profilecreation-container">
+        {" "}
+        {/* Use className without CSS modules */}
         <form className="profilecreation-form" onSubmit={handlesubmit}>
           <h1 className="h1">Create your Profile</h1>
           <div>
@@ -81,10 +96,12 @@ function CreateProfile() {
             <select
               name="college"
               required
-              value={Userinfo.college||""}
+              value={Userinfo.college || ""}
               onChange={handlechange}
             >
-              <option value="" disabled>Select college</option>
+              <option value="" disabled>
+                Select college
+              </option>
               <option value="LNCT">LNCT</option>
               <option value="LNCTS">LNCTS</option>
               <option value="LNCTE">LNCTE</option>
@@ -100,7 +117,9 @@ function CreateProfile() {
               value={Userinfo.degree || ""}
               onChange={handlechange}
             >
-              <option value="" disabled>Select degree</option>
+              <option value="" disabled>
+                Select degree
+              </option>
               <option value="CSE">CSE</option>
               <option value="AIML">AIML</option>
               <option value="AIDS">AIDS</option>
@@ -120,14 +139,22 @@ function CreateProfile() {
               value={Userinfo.GraduationYear || ""}
               onChange={handlechange}
             >
-              <option value="" disabled>Select Graduation Year</option>
+              <option value="" disabled>
+                Select Graduation Year
+              </option>
               {graduationYears.map((year) => {
-                return <option key={year} value={year}>{year}</option>;
+                return (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                );
               })}
             </select>
           </div>
           <div>
-            <label className="label" htmlFor="skills">Skills</label>
+            <label className="label" htmlFor="skills">
+              Skills
+            </label>
             <Select
               isMulti
               name="skills"
@@ -139,7 +166,9 @@ function CreateProfile() {
             />
           </div>
           <div>
-            <label className="label" htmlFor="bio">Bio</label>
+            <label className="label" htmlFor="bio">
+              Bio
+            </label>
             <textarea
               className="input"
               value={Userinfo.bio || ""}
@@ -150,9 +179,11 @@ function CreateProfile() {
             ></textarea>
           </div>
           <div>
-            <label className="label" htmlFor="githubProfile">GitHub Profile</label>
+            <label className="label" htmlFor="githubProfile">
+              GitHub Profile
+            </label>
             <input
-            required
+              required
               className="input"
               value={Userinfo.githubProfile || ""}
               type="url"
@@ -162,9 +193,11 @@ function CreateProfile() {
             />
           </div>
           <div>
-            <label className="label" htmlFor="linkedinProfile">LinkedIn Profile</label>
+            <label className="label" htmlFor="linkedinProfile">
+              LinkedIn Profile
+            </label>
             <input
-            required
+              required
               className="input"
               value={Userinfo.linkedinProfile || ""}
               type="url"
@@ -173,7 +206,9 @@ function CreateProfile() {
               onChange={handlechange}
             />
           </div>
-          <button type="submit" onClick={handlesubmit}>Save Profile</button>
+          <button type="submit" onClick={handlesubmit}>
+            Save Profile
+          </button>
         </form>
         <ToastContainer />
       </div>

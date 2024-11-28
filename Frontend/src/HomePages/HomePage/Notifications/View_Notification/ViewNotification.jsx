@@ -56,7 +56,7 @@ const ViewNotification = ({ setIsFloatingVisible, Details }) => {
       const response = await axios.get(
         `http://localhost:3000/team/${Details.teamId}`
       );
-      console.log(response.data);
+      console.log("team data",response.data);
       SetTeamDetail(response.data);
     } catch (error) {
       console.log("error in fetching team data", error);
@@ -74,15 +74,31 @@ const ViewNotification = ({ setIsFloatingVisible, Details }) => {
     <div className="floating-overlay">
       {console.log("a", TeamDetail?.members[0].user.name || "S")}
       <div className="Notification-Details-container">
+        <div className="Header">
+        <div className="Hackaton-details">
         <h3>{TeamDetail?.hackathonId.name}</h3>
-        <h8>{TeamDetail?.hackathonId.description}</h8>
+        <p>{TeamDetail?.hackathonId.description}</p>
+        </div>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          onClick={handlecloseNotification}
+        ></button>
+        </div>
+        <div className="Team-details">
         <h3>
-          TeamName:<span>{TeamDetail?.teamName}</span>
+          TeamName:   <span>{TeamDetail?.teamName}</span>
         </h3>
         {TeamDetail?.members?.map((value) => (
+          console.log(value.user),
+        
           <div className="memberCard" key={value._id}>
             <div className="memberAvatar">
-              {value.user?.name ? value.user.name : "?"}
+            <img
+                src={value.user.profilePicture}
+                alt="heeeelp"
+              ></img>
             </div>
             <div>
               <div className="memberInfo">
@@ -108,19 +124,18 @@ const ViewNotification = ({ setIsFloatingVisible, Details }) => {
             </div>
           </div>
         ))}
-        <button
-          type="button"
-          class="btn-close"
-          aria-label="Close"
-          onClick={handlecloseNotification}
-        ></button>
-        <button onClick={handleAccept} type="button" class="btn btn-success">
+        </div>
+       
+        <div className="Button">
+        <button  onClick={handleAccept} type="button" className="btn btn-success Accept">
           Accept
         </button>
 
-        <button onClick={handleDecline} type="button" class="btn btn-danger">
+        <button onClick={handleDecline} type="button" className="btn btn-danger Decline">
           Decline
         </button>
+        </div>
+       
       </div>
     </div>
   );
