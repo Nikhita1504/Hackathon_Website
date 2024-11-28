@@ -5,6 +5,8 @@ import { jwtDecode } from "jwt-decode";
 import skillOptions from "./../../../../utils/Skillsoption";
 import Usercontext from "../../../../Context/Usercontext";
 import Select from "react-select";
+import { ToastContainer, toast } from "react-toastify"; // Importing ToastContainer and toast
+import 'react-toastify/dist/ReactToastify.css'; 
 
 const EditProfile = () => {
   const { Userinfo, SetUserinfo } = useContext(Usercontext);
@@ -65,12 +67,13 @@ const EditProfile = () => {
       const user = jwtDecode(token);
 
       await axios.put(
-        `http://localhost:3000/profile/edit-profile/${user.email}`,
+        `http://localhost:3000/profile/edit-profile/${user.user.email}`,
         Userinfo
       );
-      alert("Profile updated successfully!");
+      toast.success("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);
+      toast.error("Error updating profile! Please try again.")
     }
   };
 
@@ -183,6 +186,7 @@ const EditProfile = () => {
           <button type="submit">Save Changes</button>
         </form>
       </div>
+      <ToastContainer /> 
     </>
   );
 };
