@@ -46,6 +46,7 @@ const HackathonDetails = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`http://localhost:3000/hackathon/${hackathonName}`); 
+                console.log(response.data)
                 
                 setHackathonDetails(response.data); 
             } catch (error) {

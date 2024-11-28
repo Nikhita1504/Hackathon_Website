@@ -17,6 +17,7 @@ import HackathonDetails from "../HomePages/HomePage/Navbar/Hackathons/hackathon_
 import TeamDetails from "../HomePages/HomePage/Navbar/Hackathons/team-details/TeamDetails";
 import AddMember from "../HomePages/HomePage/Navbar/Hackathons/team-details/addmember/AddMember";
 import ViewProfile from "../HomePages/HomePage/Notifications/view_profile/ViewProfile";
+import ViewDetails from "../HomePages/HomePage/Navbar/Teams/view-details/ViewDetails";
 
 
 const router = createBrowserRouter([
@@ -47,6 +48,11 @@ const router = createBrowserRouter([
           {
             path: "teams",
             element: <Teams />
+          },
+          {
+            path:"teams/view-details",
+            element:<ViewDetails/>
+
           },
           {
             path: "hackathons",
