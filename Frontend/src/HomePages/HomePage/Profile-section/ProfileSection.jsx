@@ -33,7 +33,7 @@ const ProfileSection = () => {
            
             try {
                
-                const response = await axios.get(`http://localhost:3000/home/userdata/${payload.user.email}`)
+                const response = await axios.get(`http://localhost:3000/home/userdata/${payload.email}`)
 
                 // setprofilepic(response.data.userdata.profilePicture)
                 setuserdata(response.data.userdata);
