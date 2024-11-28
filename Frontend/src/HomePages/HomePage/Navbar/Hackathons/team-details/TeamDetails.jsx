@@ -40,13 +40,13 @@ const TeamDetails = () => {
         hackathonName,
         ...teamInfo,
       });
-const teamData=response.data.team
-      
+      const teamData = response.data.team
+
 
 
 
       navigate(`/home/hackathons/${hackathonName}/team-details/add-member`, {
-        state: { hackathonName,teamData },
+        state: { hackathonName, teamData },
       });
     } catch (error) {
       console.error("Error enrolling team:", error);
