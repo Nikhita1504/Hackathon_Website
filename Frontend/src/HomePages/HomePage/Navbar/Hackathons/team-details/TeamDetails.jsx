@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styles from "./TeamDetails.module.css";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import Usercontext from "../../../../../Context/Usercontext";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
 const TeamDetails = () => {
   const location = useLocation();
   const hackathonName = location.state?.hackathonName;
+  const {Userinfo} = useContext(Usercontext);
 
   const [teamInfo, setTeamInfo] = useState({
     teamName: "",
@@ -26,9 +28,8 @@ const TeamDetails = () => {
   };
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    const payload = token ? jwtDecode(token) : null;
-    setTeamInfo({ Yourname: payload.user.name, yourEmail: payload.user.email })
+    
+    setTeamInfo({ Yourname: Userinfo.name, yourEmail: Userinfo.email })
     // console.log(payload.user.name);
   }, []);
 

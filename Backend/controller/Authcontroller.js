@@ -25,10 +25,12 @@ const signup = async (req, res) => {
     UserModell.password = await bcrypt.hash(password, 10);
     const { _id, isAdmin } = await UserModell.save();
     const token = jwt.sign(
-      {
+      {user:{
         email,
         isAdmin,
         UserId: _id,
+      }
+       
       },
       process.env.SecretKey,
      
