@@ -1,0 +1,101 @@
+.container {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+
+
+    padding: 20px;
+  }
+  
+  .card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 600px;
+    height: 600px;
+    overflow: scroll;
+    padding: 20px;
+  }
+  
+  .hackathonTitle {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a3e7a;
+    margin-bottom: 5px;
+  }
+  
+  .organizer {
+    font-size: 16px;
+    font-weight: 400;
+    color: #5a5a5a;
+    margin-bottom: 20px;
+  }
+  
+  .teamSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .teamName {
+    color: #2d4cc8;
+    font-weight: 600;
+  }
+  
+  .teammates {
+    color: #5a5a5a;
+    font-size: 14px;
+  }
+  
+  .additionalInfo {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 15px;
+  }
+  
+  .memberCard {
+    display: flex;
+    align-items: center;
+    background-color: #e8f3ff;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+    border: 0.5px solid black;
+  }
+  
+  .avatar {
+    background-color: #2a5783;
+    color: #fff;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+    font-size: 18px;
+  }
+  
+  .memberInfo {
+    flex-grow: 1;
+  }
+  
+  .memberName {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .memberDetails {
+    font-size: 14px;
+    color: #5a5a5a;
+  }
+  
+  .memberRole{
+    border: 1px solid black;
+    background-color: transparent;
+}
+  

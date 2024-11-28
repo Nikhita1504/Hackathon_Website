@@ -10,9 +10,9 @@ import skillOptions from '../../../../../../utils/Skillsoption';
 
 const AddMember = () => {
 
-    const {socket} = useContext(SocketContext)
-    const{Userinfo} = useContext(Usercontext);
-  
+    const { socket } = useContext(SocketContext)
+    const { Userinfo } = useContext(Usercontext);
+
     const [recommendations, setRecommendations] = useState([]);
     const [teamMembers, setTeamMembers] = useState([]);
     const location = useLocation();
@@ -25,13 +25,15 @@ const AddMember = () => {
     const [showYears, setShowYears] = useState(false);
     const [showSkills, setShowSkills] = useState(false);
 
-  const currentYear = new Date().getFullYear();
-  const graduationYears = [
-    currentYear,
-    currentYear + 1,
-    currentYear + 2,
-    currentYear + 3,
-  ];
+    const [modal, setmodal] = useState(false);
+
+    const currentYear = new Date().getFullYear();
+    const graduationYears = [
+        currentYear,
+        currentYear + 1,
+        currentYear + 2,
+        currentYear + 3,
+    ];
 
     const [college, setCollege] = useState([]);
     const [degree, setDegree] = useState([]);
@@ -51,23 +53,20 @@ const AddMember = () => {
     }, [hackathonName, setHackathonDetails]);
 
     useEffect(() => {
+        if (!teamData) return;
         const fetchTeamData = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/team/${teamData._id}`);
-                // console.log(response.data.members)
+                const response = await axios.get(`http://localhost:3000/team/team-details/${teamData._id}`);
                 setTeamMembers(response.data.members);
             } catch (error) {
                 console.error("Error fetching team data:", error);
             }
         };
-
-
         fetchTeamData();
         const intervalId = setInterval(fetchTeamData, 5000);
 
-
         return () => clearInterval(intervalId);
-    }, [teamData._id]);
+    }, [teamData?._id]);
 
 
     const handleCollegeChange = (e) => {
@@ -75,43 +74,41 @@ const AddMember = () => {
         console.log(value);
         console.log(checked);
         setCollege((prev) =>
-          checked ? [...prev, value] : prev.filter((college) => college !== value)
+            checked ? [...prev, value] : prev.filter((college) => college !== value)
         );
-      };
-      const handleDegreeChange = (e) => {
+    };
+    const handleDegreeChange = (e) => {
         const { value, checked } = e.target;
         setDegree((prev) =>
-          checked ? [...prev, value] : prev.filter((deg) => deg !== value)
+            checked ? [...prev, value] : prev.filter((deg) => deg !== value)
         );
-      };
-    
-        const handleSkillChange = (e) => {
-            const { value, checked } = e.target;
-            console.log(value);
-            setSkills((prev) =>
-                checked ? [...prev, value] : prev.filter((skill) => skill !== value)
-            );
-        };
-      
-        const handleYearChange = (e) => {
-            const { value, checked } = e.target;
-            const year = parseInt(value, 10); 
-            setGraduationYear((prev) =>
-                checked ? [...prev, year] : prev.filter((yr) => yr !== year)
-            );
-        };
-        
-    
-        const handleReset = () => {
-            setCollege([]);
-            setDegree([]);
-            setGraduationYear([]);
-            setSkills([]);
-            setSearchname("");
-            setRecommendations([]);
-        };
-    
-    
+    };
+
+    const handleSkillChange = (e) => {
+        const { value, checked } = e.target;
+        console.log(value);
+        setSkills((prev) =>
+            checked ? [...prev, value] : prev.filter((skill) => skill !== value)
+        );
+    };
+
+    const handleYearChange = (e) => {
+        const { value, checked } = e.target;
+        const year = parseInt(value, 10);
+        setGraduationYear((prev) =>
+            checked ? [...prev, year] : prev.filter((yr) => yr !== year)
+        );
+    };
+
+
+    const handleReset = () => {
+        setCollege([]);
+        setDegree([]);
+        setGraduationYear([]);
+        setSkills([]);
+        setSearchname("");
+        setRecommendations([]);
+    };
 
     const fetchRecommendations = async () => {
         try {
@@ -139,24 +136,36 @@ const AddMember = () => {
         }
     }, [searchname, college, degree, GraduationYear, Skills]);
 
-  const handleInvite = (item) => { 
-    console.log(item.email);
-    socket.emit("SendNotification" ,Userinfo.email , item.email,`${Userinfo.name} invites you to join their team for the ${hackathonName} hackathon!`,{teamId:teamData._id}
-)
-  };
+    const handleInvite = (item) => {
+        console.log(item.email);
+        socket.emit("SendNotification", Userinfo.email, item.email, `${Userinfo.name} invites you to join their team for the ${hackathonName} hackathon!`, { teamId: teamData._id }
+        )
+    };
 
-  const navigate = useNavigate();
-  const handleNavigateBack = () => {
-    navigate(`/home/hackathons/${hackathonName}/team-details`);
-  };
-  const handleProfileNavigate = (userEmail) => {
-    navigate("/home/view-profile", { state: { userEmail } });
-  };
-  
+    const navigate = useNavigate();
+    const handleNavigateBack = () => {
+        navigate(`/home/hackathons/${hackathonName}/team-details`);
+    };
+    const handleProfileNavigate = (userEmail) => {
+        navigate("/home/view-profile", { state: { userEmail } });
+    };
+
+    const handleDeleteTeam = async (teamId) => {
+        try {
+            await axios.delete(`http://localhost:3000/team/delete/${teamId}`);
+            setmodal(false);
+            navigate(`/home/hackathons/${hackathonName}/team-details`);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <>
+
             <div className={styles.container}>
+
+
                 <div className={styles.leftPanel}>
                     <h2 className={styles.hackathonTitle}>{hackathonDetails.name}</h2>
                     <p className={styles.institution}>
@@ -172,33 +181,43 @@ const AddMember = () => {
                             <p className={styles.memberCount}>Teammates: {teamMembers.length}/{hackathonDetails?.teamSize?.max || 'N/A'}</p>
                         </div>
                         <p className={styles.memberCountP}>You can add up to 3 additional members</p>
-                        {teamMembers.length > 0 ? (
-                            teamMembers.map((value) => (
-                                <div className={styles.memberCard} key={value._id}>
-                                    <div className={styles.memberAvatar}>{value.user.name ? value.user.name[0] : "?"}</div>
-                                    <div>
-                                        <div className={styles.memberInfo}>
-                                            <p className={styles.memberName} onClick={()=>{handleProfileNavigate(value.user.email)}}>{value.user.name || "Unknown"}</p>
-                                            <p className={styles.memberCollege}>
-                                                {value.user.college || "College not available"}
-                                            </p>
-                                            <p className={styles.memberDegree}>
-                                                {value.user.degree || "Degree not available"}
-                                            </p>
-                                            <p className={styles.memberYear}>
-                                                {value.user.GraduationYear || ""}
-                                            </p>
-                                        </div>
-                                        <button className={styles.memberRole}>
-                                            {value.role ? value.role.charAt(0).toUpperCase() + value.role.slice(1) : ""}
-                                        </button>
+                        <div className={styles.membersContainer}>
+                            {teamMembers.length > 0 ? (
+                                teamMembers.map((value) => (
+                                    <div className={styles.memberCard} key={value._id}>
+                                        <div className={styles.memberAvatar}>{value.user.name ? value.user.name[0] : "?"}</div>
+                                        <div>
+                                            <div className={styles.memberInfo}>
+                                                <p className={styles.memberName} onClick={() => { handleProfileNavigate(value.user.email) }}>{value.user.name || "Unknown"}</p>
+                                                <p className={styles.memberCollege}>
+                                                    {value.user.college || "College not available"}
+                                                </p>
+                                                <p className={styles.memberDegree}>
+                                                    {value.user.degree || "Degree not available"}
+                                                </p>
+                                                <p className={styles.memberYear}>
+                                                    {value.user.GraduationYear || ""}
+                                                </p>
 
+                                            </div>
+                                            <button className={styles.memberRole}>
+                                                {value.role ? value.role.charAt(0).toUpperCase() + value.role.slice(1) : ""}
+                                            </button>
+
+
+                                        </div>
                                     </div>
-                                </div>
-                            ))
-                        ) : (
-                            <p>No team members found</p>
-                        )}
+                                ))
+                            ) : (
+                                <p>No team members found</p>
+                            )}
+                        </div>
+                        <button onClick={() => setmodal(!modal)} className={styles.deleteTeamBtn}>
+
+                            Delete Team
+                        </button>
+
+
 
                     </div>
                 </div>
@@ -300,12 +319,23 @@ const AddMember = () => {
                                 recommendations.map((item) => (
                                     <div className={styles.item} key={item._id}>
                                         <div>
-                                            <span  onClick={()=>{handleProfileNavigate(item.email)}}>{item.name}</span>
-                                            <span className={styles.itemborder}>{item.college}</span>
-                                            <span className={styles.itemborder}>{item.degree}</span>
-                                            <span className={styles.itemborder}>{item.GraduationYear}</span>
+                                            <div >
+                                                {
+                                                    item.profilePicture ? (<img className={styles.itemimg} src={item.profilePicture} alt="" />) : <img className={styles.itemimg} src="/assets/uploadpic .png" alt="" />
+                                                }
+                                            </div>
+                                            <div className={styles.details}>
+                                                <span className={styles.detailsName} onClick={() => { handleProfileNavigate(item.email) }}>{item.name}</span>
+                                                <div className={styles.down}>
+                                                    <span>{item.college}</span>
+                                                    <span className={styles.itemborder}>{item.degree}</span>
+                                                    <span className={styles.itemborder}>{item.GraduationYear}</span>
+
+                                                </div>
+
+                                            </div>
                                         </div>
-                                        <button onClick={()=>handleInvite(item)}>Invite</button>
+                                        <button onClick={() => handleInvite(item)}>Invite</button>
                                     </div>
                                 ))
                             ) : (
@@ -318,12 +348,35 @@ const AddMember = () => {
 
             <div className={styles.buttonContainer}>
                 <button className={styles.backButton}
-                onClick={handleNavigateBack}
+                    onClick={handleNavigateBack}
                 >
                     Back
                 </button>
                 <button className={styles.completeRegistrationButton}>Complete Registration</button>
             </div>
+
+            {/* Modal */}
+            {modal && (
+                <div className={styles.modalBg}>
+                    <div className={styles.modal}>
+                        <h3>Are you sure you want to delete this team?</h3>
+                        <div className={styles.modalButtons}>
+                            <button
+                                onClick={() => handleDeleteTeam(teamData._id)}
+                                className={styles.confirmButton}
+                            >
+                                Yes
+                            </button>
+                            <button
+                                onClick={() => setmodal(false)}
+                                className={styles.cancelButton}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 };

@@ -3,6 +3,8 @@
     gap: 20px;
     padding: 20px;
     height: 74vh;
+    position: relative;
+    z-index: 1;
 }
 
 .leftPanel,
@@ -12,6 +14,12 @@
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+.leftPanel{
+    overflow: scroll;
+    position: relative;
+  
+
 }
 
 .rightPanel {
@@ -55,6 +63,10 @@
     color: #777;
 }
 
+.membersContainer{
+    /* overflow: scroll; */
+}
+
 .memberCard {
     display: flex;
     align-items: center;
@@ -64,6 +76,7 @@
     border-radius: 8px;
     margin-top: 10px;
     transition: background-color 0.3s ease;
+    position: relative;
 }
 
 .memberCard:hover {
@@ -101,6 +114,23 @@
     border: 1px solid black;
     background-color: transparent;
 }
+.deleteTeamBtn{
+    background-color: transparent;
+    /* border: 0.5px solid black; */
+    border: none;
+    color: darkblue;
+    padding: 8px;
+    position: absolute;
+    right: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.deleteTeamBtn:hover{
+    cursor: pointer;
+    background-color: rgba(250, 69, 69, 0.777);
+    color: black;
+}
+
 
 .addMemberButton,
 .inviteFriendsButton,
@@ -284,7 +314,8 @@
     background-color: #e8f1f9;
     color: #004d40;
     width: 100%;
-    padding: 10px;
+    gap: 10px;
+    padding: 15px 10px;
     border-radius: 8px;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
@@ -295,6 +326,13 @@
     gap: 12px;
     align-items: center;
 }
+.item .details{
+/* background-color: #004080; */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+}
+
 
 .item .itemborder {
     font-size: 15px;
@@ -313,6 +351,14 @@
     font-weight: bold;
     cursor: pointer;
 }
+/* .details .detailsName{
+   text-align: left;
+} */
+
+.details .down span{
+font-size: 12px;
+font-weight: 400;
+}
 
 .item button {
     background-color: #5a82a1;
@@ -327,4 +373,83 @@
 
 .item button:hover {
     background-color: #2C3E50;
+}
+.itemimg{
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    object-fit: cover;
+}
+/* Modal Background */
+.modalBg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* Modal Box */
+.modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 300px;
+    max-width: 90%;
+}
+
+/* Modal Buttons */
+.modalButtons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.confirmButton,
+.cancelButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.confirmButton {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.cancelButton {
+    background-color: #ccc;
+    color: black;
+}
+
+.confirmButton:hover {
+    background-color: #e63939;
+}
+
+.cancelButton:hover {
+    background-color: #bbb;
+}
+.removeBtn{
+    background-color: transparent;
+    border: none;
+    position: absolute;
+right: 20px;
+}
+.removeBtn:hover{
+    color: black;
+    background-color: #f76464ce ;
+    cursor: pointer;
+    padding: 5px ;
+    transition: 0.2s;
 }
