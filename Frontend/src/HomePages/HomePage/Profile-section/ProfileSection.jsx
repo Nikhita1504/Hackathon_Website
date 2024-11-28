@@ -24,11 +24,15 @@ const ProfileSection = () => {
         } else {
             token = sessionStorage.getItem('token', token)
         }
+      
 
         const payload = jwtDecode(token)
+        
 
         const fetchuserdata = async () => {
+           
             try {
+               
                 const response = await axios.get(`http://localhost:3000/home/userdata/${payload.user.email}`)
 
                 // setprofilepic(response.data.userdata.profilePicture)
@@ -43,7 +47,7 @@ const ProfileSection = () => {
         }
         fetchuserdata();
 
-    }, [userdata])
+    }, [])
 
     const handleEdit = () => {
         navigate('/home/edit-profile');
@@ -86,7 +90,7 @@ const ProfileSection = () => {
         try {
 
             const uploadResponse = await axios.post(
-                `http://localhost:3000/upload/${payload.user.email}`,
+                `http://localhost:3000/upload/${payload.email}`,
                 formData
             );
     

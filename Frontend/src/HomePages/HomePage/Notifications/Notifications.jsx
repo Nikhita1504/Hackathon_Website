@@ -4,16 +4,16 @@ import Socketcontext from "../../../Context/SocketContext";
 import Usercontext from "../../../Context/Usercontext";
 import axios from "axios";
 
-const Notifications = ({ setIsFloatingVisible , SetDetails}) => {
-  const [notifications, setNotifications] = useState([]); // Change state to an array
+const Notifications = ({ setIsFloatingVisible, SetDetails }) => {
   const { socket } = useContext(Socketcontext);
   const { Userinfo } = useContext(Usercontext);
-
+  const [notifications, setNotifications] = useState([]);
   const handleViewClick = (notif) => {
     setIsFloatingVisible(true);
     console.log(notif);
     console.log("details", notif.Details);
-    SetDetails(notif.Details)
+    console.log("NotiId", notif._id);
+    SetDetails({ teamId: notif.Details.teamId, NotificationId: notif._id });
   };
 
   const FetchNotificaion = async () => {
@@ -22,7 +22,7 @@ const Notifications = ({ setIsFloatingVisible , SetDetails}) => {
       const reponse = await axios.get(
         `http://localhost:3000/home/userdata/${Userinfo.email}`
       );
-      console.log(reponse.data.userNotification);
+      console.log("notification data", reponse.data.userNotification);
       setNotifications(reponse.data.userNotification);
     } catch (error) {
       console.log("fetching of notification is failed", error);
@@ -38,6 +38,10 @@ const Notifications = ({ setIsFloatingVisible , SetDetails}) => {
     socket?.on("getNotification", () => {
       FetchNotificaion();
     });
+    socket?.on("DeleteNotification", () => {
+      console.log("deletenotification");
+      FetchNotificaion();
+    });
   }, [socket]);
 
   return (
@@ -48,16 +52,26 @@ const Notifications = ({ setIsFloatingVisible , SetDetails}) => {
       {notifications.length > 0 ? (
         notifications.map((notif, index) => (
           <div key={index} className="single-Notification-container">
-            <div className="profile-part"></div>
+            <div className="profile-part">
+              <img
+                src={notif.SenderUser.profilePicture}
+                alt="User profile"
+              ></img>
+            </div>
             <div className="message-and-button">
               <div className="message-part">
                 <p>
                   <strong>{notif.message}</strong>{" "}
                 </p>
-                <p>{notif.createdAt}</p>
+             
               </div>
-              <button onClick={()=>{
-                handleViewClick(notif)}} className="button">
+              <p className="createAtpara">{notif.createdAt}</p>
+              <button
+                onClick={() => {
+                  handleViewClick(notif);
+                }}
+                className="button"
+              >
                 View
               </button>
             </div>

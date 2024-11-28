@@ -31,7 +31,6 @@ function Setpassword() {
       const {email,name} = jwtDecode(token);
       Userinfo.email = email;
       Userinfo.name = name;
-      // SetUserinfo(name)
      sessionStorage.setItem('token' , token); 
 
     }
@@ -40,7 +39,6 @@ function Setpassword() {
   
 
   const handleSubmit = async(e) =>{
-    console.log("hello")
     e.preventDefault();
     if(Userinfo.password == confirmpassword){
      try{
@@ -99,7 +97,6 @@ function Setpassword() {
         <input
           id='password'
           className={style.input}
-          // value={Userinfo.password}
           type={showPassword ? 'text' : 'password'}
           placeholder="Enter password"
           name="password"

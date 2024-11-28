@@ -9,12 +9,13 @@ import { useState } from "react";
 const HomePage = () => {
   const [isFloatingVisible, setIsFloatingVisible] = useState(false);
 const [Details , SetDetails] = useState({})
+
   return (
     <>
       {isFloatingVisible && (
         <ViewNotification
           setIsFloatingVisible={setIsFloatingVisible}
-    Details = {Details}
+    Details = {Details} 
         ></ViewNotification>
       )}
       <div className="home-container">

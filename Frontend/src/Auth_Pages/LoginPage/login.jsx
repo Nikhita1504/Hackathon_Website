@@ -5,7 +5,6 @@ import { handleError, handleSucess } from "../../Utils/utils";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function login() {
-  
   const [logininfo, Setlogininfo] = useState({
     email: "",
     password: "",
@@ -102,4 +101,3 @@ function login() {
   );
 }
 export default login;
-

@@ -7,8 +7,8 @@ homerouter.get("/userdata/:email",async(req,res)=>{
  
       const userdata= await UserModel.findOne({email:req.params.email});
 
-      const userNotification = await NotificationModel.find({RecieverUser:userdata._id}).populate('SenderUser', 'name email') // Populate SenderUser with specific fields (e.g., name and email)
-      .populate('RecieverUser', 'name email') // Populate RecieverUser with specific fields
+      const userNotification = await NotificationModel.find({RecieverUser:userdata._id}).populate('SenderUser') // Populate SenderUser with specific fields (e.g., name and email)
+      .populate('RecieverUser') // Populate RecieverUser with specific fields
       .sort({ createdAt: -1 }); 
   
       if(!userdata){
