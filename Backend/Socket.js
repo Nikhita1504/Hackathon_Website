@@ -63,6 +63,7 @@ function hello(server) {
         const sender = await UserModel.findOne({ email: senderemail });
         const reciever = await UserModel.findOne({ email: recieveremail });
 
+
         const Notification = new NotificationModel({
           SenderUser: sender._id,
           RecieverUser: reciever._id,

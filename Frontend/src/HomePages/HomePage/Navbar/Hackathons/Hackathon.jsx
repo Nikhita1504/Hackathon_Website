@@ -10,6 +10,7 @@ const Hackathon = () => {
 
   const handleNavigate = (hackathonName, e) => {
     e.preventDefault(); 
+    // console.log(hackathonName)
     navigate(`/home/hackathons/${hackathonName}`);
   };
 

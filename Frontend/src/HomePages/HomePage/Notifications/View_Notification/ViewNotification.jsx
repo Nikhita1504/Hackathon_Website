@@ -54,7 +54,7 @@ const ViewNotification = ({ setIsFloatingVisible, Details }) => {
   const fetchTeamData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/team/${Details.teamId}`
+        `http://localhost:3000/team/team-details/${Details.teamId}`
       );
       console.log("team data",response.data);
       SetTeamDetail(response.data);
@@ -88,7 +88,7 @@ const ViewNotification = ({ setIsFloatingVisible, Details }) => {
         </div>
         <div className="Team-details">
         <h3>
-          TeamName:   <span>{TeamDetail?.teamName}</span>
+          TeamName: <span>{TeamDetail?.teamName}</span>
         </h3>
         {TeamDetail?.members?.map((value) => (
           console.log(value.user),
