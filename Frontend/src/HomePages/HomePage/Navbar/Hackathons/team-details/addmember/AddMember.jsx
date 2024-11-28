@@ -154,7 +154,7 @@ const AddMember = () => {
         try {
             await axios.delete(`http://localhost:3000/team/delete/${teamId}`);
             setmodal(false);
-            navigate(`/home/hackathons/${hackathonName}/team-details`);
+            navigate(`/home/hackathons`);
         } catch (error) {
             console.log(error);
         }
