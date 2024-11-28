@@ -24,10 +24,10 @@ const ProfileSection = () => {
         } else {
             token = sessionStorage.getItem('token', token)
         }
-      
+        
 
         const payload = jwtDecode(token)
-        
+        console.log("paylogad",payload)
 
         const fetchuserdata = async () => {
            
