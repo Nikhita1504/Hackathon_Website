@@ -27,7 +27,9 @@ function ViewDetails() {
         teamData.members.length>0 ?  (
             teamData.members.map((member)=>(
                 <div className={styles.memberCard}>
-                <div className={styles.avatar}>{member.user.name ? member.user.name.charAt(0): "?"}</div>
+                <div className={styles.avatar}>{
+                    member.user.profilePicture ? (<img src={member.user.profilePicture} alt="" />):(<img src="/assets/uploadpic .png" alt="" />)
+                }</div>
                 <div className={styles.memberInfo}>
                   <p className={styles.memberName}>{member.user.name || "No Username"}</p>
                   <p className={styles.memberDetails}>

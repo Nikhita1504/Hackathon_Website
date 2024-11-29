@@ -3,6 +3,7 @@ import "./notification.scss";
 import Socketcontext from "../../../Context/SocketContext";
 import Usercontext from "../../../Context/Usercontext";
 import axios from "axios";
+import { format } from 'date-fns';
 
 const Notifications = ({ setIsFloatingVisible, SetDetails }) => {
   const { socket } = useContext(Socketcontext);
@@ -53,19 +54,28 @@ const Notifications = ({ setIsFloatingVisible, SetDetails }) => {
         notifications.map((notif, index) => (
           <div key={index} className="single-Notification-container">
             <div className="profile-part">
-              <img
+              {
+                notif.SenderUser.profilePicture ? <img
+                  src={notif.SenderUser.profilePicture}
+                  alt="User profile"
+                ></img> : <img src="assets/uploadpic .png" alt="Member Avatar" />
+              }
+              {/* <img
                 src={notif.SenderUser.profilePicture}
                 alt="User profile"
-              ></img>
+              ></img> */}
             </div>
             <div className="message-and-button">
               <div className="message-part">
                 <p>
-                  <strong>{notif.message}</strong>{" "}
+                {notif.message}{" "}
                 </p>
-             
+
               </div>
-              <p className="createAtpara">{notif.createdAt}</p>
+              {/* <p className="createAtpara">{notif.createdAt}</p> */}
+              <p className="createAtpara">
+  {format(new Date(notif.createdAt), 'MMM dd, yyyy hh:mm a')}
+</p>
               <button
                 onClick={() => {
                   handleViewClick(notif);

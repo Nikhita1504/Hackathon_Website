@@ -64,18 +64,17 @@
     border: 0.5px solid black;
   }
   
-  .avatar {
+  .avatar img {
     background-color: #2a5783;
     color: #fff;
     font-weight: 700;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    margin-right: 15px;
-    font-size: 18px;
+    object-fit: cover;
   }
   
   .memberInfo {

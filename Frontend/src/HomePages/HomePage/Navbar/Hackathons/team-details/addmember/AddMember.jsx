@@ -6,6 +6,9 @@ import HackathonContext from "../../../../../../Context/HackathonContext";
 import SocketContext from "../../../../../../Context/SocketContext";
 import Usercontext from "../../../../../../Context/Usercontext";
 import skillOptions from "../../../../../../utils/Skillsoption";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'; 
+
 
 const AddMember = () => {
 
@@ -34,40 +37,40 @@ const AddMember = () => {
         currentYear + 3,
     ];
 
-  const [college, setCollege] = useState([]);
-  const [degree, setDegree] = useState([]);
-  const [GraduationYear, setGraduationYear] = useState([]);
-  const [Skills, setSkills] = useState([]);
+    const [college, setCollege] = useState([]);
+    const [degree, setDegree] = useState([]);
+    const [GraduationYear, setGraduationYear] = useState([]);
+    const [Skills, setSkills] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/hackathon/${hackathonName}`
-        );
-        setHackathonDetails(response.data);
-      } catch (error) {
-        console.error("Error fetching hackathon data:", error);
-      }
-    };
-    fetchData();
-  }, [hackathonName, setHackathonDetails]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:3000/hackathon/${hackathonName}`
+                );
+                setHackathonDetails(response.data);
+            } catch (error) {
+                console.error("Error fetching hackathon data:", error);
+            }
+        };
+        fetchData();
+    }, [hackathonName, setHackathonDetails]);
 
-  useEffect(() => {
-    const fetchTeamData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/team/team-details/${teamData._id}`
-        );
-        // console.log(response.data.members)
-        setTeamMembers(response.data.members);
-      } catch (error) {
-        console.error("Error fetching team data:", error);
-      }
-    };
+    useEffect(() => {
+        const fetchTeamData = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:3000/team/team-details/${teamData._id}`
+                );
+                // console.log(response.data.members[0].role)
+                setTeamMembers(response.data.members);
+            } catch (error) {
+                console.error("Error fetching team data:", error);
+            }
+        };
 
-    fetchTeamData();
-    const intervalId = setInterval(fetchTeamData, 5000);
+        fetchTeamData();
+        const intervalId = setInterval(fetchTeamData, 5000);
 
         return () => clearInterval(intervalId);
     }, [teamData?._id]);
@@ -114,53 +117,53 @@ const AddMember = () => {
         setRecommendations([]);
     };
 
-  const fetchRecommendations = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:3000/add-member/search",
-        {
-          params: {
-            name: searchname.length > 2 ? searchname : undefined,
-            college: college.length ? college : undefined,
-            degree: degree.length ? degree : undefined,
-            GraduationYear: GraduationYear.length ? GraduationYear : undefined,
-            skills: Skills.length ? Skills : undefined,
-          },
+    const fetchRecommendations = async () => {
+        try {
+            const response = await axios.get(
+                "http://localhost:3000/add-member/search",
+                {
+                    params: {
+                        name: searchname.length > 2 ? searchname : undefined,
+                        college: college.length ? college : undefined,
+                        degree: degree.length ? degree : undefined,
+                        GraduationYear: GraduationYear.length ? GraduationYear : undefined,
+                        skills: Skills.length ? Skills : undefined,
+                    },
+                }
+            );
+            setRecommendations(response.data);
+        } catch (error) {
+            console.error("Error fetching recommendations:", error);
         }
-      );
-      setRecommendations(response.data);
-    } catch (error) {
-      console.error("Error fetching recommendations:", error);
-    }
-  };
+    };
 
-  useEffect(() => {
-    if (
-      searchname.length > 2 ||
-      college.length ||
-      degree.length ||
-      GraduationYear.length ||
-      Skills.length
-    ) {
-      fetchRecommendations();
-    } else {
-      setRecommendations([]);
-    }
-  }, [searchname, college, degree, GraduationYear, Skills]);
+    useEffect(() => {
+        if (
+            searchname.length > 2 ||
+            college.length ||
+            degree.length ||
+            GraduationYear.length ||
+            Skills.length
+        ) {
+            fetchRecommendations();
+        } else {
+            setRecommendations([]);
+        }
+    }, [searchname, college, degree, GraduationYear, Skills]);
 
-  const handleInvite = (item) => {
-    if (teamMembers.length == hackathonDetails?.teamSize?.max) {
-      alert("Team is full");
-    } else {
-      socket.emit(
-        "SendNotification",
-        Userinfo.email,
-        item.email,
-        `${Userinfo.name} invites you to join their team for the ${hackathonName} hackathon!`,
-        { teamId: teamData._id }
-      );
-    }
-  };
+    const handleInvite = (item) => {
+        if (teamMembers.length == hackathonDetails?.teamSize?.max) {
+            toast.info("Team is full");
+        } else {
+            socket.emit(
+                "SendNotification",
+                Userinfo.email,
+                item.email,
+                `${Userinfo.name} invites you to join their team for the ${hackathonName} hackathon!`,
+                { teamId: teamData._id }
+            );
+        }
+    };
 
     const navigate = useNavigate();
     const handleNavigateBack = () => {
@@ -174,25 +177,27 @@ const AddMember = () => {
         try {
             await axios.delete(`http://localhost:3000/team/delete/${teamId}`);
             setmodal(false);
+
             navigate(`/home/hackathons`);
+            
         } catch (error) {
             console.log(error);
         }
     };
 
-  return (
-    <>
-      <div className={styles.container}>
-        <div className={styles.leftPanel}>
-          <h2 className={styles.hackathonTitle}>{hackathonDetails.name}</h2>
-          <p className={styles.institution}>
-            {hackathonDetails?.organizers?.[0]?.name || "N/A"}
-          </p>
+    return (
+        <>
+            <div className={styles.container}>
+                <div className={styles.leftPanel}>
+                    <h2 className={styles.hackathonTitle}>{hackathonDetails.name}</h2>
+                    <p className={styles.institution}>
+                        {hackathonDetails?.organizers?.[0]?.name || "N/A"}
+                    </p>
 
                     <div className={styles.teamSection}>
                         <div className={styles.teamHeader}>
                             <h3 className={styles.teamName}>
-                                Team Name: <span className={styles.teamNameHighlight}>{teamData.teamName}</span>
+                                Team Name: <span className={styles.teamNameHighlight}>{teamData.teamName} </span>
                             </h3>
                             <p className={styles.memberCount}>Teammates: {teamMembers.length}/{hackathonDetails?.teamSize?.max || 'N/A'}</p>
                         </div>
@@ -201,7 +206,13 @@ const AddMember = () => {
                             {teamMembers.length > 0 ? (
                                 teamMembers.map((value) => (
                                     <div className={styles.memberCard} key={value._id}>
-                                        <div className={styles.memberAvatar}> <img className={styles.Image} src={value.user.profilePicture} alt="heeeelp"></img></div>
+                                        <div className={styles.memberAvatar}>
+                                            {
+                                                value.user.profilePicture ? (<img src={value.user.profilePicture} />) :
+                                                    (<img src="/assets/uploadpic .png" alt="Member Avatar" />)
+                                            }
+                                            {/* <img className={styles.Image} src={value.user.profilePicture} alt="heeeelp"></img> */}
+                                        </div>
                                         <div>
                                             <div className={styles.memberInfo}>
                                                 <p className={styles.memberName} onClick={() => { handleProfileNavigate(value.user.email) }}>{value.user.name || "Unknown"}</p>
@@ -228,107 +239,104 @@ const AddMember = () => {
                                 <p>No team members found</p>
                             )}
                         </div>
-                        <button onClick={() => setmodal(!modal)} className={styles.deleteTeamBtn}>
-
-                            Delete Team
-                        </button>
+                        {teamData?.members?.[0]?.role === "leader" ? (
+                            <button onClick={() => setmodal(!modal)} className={styles.deleteTeamBtn}>
+                                Delete Team
+                            </button>
+                        ) : null}
 
 
 
                     </div>
                 </div>
 
-        <div className={styles.rightPanel}>
-          <div className={styles.filters}>
-            <div className={styles.header}>
-              <h3>Filter By:</h3>
-              <button onClick={handleReset}>Reset</button>
-            </div>
+                <div className={styles.rightPanel}>
+                    <div className={styles.filters}>
+                        <div className={styles.header}>
+                            <h3>Filter By:</h3>
+                            <button onClick={handleReset}>Reset</button>
+                        </div>
 
-            <p onClick={() => setShowColleges(!showColleges)}>Colleges</p>
-            <div
-              className={`${styles.filterlist} ${
-                showColleges ? styles.showfilterlist : ""
-              }`}
-            >
-              {["LNCT", "LNCTS", "LNCTE"].map((value) => (
-                <div className={styles.filterCategory} key={value}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      value={value}
-                      checked={college.includes(value)}
-                      onChange={handleCollegeChange}
-                    />
-                    {value}
-                  </label>
-                </div>
-              ))}
-            </div>
+                        <p onClick={() => setShowColleges(!showColleges)}>Colleges</p>
+                        <div
+                            className={`${styles.filterlist} ${showColleges ? styles.showfilterlist : ""
+                                }`}
+                        >
+                            {["LNCT", "LNCTS", "LNCTE"].map((value) => (
+                                <div className={styles.filterCategory} key={value}>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            value={value}
+                                            checked={college.includes(value)}
+                                            onChange={handleCollegeChange}
+                                        />
+                                        {value}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
 
-            <p onClick={() => setShowBranches(!showBranches)}>Branches</p>
-            <div
-              className={`${styles.filterlist} ${
-                showBranches ? styles.showfilterlist : ""
-              }`}
-            >
-              {["CSE", "AIML", "AIDS", "IOT", "ME", "EC", "EE"].map((value) => (
-                <div className={styles.filterCategory} key={value}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      value={value}
-                      checked={degree.includes(value)}
-                      onChange={handleDegreeChange}
-                    />
-                    {value}
-                  </label>
-                </div>
-              ))}
-            </div>
+                        <p onClick={() => setShowBranches(!showBranches)}>Branches</p>
+                        <div
+                            className={`${styles.filterlist} ${showBranches ? styles.showfilterlist : ""
+                                }`}
+                        >
+                            {["CSE", "AIML", "AIDS", "IOT", "ME", "EC", "EE"].map((value) => (
+                                <div className={styles.filterCategory} key={value}>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            value={value}
+                                            checked={degree.includes(value)}
+                                            onChange={handleDegreeChange}
+                                        />
+                                        {value}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
 
-            <p onClick={() => setShowYears(!showYears)}>Year</p>
-            <div
-              className={`${styles.filterlist} ${
-                showYears ? styles.showfilterlist : ""
-              }`}
-            >
-              {graduationYears.map((value) => (
-                <div className={styles.filterCategory} key={value}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      value={value}
-                      checked={GraduationYear.includes(value)}
-                      onChange={handleYearChange}
-                    />
-                    {value}
-                  </label>
-                </div>
-              ))}
-            </div>
+                        <p onClick={() => setShowYears(!showYears)}>Year</p>
+                        <div
+                            className={`${styles.filterlist} ${showYears ? styles.showfilterlist : ""
+                                }`}
+                        >
+                            {graduationYears.map((value) => (
+                                <div className={styles.filterCategory} key={value}>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            value={value}
+                                            checked={GraduationYear.includes(value)}
+                                            onChange={handleYearChange}
+                                        />
+                                        {value}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
 
-            <p onClick={() => setShowSkills(!showSkills)}>Skills</p>
-            <div
-              className={`${styles.filterlist} ${
-                showSkills ? styles.showfilterlist : ""
-              }`}
-            >
-              {skillOptions.map((value) => (
-                <div className={styles.filterCategory} key={value.value}>
-                  <label>
-                    <input
-                      type="checkbox"
-                      value={value.value}
-                      checked={Skills.includes(value.value)}
-                      onChange={handleSkillChange}
-                    />
-                    {value.label}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </div>
+                        <p onClick={() => setShowSkills(!showSkills)}>Skills</p>
+                        <div
+                            className={`${styles.filterlist} ${showSkills ? styles.showfilterlist : ""
+                                }`}
+                        >
+                            {skillOptions.map((value) => (
+                                <div className={styles.filterCategory} key={value.value}>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            value={value.value}
+                                            checked={Skills.includes(value.value)}
+                                            onChange={handleSkillChange}
+                                        />
+                                        {value.label}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
 
                     <div className={styles.searchContainer}>
                         <div className={styles.searchBar}>
@@ -403,6 +411,7 @@ const AddMember = () => {
                     </div>
                 </div>
             )}
+            <ToastContainer/>
         </>
     );
 };

@@ -85,18 +85,18 @@
     background-color: #d2e7f3;
 }
 
-.memberAvatar {
+.memberAvatar img {
     background-color: #2a5783;
     color: white;
     font-weight: bold;
-    font-size: 16px;
     border-radius: 50%;
-    width: 45px;
-    height: 45px;
+    width: 55px;
+    height: 55px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 15px;
+    object-fit: cover;
     
 }
 .Image{

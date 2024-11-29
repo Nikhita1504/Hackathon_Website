@@ -1,11 +1,12 @@
 .Notification-container {
   height: 100vh;
   overflow-y: auto;
-  background-color: white;
-
+  background-color: #eff2f8; 
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 
   h3 {
-    text-align: center;
+   font-weight: 500;
   }
 
   .single-Notification-container {
@@ -17,13 +18,13 @@
     align-items: start;
 
 
-    .profile-part {
+    .profile-part img {
       margin: 5px;
      padding: 1px 1px;
       border: 1px solid rgb(175, 172, 172);
-      width: 80px;
+      width: 50px;
       height: 50px;
-  
+  object-fit: cover;
       overflow: hidden;
       border-radius: 50%;
       img{
@@ -59,7 +60,8 @@ font-size: small;
         width: 100%;
 
         p {
-         
+        font-weight: 430;
+
           margin: 1px;
           padding: 0;
         }
