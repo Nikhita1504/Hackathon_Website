@@ -30,6 +30,7 @@ const [Details , SetDetails] = useState({})
         <div className="three">
           <Notifications setIsFloatingVisible={setIsFloatingVisible} SetDetails={SetDetails} />
         </div>
+        
       </div>
     </>
   );

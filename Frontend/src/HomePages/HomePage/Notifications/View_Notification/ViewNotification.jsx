@@ -5,6 +5,9 @@ import Usercontext from "../../../../Context/Usercontext";
 import SocketContext from "../../../../Context/SocketContext";
 import styles from "./ViewNotification.module.css"; // Import the module.css
 
+import { handleError, handleSucess } from "../../../../utils/utils";
+import { ToastContainer } from "react-toastify";
+
 const ViewNotification = ({ setIsFloatingVisible, Details }) => {
   const [TeamDetail, SetTeamDetail] = useState(null);
   const { Userinfo } = useContext(Usercontext);
@@ -16,7 +19,7 @@ const ViewNotification = ({ setIsFloatingVisible, Details }) => {
   };
 
   const handleAccept = async () => {
-    console.log("InviteDetails", TeamDetail);
+    
     try {
       const data = {
         team_id: TeamDetail._id,
@@ -34,7 +37,10 @@ const ViewNotification = ({ setIsFloatingVisible, Details }) => {
       socket?.emit("DeleteNotification", Userinfo.email);
       handlecloseNotification();
     } catch (error) {
-      console.log("error in accepting invite", error);
+      if(error.response){
+      handleError(error.response.data.message);
+      console.log(error.response.data.message)
+      }
     }
   };
 
@@ -133,9 +139,12 @@ const ViewNotification = ({ setIsFloatingVisible, Details }) => {
         >
           Decline
         </button>
+        
       </div>
     </div>
+    <ToastContainer />
   </div>
+   
   
   );
 };

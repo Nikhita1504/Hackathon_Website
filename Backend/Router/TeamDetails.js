@@ -142,6 +142,19 @@ TeamDetails.put("/updateTeamMembers", async (req, res) => {
         .json({ message: "No team found with the given ID" });
     }
 
+    const isAlreadyInAnotherTeam = await TeamModel.findOne({
+      hackathonId: team.hackathonId,
+      "members.user": newMember.user,
+      _id: { $ne: team_id }, // Exclude the current team
+    });
+    
+    if (isAlreadyInAnotherTeam) {
+     
+      return res
+        .status(400)
+        .json({ message: "You are already in a Team " });
+    }
+
     const isMemberExists = team.members.some(
       (member) => member.user.toString() === newMember.user.toString()
     );
