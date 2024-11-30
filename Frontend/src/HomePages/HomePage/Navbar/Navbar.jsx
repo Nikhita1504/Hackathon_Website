@@ -1,18 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import "./navbar.scss";
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import SocketContext from '../../../Context/SocketContext';
 
 const Navbar = () => {
   const [modal, setopenmodal] = useState(false);
   const navigate = useNavigate();
+  const{socket} = useContext(SocketContext);
   const handleEditProfile = () => {
     setopenmodal(false)
     navigate('/home/edit-profile');
   };
+  
 
+const handlelogout = () =>{
+  try {
+    sessionStorage.clear();
+    socket.disconnect();
+    navigate("/login");
+  } catch (error) {
+    console.log("error " ,error)
+  }
+}
  
 
   return (
@@ -45,7 +57,7 @@ const Navbar = () => {
             <div className={`modaloverlay ${modal ? 'modalshow' : ''}`}>
               <button onClick={handleEditProfile}>Edit profile</button>
               <br />
-              <button>Logout</button>
+              <button onClick={handlelogout}>Logout</button>
 
             </div>
           </div>

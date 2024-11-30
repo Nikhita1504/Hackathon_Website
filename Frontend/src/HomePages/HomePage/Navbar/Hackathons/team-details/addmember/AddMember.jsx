@@ -7,7 +7,7 @@ import SocketContext from "../../../../../../Context/SocketContext";
 import Usercontext from "../../../../../../Context/Usercontext";
 import skillOptions from "../../../../../../utils/Skillsoption";
 import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css'; 
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const AddMember = () => {
@@ -179,11 +179,14 @@ const AddMember = () => {
             setmodal(false);
 
             navigate(`/home/hackathons`);
-            
+
         } catch (error) {
             console.log(error);
         }
     };
+
+
+
 
     return (
         <>
@@ -239,11 +242,20 @@ const AddMember = () => {
                                 <p>No team members found</p>
                             )}
                         </div>
-                        {teamData?.members?.[0]?.role === "leader" ? (
-                            <button onClick={() => setmodal(!modal)} className={styles.deleteTeamBtn}>
-                                Delete Team
-                            </button>
-                        ) : null}
+
+
+                        {teamData?.members?.some(
+                            (member) =>
+                                member.role === "leader" &&
+                                member.user.toString() === Userinfo._id.toString() // User ID match
+                        ) && (
+                                <button
+                                    onClick={() => setmodal(!modal)}
+                                    className={styles.deleteTeamBtn}
+                                >
+                                    Delete Team
+                                </button>
+                            )}
 
 
 
@@ -411,7 +423,7 @@ const AddMember = () => {
                     </div>
                 </div>
             )}
-            <ToastContainer/>
+            <ToastContainer />
         </>
     );
 };

@@ -27,7 +27,7 @@ const ProfileSection = () => {
         
 
         const payload = jwtDecode(token)
-        console.log("paylogad",payload)
+        // console.log("paylogad",payload)
 
         const fetchuserdata = async () => {
            
