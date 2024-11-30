@@ -47,7 +47,7 @@ const ProfileSection = () => {
         }
         fetchuserdata();
 
-    }, [])
+    }, [userdata])
 
     const handleEdit = () => {
         navigate('/home/edit-profile');
@@ -90,7 +90,7 @@ const ProfileSection = () => {
         try {
 
             const uploadResponse = await axios.post(
-                `http://localhost:3000/upload/${payload.email}`,
+                `http://localhost:3000/upload/${payload.user.email}`,
                 formData
             );
     
