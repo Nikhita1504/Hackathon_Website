@@ -54,12 +54,17 @@ const Notifications = ({ setIsFloatingVisible, SetDetails }) => {
         notifications.map((notif, index) => (
           <div key={index} className="single-Notification-container">
             <div className="profile-part">
-              {
-                notif.SenderUser.profilePicture ? <img
-                  src={notif.SenderUser.profilePicture}
-                  alt="User profile"
-                ></img> : <img src="assets/uploadpic .png" alt="Member Avatar" />
-              }
+            {
+  notif.SenderUser?.profilePicture ? (
+    <img
+      src={notif.SenderUser.profilePicture}
+      alt="User profile"
+    />
+  ) : (
+    <img src="assets/uploadpic .png" alt="Member Avatar" />
+  )
+}
+
               {/* <img
                 src={notif.SenderUser.profilePicture}
                 alt="User profile"

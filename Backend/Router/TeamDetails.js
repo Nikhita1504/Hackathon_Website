@@ -71,6 +71,7 @@ TeamDetails.get("/teams-list/:email", async (req, res) => {
 TeamDetails.get("/team-details/:teamid", async (req, res) => {
   try {
     const { teamid } = req.params;
+    const { userId } = req.query;
     const teamData = await TeamModel.findOne({ _id: teamid })
       .populate({
         path: "members.user",
@@ -81,7 +82,13 @@ TeamDetails.get("/team-details/:teamid", async (req, res) => {
     if (!teamData) {
       return res.status(404).json({ message: "Team does not exist" });
     }
-    // console.log(teamData)
+    // const isMember = teamData.members.some((member) => member.user._id.toString() === userId);
+
+    // if (!isMember) {
+    //   return res.status(403).json({ message: "You are no longer a member of this team" });
+    // }
+
+    // console.log(teamData.members)
     res.json(teamData);
   } catch (error) {
     console.error(error);
@@ -173,6 +180,42 @@ TeamDetails.put("/updateTeamMembers", async (req, res) => {
   } catch (error) {
     console.error("Error updating team members:", error);
     res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+TeamDetails.delete("/leave/:teamId/:userId", async (req, res) => {
+  const { teamId, userId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(teamId) || !mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ message: "Invalid teamId or userId" });
+  }
+
+  try {
+    const team = await TeamModel.findById(teamId);
+
+    if (!team) {
+      return res.status(404).json({ message: "Team not found" });
+    }
+
+
+    const userIndex = team.members.findIndex(
+      (member) => member.user.toString() === userId
+    );
+
+    if (userIndex === -1) {
+      return res.status(404).json({ message: "User is not part of the team" });
+    }
+
+
+    team.members.splice(userIndex, 1);
+
+
+    await team.save();
+
+    res.status(200).json({ message: "User has left the team successfully" });
+  } catch (error) {
+    console.error("Error in leave API:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 

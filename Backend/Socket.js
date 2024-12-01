@@ -100,8 +100,33 @@ function hello(server) {
     socket.on("disconnect", () => {
       console.log("disconnect user");
       removeUser(socket.id);
+    });socket.on("deleteTeam", async (teamId) => {
+      try {
+        // Perform the team deletion logic
+        await TeamModel.findByIdAndDelete(teamId);
+        // Emit 'teamDeleted' to all connected clients
+        io.emit("teamDeleted", teamId);  // Emit to all connected clients
+      } catch (error) {
+        console.error("Error deleting team:", error);
+        socket.emit("errorDeletingTeam", error.message); // Emit error back to the requester
+      }
+    });
+
+    socket.on("deleteTeam", async (teamId) => {
+      try {
+        // Perform the team deletion logic
+        await TeamModel.findByIdAndDelete(teamId);
+        // Emit 'teamDeleted' to all connected clients
+        io.emit("teamDeleted", teamId);  // Emit to all connected clients
+      } catch (error) {
+        console.error("Error deleting team:", error);
+        socket.emit("errorDeletingTeam", error.message); // Emit error back to the requester
+      }
     });
   });
+
+  
 }
+
 
 module.exports = { hello };
