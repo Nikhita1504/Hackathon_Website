@@ -15,6 +15,7 @@
     height: 600px;
     overflow: scroll;
     padding: 20px;
+    position: relative;
   }
   
   .hackathonTitle {
@@ -97,4 +98,73 @@
     border: 1px solid black;
     background-color: transparent;
 }
-  
+.modalBg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* Modal Box */
+.modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 300px;
+    max-width: 90%;
+}
+
+/* Modal Buttons */
+.modalButtons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.confirmButton,
+.cancelButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.confirmButton {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.cancelButton {
+    background-color: #ccc;
+    color: black;
+}
+
+.confirmButton:hover {
+    background-color: #e63939;
+}
+
+.cancelButton:hover {
+    background-color: #bbb;
+}
+.deleteTeamBtn{
+    background-color: transparent;
+    /* border: 0.5px solid black; */
+    border: none;
+    color: darkblue;
+    padding: 8px;
+    position: absolute;
+    right: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

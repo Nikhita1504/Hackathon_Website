@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const AddMember = () => {
 
+
     const { socket } = useContext(SocketContext)
     const { Userinfo } = useContext(Usercontext);
 
@@ -26,6 +27,10 @@ const AddMember = () => {
     const [showBranches, setShowBranches] = useState(false);
     const [showYears, setShowYears] = useState(false);
     const [showSkills, setShowSkills] = useState(false);
+    const [leaveModal, setLeaveModal] = useState(false);
+    const [removeModal, setremoveModal] = useState(false);
+
+
 
     const [modal, setmodal] = useState(false);
 
@@ -56,24 +61,41 @@ const AddMember = () => {
         fetchData();
     }, [hackathonName, setHackathonDetails]);
 
-    useEffect(() => {
-        const fetchTeamData = async () => {
-            try {
-                const response = await axios.get(
-                    `http://localhost:3000/team/team-details/${teamData._id}`
-                );
-                // console.log(response.data.members[0].role)
-                setTeamMembers(response.data.members);
-            } catch (error) {
-                console.error("Error fetching team data:", error);
-            }
-        };
+    const fetchTeamData = async () => {
+        try {
+            const currentuserId=Userinfo._id
+            const response = await axios.get(`http://localhost:3000/team/team-details/${teamData._id}`,{
+                params: { userId: currentuserId } 
+            });
 
+            const members = response.data.members;
+
+            setTeamMembers(members);
+
+        } catch (error) {
+            console.log('Error fetching team data:', error);
+
+            // if ( error.response.status === 403) {
+
+            //     navigate('/home/hackathons');
+            // } else {
+
+                navigate('/home/hackathons');
+            // }
+
+        }
+    };
+
+
+
+
+    useEffect(() => {
         fetchTeamData();
         const intervalId = setInterval(fetchTeamData, 5000);
 
         return () => clearInterval(intervalId);
-    }, [teamData?._id]);
+    }, [hackathonName, teamData._id]);
+
 
 
     const handleCollegeChange = (e) => {
@@ -175,23 +197,63 @@ const AddMember = () => {
 
     const handleDeleteTeam = async (teamId) => {
         try {
+
             await axios.delete(`http://localhost:3000/team/delete/${teamId}`);
             setmodal(false);
-
             navigate(`/home/hackathons`);
-
+            toast.success("Team deleted successfully!");
         } catch (error) {
-            console.log(error);
+            console.error("Failed to delete the team:", error);
+            toast.error("Failed to delete the team. Please try again.");
         }
     };
 
 
 
+    const handleLeave = async (userid, teamid) => {
+        try {
+            await axios.delete(`http://localhost:3000/team/leave/${teamid}/${userid}`)
+            setLeaveModal(false);
+            navigate("/home/hackathons")
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const [memberToRemoveId, setMemberToRemoveId] = useState(null);
+    const handleRemoveModal = (memberId) => {
+        setMemberToRemoveId(memberId);
+        setremoveModal(true);
+
+    }
+    const handleRemove = async (userid, teamid) => {
+        console.log("Current User ID:", Userinfo._id);
+        console.log("Removing User ID:", userid);
+        
+        try {
+            await axios.delete(`http://localhost:3000/team/leave/${teamid}/${userid}`);
+            
+   
+            setremoveModal(false);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+   
+// console.log(teamData.members)
+
+    const normalizedTeamMembers = teamMembers.map((value) => ({
+        ...value,
+        role: value.role.toLowerCase().trim(), // Convert role to lowercase and remove extra spaces
+    }));
+
+    const arr = normalizedTeamMembers
+        .filter((value) => value.role === 'member')
 
     return (
         <>
             <div className={styles.container}>
                 <div className={styles.leftPanel}>
+                    {Userinfo._id}
                     <h2 className={styles.hackathonTitle}>{hackathonDetails.name}</h2>
                     <p className={styles.institution}>
                         {hackathonDetails?.organizers?.[0]?.name || "N/A"}
@@ -214,7 +276,6 @@ const AddMember = () => {
                                                 value.user.profilePicture ? (<img src={value.user.profilePicture} />) :
                                                     (<img src="/assets/uploadpic .png" alt="Member Avatar" />)
                                             }
-                                            {/* <img className={styles.Image} src={value.user.profilePicture} alt="heeeelp"></img> */}
                                         </div>
                                         <div>
                                             <div className={styles.memberInfo}>
@@ -230,12 +291,27 @@ const AddMember = () => {
                                                 </p>
 
                                             </div>
-                                            <button className={styles.memberRole}>
-                                                {value.role ? value.role.charAt(0).toUpperCase() + value.role.slice(1) : ""}
-                                            </button>
 
+                                            <div className={styles.memberBtnCon}>
+                                                <button className={styles.memberRole}>
+                                                    {value.role ? value.role.charAt(0).toUpperCase() + value.role.slice(1) : ""}
+                                                </button>
 
+                                                {
+                                                    value.role === 'member' && (
+                                                        <button
+                                                            key={value._id}
+                                                            className={styles.removeBtn}
+                                                            onClick={() => handleRemoveModal(value.user._id)}
+                                                        >
+                                                            Remove
+                                                        </button>
+                                                    )
+                                                }
+
+                                            </div>
                                         </div>
+
                                     </div>
                                 ))
                             ) : (
@@ -243,11 +319,23 @@ const AddMember = () => {
                             )}
                         </div>
 
+                        {/* <button className={styles.leaveBtn} onClick={() => setLeaveModal(!leaveModal)} >Leave</button> */}
+
+
+
+                        {teamData?.members?.some(
+                            (member) =>
+                                member.role === "member" &&
+                                member.user.toString() === Userinfo._id.toString()
+                        ) && (
+                                <button className={styles.leaveBtn} onClick={() => setLeaveModal(!leaveModal)} >Leave</button>
+
+                            )}
 
                         {teamData?.members?.some(
                             (member) =>
                                 member.role === "leader" &&
-                                member.user.toString() === Userinfo._id.toString() // User ID match
+                                member.user.toString() === Userinfo._id.toString()
                         ) && (
                                 <button
                                     onClick={() => setmodal(!modal)}
@@ -423,6 +511,51 @@ const AddMember = () => {
                     </div>
                 </div>
             )}
+
+            {/* Leave Modal */}
+            {leaveModal && (
+                <div className={styles.modalBg}>
+                    <div className={styles.modal}>
+                        <h3>Are you sure you want to leave this team?</h3>
+                        <div className={styles.modalButtons}>
+                            <button
+                                onClick={() => handleLeave(Userinfo._id, teamData._id)}
+                                className={styles.confirmButton}
+                            >
+                                Yes
+                            </button>
+                            <button
+                                onClick={() => setLeaveModal(false)}
+                                className={styles.cancelButton}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {removeModal && (
+                <div className={styles.modalBg}>
+                    <div className={styles.modal}>
+                        <h3>Are you sure you want to remove this member?</h3>
+                        <div className={styles.modalButtons}>
+                            <button
+                                onClick={() => handleRemove(memberToRemoveId, teamData._id)}
+                                className={styles.confirmButton}
+                            >
+                                Yes
+                            </button>
+                            <button
+                                onClick={() => setremoveModal(false)}
+                                className={styles.cancelButton}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <ToastContainer />
         </>
     );
