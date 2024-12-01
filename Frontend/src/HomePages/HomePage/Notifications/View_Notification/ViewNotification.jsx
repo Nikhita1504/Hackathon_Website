@@ -5,7 +5,7 @@ import Usercontext from "../../../../Context/Usercontext";
 import SocketContext from "../../../../Context/SocketContext";
 import styles from "./ViewNotification.module.css"; // Import the module.css
 
-import { handleError, handleSucess } from "../../../../utils/utils";
+import { handleError, handleSucess } from "../../../../Utils/utils";
 import { ToastContainer } from "react-toastify";
 
 const ViewNotification = ({ setIsFloatingVisible, Details }) => {

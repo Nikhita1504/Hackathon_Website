@@ -23,7 +23,7 @@ TeamDetails.post("/enroll-team", async (req, res) => {
       teamName,
       members: [
         {
-          user: userData.id,
+          user: userData._id,
           role: "leader",
         },
       ],

@@ -75,13 +75,9 @@ const AddMember = () => {
         } catch (error) {
             console.log('Error fetching team data:', error);
 
-            // if ( error.response.status === 403) {
-
-            //     navigate('/home/hackathons');
-            // } else {
-
+            
                 navigate('/home/hackathons');
-            // }
+
 
         }
     };
