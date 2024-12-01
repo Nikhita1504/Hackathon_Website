@@ -55,7 +55,7 @@ const Notifications = ({ setIsFloatingVisible, SetDetails }) => {
           <div key={index} className="single-Notification-container">
             <div className="profile-part">
               {
-                notif.SenderUser.profilePicture ? <img
+                notif.SenderUser.profilePicture? <img
                   src={notif.SenderUser.profilePicture}
                   alt="User profile"
                 ></img> : <img src="assets/uploadpic .png" alt="Member Avatar" />
