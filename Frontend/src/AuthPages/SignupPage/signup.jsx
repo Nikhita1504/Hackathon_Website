@@ -5,11 +5,11 @@ import { handleError, handleSucess } from "../../Utils/utils";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Usercontext from "../../Context/Usercontext";
-
+import SocketContext from "../../Context/SocketContext";
 function Signup() {
   const { Userinfo, SetUserinfo } = useContext(Usercontext);
   const navigate = useNavigate();
-
+  const { SetloggedIn} = useContext(SocketContext)
   const handlechange = (e) => {
     const { name, value } = e.target;
     const copyinfo = { ...Userinfo };
@@ -41,6 +41,7 @@ function Signup() {
       const { success, error, message, jwt_token } = result;
 
       if (success) {
+        SetloggedIn(true);
         sessionStorage.setItem("token", jwt_token);
         handleSucess(message);
         setTimeout(() => {

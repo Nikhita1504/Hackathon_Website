@@ -1,4 +1,3 @@
-const { string, required, object } = require("joi");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const URL = process.env.URL;
@@ -6,10 +5,10 @@ const URL = process.env.URL;
 mongoose
   .connect(URL)
   .then(() => {
-    console.log("database connected");
+    console.log("User database connected");
   })
   .catch((e) => {
-    console.log("database connection error", e);
+    console.log("User database connection error", e);
   });
 
 const userSchema = new mongoose.Schema(
@@ -114,7 +113,6 @@ const teamSchema = new mongoose.Schema(
           type: mongoose.Schema.Types.ObjectId,
           ref: "Usermodel",
           required: true,
-          unique: true,
         },
         role: {
           type: String,
