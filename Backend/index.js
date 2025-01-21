@@ -16,12 +16,15 @@ const CheckEnrollRouter = require("./Router/CheckEnrollRouter");
 const Notificaitonrouter = require("./Router/Notificationrouter")
 require("dotenv").config();
 require("./model/db");
+require("./model/Admindb");
 
 const { createServer } = require("http");
 const server = createServer(app);
 
 const {hello} = require("./Socket"); // Import the function correctly
 const ImageUpload = require("./Router/ImageUpload");
+const { AdminRouter } = require("./Admin/AdminRouter");
+
    hello(server); // Call the function to initialize socket
 
 app.use(bodyparser.json());
@@ -30,7 +33,7 @@ app.use(
   cors({
     credentials: true,
     methods: ["POST", "GET", "PUT", "DELETE"],
-    origin: "http://localhost:5173",
+    origin: "http://localhost:5174",
   })
 );
 
@@ -45,6 +48,7 @@ app.use("/team", TeamDetails);
 app.use("/enroll", CheckEnrollRouter);
 app.use("/upload",ImageUpload);
 app.use("/Notification" , Notificaitonrouter)
+app.use("/Admin" , AdminRouter);
 
 // Listen on port
 const Port = process.env.Port || 3000;

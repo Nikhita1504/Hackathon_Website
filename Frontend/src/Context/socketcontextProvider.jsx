@@ -11,14 +11,11 @@ const SocketProvider = ({ children }) => {
     const token = sessionStorage.getItem("token");
     return token? true:false;
   });
-  console.log(loggedIn)
-  console.log(socket)
 
   // Initialize socket connection
   useEffect(() => {
     if (socket == null && loggedIn) {
       try {
-        console.log("new socket connection");
         const newSocket = io("http://localhost:3000");
         sessionStorage.setItem("SocketID", newSocket.id); 
         Setsocket(newSocket);
