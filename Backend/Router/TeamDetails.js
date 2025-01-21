@@ -19,6 +19,19 @@ TeamDetails.post("/enroll-team", async (req, res) => {
       return res.status(404).json({ message: "Hackathon not found" });
     }
 
+
+    const existingTeam = await TeamModel.findOne({
+      hackathonId: hackathonData.id,
+      "members.user": userData._id,
+    });
+
+    if (existingTeam) {
+      return res
+        .status(400)
+        .json({ message: "User is already part of a team for this hackathon" });
+    }
+
+
     const teamData = new TeamModel({
       teamName,
       members: [
@@ -101,9 +114,6 @@ TeamDetails.delete("/delete/:teamid", async (req, res) => {
     let { teamid } = req.params;
 
     teamid = teamid.trim();
-
-    // console.log("Received teamid:", teamid);
-    // console.log(mongoose.Types.ObjectId.isValid(teamid))
 
     if (!mongoose.Types.ObjectId.isValid(teamid)) {
       return res.status(400).json({ message: "Invalid team ID" });

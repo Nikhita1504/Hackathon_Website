@@ -26,7 +26,6 @@ const Teams = () => {
 
     const fetchTeamData = async () => {
       const response = await axios.get(`http://localhost:3000/team/teams-list/${payload.user.email}`)
-      // console.log(response.data)
       setteams(response.data);
     }
     fetchTeamData();

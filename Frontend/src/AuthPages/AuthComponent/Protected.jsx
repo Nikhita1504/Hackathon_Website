@@ -13,6 +13,7 @@ const Admin = ({ children }) => {
   if (isTokenValid() && isAdmin()) {
     return children;
   } else {
+    <Navigate to="/login"></Navigate>
   }
 };
 
