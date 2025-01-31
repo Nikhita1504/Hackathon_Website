@@ -1,15 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Merriweather:wght@700&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Ubuntu&display=swap');
 .profile-container {
     padding: 30px 40px;
     display: flex;
     position: relative;
     flex-direction: column;
     align-items: center;
-    // background-color: #fafafa;
-    // background-color: #D9E8FB;
-    background-color: #eff2f8; 
-  font-family: 'Arial', sans-serif;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    font-family: "Roboto", serif;
+    background-color: #ffffff;
+    // font-family: 'Arial', sans-serif;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
     .edit-icon {
         position: absolute;
@@ -41,6 +41,22 @@
             gap: 8px;
             font-size: 14px;
             justify-content: center;
+
+            .college {
+                background-color: #E0E7FF;
+                padding: 4px 10px;
+                border-radius: 8px;
+            }
+            .graduationYear {
+                background-color: #F3E8FF;
+                padding: 4px 10px;
+                border-radius: 8px;
+            }
+            .degree {
+                background-color: #DCFCE7;
+                padding: 4px 10px;
+                border-radius: 8px;
+            }
         }
 
         p.name {
@@ -57,16 +73,16 @@
         color: #34495e;
     }
 
-    .info p:not(:last-child)::after {
-        content: "";
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 1px;
-        height: 20px;
-        background-color: #bdc3c7;
-    }
+    // .info p:not(:last-child)::after {
+    //     content: "";
+    //     position: absolute;
+    //     right: 0;
+    //     top: 50%;
+    //     transform: translateY(-50%);
+    //     width: 1px;
+    //     height: 20px;
+    //     background-color: #bdc3c7;
+    // }
 }
 
 .bio,
@@ -75,11 +91,9 @@
 .linkedin-url {
     width: 100%;
     text-align: left;
-    margin: 10px 0;
-    padding: 15px 20px;
-   
+    padding: 10px 20px;
     border-radius: 10px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+// background-color: lightblue;
 }
 
 .skills {
@@ -147,11 +161,11 @@
     }
 
     .skill-item {
-        background-color: #e1e1e1;
-        padding: 5px 8px;
+        background-color: #ececec;
+        padding: 4px 8px;
         border-radius: 5px;
-        font-size: 12px;
-        color: #2c3e50;
+        font-size: 14px;
+        color: #1F2937;
         white-space: nowrap;
         transition: background-color 0.3s ease, transform 0.3s ease;
     }
@@ -167,15 +181,22 @@
 .github-url p,
 .linkedin-url p {
     font-weight: bold;
-    margin-bottom: 8px;
-    color: #2c3e50;
+color: #2c3e50;
+}
+
+.bio{
+    color: #4B5563;
+    font-size: 16px;
 }
 
 .github-url,
 .linkedin-url {
     .light {
         font-weight: 300;
-        color: #2c3e50;
+        color: #374151;
+        border: 1px solid #dcdcdd;
+        border-radius: 8px;
+        padding: 8px 16px;
         display: block;
         margin-top: 7px;
         text-decoration: none;

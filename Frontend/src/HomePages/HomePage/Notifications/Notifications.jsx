@@ -54,16 +54,16 @@ const Notifications = ({ setIsFloatingVisible, SetDetails }) => {
         notifications.map((notif, index) => (
           <div key={index} className="single-Notification-container">
             <div className="profile-part">
-            {
-  notif.SenderUser?.profilePicture ? (
-    <img
-      src={notif.SenderUser.profilePicture}
-      alt="User profile"
-    />
-  ) : (
-    <img src="assets/uploadpic .png" alt="Member Avatar" />
-  )
-}
+              {
+                notif.SenderUser?.profilePicture ? (
+                  <img
+                    src={notif.SenderUser.profilePicture}
+                    alt="User profile"
+                  />
+                ) : (
+                  <img src="assets/uploadpic .png" alt="Member Avatar" />
+                )
+              }
 
               {/* <img
                 src={notif.SenderUser.profilePicture}
@@ -73,14 +73,15 @@ const Notifications = ({ setIsFloatingVisible, SetDetails }) => {
             <div className="message-and-button">
               <div className="message-part">
                 <p>
-                {notif.message}{" "}
+                  {notif.message}{" "}
                 </p>
 
               </div>
               {/* <p className="createAtpara">{notif.createdAt}</p> */}
+              <div>
               <p className="createAtpara">
-  {format(new Date(notif.createdAt), 'MMM dd, yyyy hh:mm a')}
-</p>
+                {format(new Date(notif.createdAt), 'MMM dd, yyyy hh:mm a')}
+              </p>
               <button
                 onClick={() => {
                   handleViewClick(notif);
@@ -89,6 +90,7 @@ const Notifications = ({ setIsFloatingVisible, SetDetails }) => {
               >
                 View
               </button>
+              </div>
             </div>
           </div>
         ))

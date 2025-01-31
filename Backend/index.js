@@ -33,7 +33,7 @@ app.use(
   cors({
     credentials: true,
     methods: ["POST", "GET", "PUT", "DELETE"],
-    origin: "http://localhost:5174",
+    origin: "http://localhost:5173",
   })
 );
 
@@ -55,6 +55,7 @@ const Port = process.env.Port || 3000;
 server.listen(Port, () => {
   console.log("Server is running on port " + Port);
 });
+
 
 
 

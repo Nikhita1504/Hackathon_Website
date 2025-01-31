@@ -131,9 +131,9 @@ const ProfileSection = () => {
 
                 <div className="student-info">
                     <div className="info">
-                        <p>{userdata.college || "not mentioned"}</p>
-                        <p>{userdata.GraduationYear || "not mentioned"}</p>
-                        <p>{userdata.degree || "not mentioned"}</p>
+                        <p className='college' >{userdata.college || "not mentioned"}</p>
+                        <p className='graduationYear'>{userdata.GraduationYear || "not mentioned"}</p>
+                        <p className='degree'>{userdata.degree || "not mentioned"}</p>
                     </div>
 
                     <div className="bio">
