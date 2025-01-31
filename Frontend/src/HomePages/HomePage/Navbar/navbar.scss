@@ -2,9 +2,9 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  padding: 10px 40px;
-  // background-color: #2C3E50;
-  height: 63px;
+  // padding: 10px 40px;
+  background-color: #111827;
+  // height: 63px;
 
 
   .navbar {
@@ -12,9 +12,9 @@
     align-items: center;
     gap: 50px;
     // background-color: #7491B7;
-    background-color: #2C3E50;
+    background-color: #111827;
     padding: 0px 39px;
-    border-radius: 24px;
+
     justify-content: space-evenly;
 
     ul {
@@ -73,7 +73,7 @@
     height: 30px;
     // width: 100%;
     border: 1px solid #ccc;
-    border-radius: 15px;
+    border-radius: 6px;
     font-size: 16px;
   }
 

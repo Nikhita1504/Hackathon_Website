@@ -1,9 +1,13 @@
 .Notification-container {
-  height: 100vh;
+  height: auto;
+  max-height:80vh ;
   overflow-y: auto;
-  background-color: #eff2f8;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  padding: 10px 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
 
   h3 {
     font-weight: 500;
@@ -11,11 +15,13 @@
 
   .single-Notification-container {
     border: none;
-    border-bottom: 1px solid #c5c2c2;
+    // border-bottom: 1px solid #c5c2c2;
+
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: start;
+    margin-bottom: 10px;
 
 
     .profile-part img {
@@ -64,7 +70,7 @@
 
         p {
           font-weight: 430;
-
+          font-size: 14px;
           margin: 1px;
           padding: 0;
         }
@@ -72,20 +78,18 @@
       }
 
       .button {
-        border: 1px solid green;
-        width: 60%;
-        /* Constrains the button width */
-        max-width: 50px;
-        /* Optional: Prevents it from growing too wide */
-        align-self: flex-start;
-        /* Aligns the button to the start */
-        background-color: white;
-        color: rgb(34, 115, 56);
+        background: linear-gradient(to right, #9333EA, #2563EB);
 
-        padding: 1px 5px;
+
+
+        align-self: flex-start;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 14px;
         cursor: pointer;
         text-align: center;
-
+        border: none;
         transition: background-color 0.3s ease;
       }
     }

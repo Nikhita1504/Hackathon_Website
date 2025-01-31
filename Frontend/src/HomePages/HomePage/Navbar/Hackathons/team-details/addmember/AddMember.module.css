@@ -1,33 +1,56 @@
+.bigContainer {
+    height: 100vh;
+    padding: 20px 40px;
+    background-color: #F9FAFB;
+
+}
+
+.header {
+    font-size: 14px;
+    color: #6B7280;
+    /* margin-bottom: 4px; */
+}
+
 .container {
     display: flex;
     gap: 20px;
-    padding: 20px;
-    height: 74vh;
+    height: 100%;
+    /* padding: 40px; */
+    /* background-color: yellow; */
     position: relative;
     z-index: 1;
-    
+
+
 }
 
 .leftPanel,
 .rightPanel {
-    width: 50%;
-    background-color: #f9f9f9;
     padding: 25px;
-    border-radius: 8px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     overflow-y: scroll;
 }
-.leftPanel{
+
+.leftPanel {
     overflow: scroll;
     position: relative;
-  
+    flex: 0.65;
+    height: auto;
+    max-height: 65%;
+    border-top: 6px solid #111827;
+    border-radius: 8px;
 
 }
+
 
 .rightPanel {
     display: flex;
-    gap: 40px;
+    border-radius: 8px;
+    gap: 20px;
+    flex: 0.35;
+    height: 75%;
+    background-color: #F9FAFB;
 }
+
 
 .hackathonTitle {
     font-size: 24px;
@@ -36,8 +59,8 @@
 }
 
 .institution {
-    font-size: 16px;
-    color: #555;
+    font-size: 14px;
+    color: #4B5563;
 }
 
 .teamSection {
@@ -50,9 +73,36 @@
     align-items: center;
 }
 
+.teamName {
+    font-weight: 400;
+    font-size: 16px;
+}
+
 .teamNameHighlight {
-    color: #0056b3;
+    color: #4F46E5;
     font-weight: bold;
+}
+
+
+.progressCircle {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.progressCircle svg {
+    position: absolute;
+}
+
+.circleText {
+    position: absolute;
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+    text-align: center;
 }
 
 .memberCount {
@@ -65,15 +115,12 @@
     color: #777;
 }
 
-.membersContainer{
-    /* overflow: scroll; */
-}
 
 .memberCard {
     display: flex;
     align-items: center;
-    background-color: #e0edf7;
-    border: 0.5px solid black;
+    background: linear-gradient(to right, rgba(44, 62, 80, 0.2), #FFFFFF);
+    /* border: 0.5px solid black; */
     padding: 15px;
     border-radius: 8px;
     margin-top: 10px;
@@ -97,59 +144,100 @@
     justify-content: center;
     margin-right: 15px;
     object-fit: cover;
-    
+
 }
-.Image{
+
+.Image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 100%;
-    }
-.memberInfo{
+}
+
+.memberBtnCon {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
+    /* background-color: yellow; */
 }
-.memberName{
+/* .memberInfo{
+    display: flex;
+    flex-direction: column;
+   line-height: 1;
+} */
+.memberName {
     font-weight: 500;
     cursor: pointer;
-}
-.memberCollege,.memberDegree,.memberYear{
-    border-left: 1px solid grey;
-    padding-left: 10px;
-}
-.memberRole{
-    border: 1px solid black;
-    background-color: transparent;
+    /* background-color: red; */
 }
 
-.removeBtn{
+.memberCollege {
+    /* border-left: 1px solid grey; */
+    /* padding-left: 10px; */
+    background-color: #DBEAFE;
+    color: #1E40AF;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.memberDegree {
+    background-color: #F3E8FF;
+    color: #6B21A8;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.memberYear {
+    background-color: #FFEDD5;
+    color: #9A3412;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.memberRole {
+    /* border: 1px solid black; */
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    border: none;
+    color: white;
+    background-color: #16A34A;
+}
+
+.removeBtn {
     cursor: pointer;
+    color: #DC2626;
 }
 
-.leaveBtn{
+.leaveBtn {
     position: absolute;
     padding: 3px 10px;
     cursor: pointer;
     right: 25px;
-    background-color: rgb(248, 175, 175);
+    bottom: 10px;
+    background-color: transparent;
     border: none;
+    color: #DC2626;
     /* color: white; */
 }
 
-.deleteTeamBtn{
+.deleteTeamBtn {
     background-color: transparent;
     /* border: 0.5px solid black; */
     border: none;
-    color: darkblue;
+    color: #DC2626;
     padding: 8px;
     position: absolute;
     right: 25px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
-.deleteTeamBtn:hover{
+
+.deleteTeamBtn:hover {
     cursor: pointer;
     background-color: rgba(250, 69, 69, 0.777);
     color: black;
@@ -157,16 +245,14 @@
 
 
 .addMemberButton,
-.inviteFriendsButton,
-.backButton,
-.completeRegistrationButton {
+.inviteFriendsButton {
     background-color: #0056b3;
     color: white;
     border: none;
     border-radius: 6px;
     padding: 12px;
     cursor: pointer;
-    width: 100%;
+
     margin-top: 15px;
     transition: background-color 0.3s ease;
 }
@@ -196,7 +282,7 @@
 .searchInput {
     width: 80%;
     padding: 10px;
-    border: 1px solid #aaa;
+    border: 1px solid #9CA3AF;
     border-radius: 6px;
 }
 
@@ -220,20 +306,15 @@
     padding-right: 15px;
 }
 
-.filters h3 {
-    margin-bottom: 15px;
-    font-size: 18px;
-    color: #333;
-}
-
-.header {
+.filterheader {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* background-color: red; */
 
 }
 
-.header button {
+.filterheader button {
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -242,7 +323,8 @@
 }
 
 .filterCategory {
-    background-color: #eef2f9; /* Light background for separation */
+    background-color: #eef2f9;
+    /* Light background for separation */
     padding: 10px;
     border-radius: 5px;
     display: flex;
@@ -251,10 +333,18 @@
     transition: background-color 0.3s ease;
     cursor: pointer;
 }
+
 .filterCategory:hover {
-    background-color: #d6e8f8; /* Slightly darker on hover */
+    background-color: #d6e8f8;
+    /* Slightly darker on hover */
+}
+
+.filterName {
+    cursor: pointer;
+    font-size: 14px;
 }
 .filters p{
+    font-size: 14px;
     cursor: pointer;
 }
 
@@ -291,31 +381,39 @@
     gap: 8px;
     cursor: pointer;
 }
+
 .filterCategory input[type="checkbox"] {
     accent-color: #007bff;
     margin-right: 8px;
     cursor: pointer;
 }
 
-.completeRegistrationButton {
+.nextBtn {
     background-color: #28a745;
     color: white;
-
-    width: 250px;
+    width: 150px;
     padding: 10px;
+    border: none;
+    border-radius: 4px;
 }
 
 .backButton {
     background-color: #999;
-    ;
     color: #333;
     width: 100px;
+    border: none;
+    border-radius: 4px;
+
 }
 
 .buttonContainer {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
+  position: absolute;
+ bottom: 20px;
+ display: flex;
+
+justify-content: space-between;
+width: 60%;
+
     /* background-color: #004d40; */
 
 
@@ -333,13 +431,13 @@
 
 .item {
     display: flex;
-    justify-content: space-between;
+
     align-items: center;
     background-color: #e8f1f9;
     color: #004d40;
     width: 100%;
     gap: 10px;
-    padding: 15px 10px;
+    padding: 10px 10px;
     border-radius: 8px;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
@@ -350,11 +448,12 @@
     gap: 12px;
     align-items: center;
 }
-.item .details{
-/* background-color: #004080; */
-display: flex;
-flex-direction: column;
-align-items: flex-start;
+
+.item .details {
+    /* background-color: #004080; */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 
@@ -375,35 +474,38 @@ align-items: flex-start;
     font-weight: bold;
     cursor: pointer;
 }
+
 /* .details .detailsName{
    text-align: left;
 } */
 
-.details .down span{
-font-size: 12px;
-font-weight: 400;
+.details .down span {
+    font-size: 12px;
+    font-weight: 400;
 }
 
 .item button {
     background-color: #5a82a1;
     color: white;
-    padding: 8px 14px;
+    padding: 8px 12px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
     transition: background-color 0.3s ease;
 }
 
 .item button:hover {
     background-color: #2C3E50;
 }
-.itemimg{
+
+.itemimg {
     height: 40px;
     width: 40px;
     border-radius: 50px;
     object-fit: cover;
 }
+
 /* Modal Background */
 .modalBg {
     position: fixed;
@@ -411,7 +513,8 @@ font-weight: 400;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -464,16 +567,18 @@ font-weight: 400;
 .cancelButton:hover {
     background-color: #bbb;
 }
-.removeBtn{
+
+.removeBtn {
     background-color: transparent;
     border: none;
     position: absolute;
-right: 20px;
+    right: 20px;
 }
-.removeBtn:hover{
+
+.removeBtn:hover {
     color: black;
-    background-color: #f76464ce ;
+    background-color: #f76464ce;
     cursor: pointer;
-    padding: 5px ;
+    padding: 5px;
     transition: 0.2s;
 }

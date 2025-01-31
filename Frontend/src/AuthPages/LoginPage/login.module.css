@@ -16,7 +16,7 @@
   height: 80%;
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 15px #1e40afc0;
   overflow: hidden;
   padding: 0 20px;
 }
@@ -81,7 +81,8 @@
 }
 
 .button {
-  background-color: #0d6efd;
+  position: relative;
+  background: linear-gradient(to right, #9333EA, #2563EB);
   border: none;
   font-size: 18px;
   color: white;
@@ -89,12 +90,25 @@
   padding: 12px;
   cursor: pointer;
   margin-top: 10px;
-  transition: background-color 0.3s;
+  overflow: hidden; /* Prevents animation from spilling outside */
 }
 
-.button:hover {
-  background-color: #0056b3;
+.button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: skewX(-30deg);
+  transition: left 0.9s ease-in-out;
 }
+
+.button:hover::before {
+  left: 120%;
+}
+
 
 .link {
   color: #0d6efd;

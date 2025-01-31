@@ -74,15 +74,15 @@ function ViewDetails() {
                             ))
                         ) : (<p>No team members found</p>)
                     }
-                    <button
+                    {/* <button
                                         onClick={() => setmodal(!modal)}
                                         className={styles.deleteTeamBtn}
                                     >
                                         Delete Team
-                                    </button>
+                                    </button> */}
                 </div>
             </div>
-            {/* delete team  */}
+            {/* delete team 
             {modal && (
                 <div className={styles.modalBg}>
                     <div className={styles.modal}>
@@ -105,7 +105,7 @@ function ViewDetails() {
                 </div>
             )}
 
-            {/* Leave Modal */}
+
             {leaveModal && (
                 <div className={styles.modalBg}>
                     <div className={styles.modal}>
@@ -126,7 +126,7 @@ function ViewDetails() {
                         </div>
                     </div>
                 </div>
-            )}
+            )} */}
         </>
     );
 }

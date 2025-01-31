@@ -12,7 +12,7 @@
   max-width: 1200px;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 15px #1e40afc0;
   overflow: hidden;
   padding: 0 20px;
 
@@ -62,8 +62,8 @@
   outline: none;
 }
 
-.signup {
-  background-color: #6f42c1;
+.signup {  background: linear-gradient(to right, #9333EA, #2563EB);
+
   color: white;
   border: none;
   padding: 10px;

@@ -3,13 +3,14 @@
     margin-top: 13px;
     height: 100vh;
     // width: 100vw;
+    background-color: #F9FAFB;
     padding: 10px 40px;
     display: grid;
     grid-template-columns: minmax(300px, 400px) minmax(500px, 450px) 1fr;
     column-gap: 20px;
 
     .one, .two, .three {
-        background-color: #D9E8FB;
+        background-color: #FFFFFF;
         height: max-content;
         border-radius: 10px;
       }

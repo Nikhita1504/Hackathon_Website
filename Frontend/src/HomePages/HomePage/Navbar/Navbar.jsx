@@ -31,7 +31,7 @@ const handlelogout = () =>{
     <>
       <div className='nav-container'>
         <div>
-       <h3>Logo</h3>
+       <h3 style={{color:"white"}}>Logo</h3>
         </div>
         <div className="navbar">
           <ul>
@@ -50,7 +50,7 @@ const handlelogout = () =>{
 
         <div className='profile-dropdown'>
           <div className="circle"></div>
-          <div className="Me">
+          <div style={{color:"white"}} className="Me">
             Me <FontAwesomeIcon
               onClick={() => setopenmodal(!modal)}
               className='triangle-down' icon={faCaretDown} />
